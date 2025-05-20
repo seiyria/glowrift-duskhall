@@ -1,0 +1,21 @@
+<app-page-card>
+  <span header>Options</span>
+
+  <div pageactions>
+    <app-connect-buttons></app-connect-buttons>
+  </div>
+
+  <div role="tablist" class="tabs tabs-boxed">
+    @for(tab of tabs; track $index) {
+    <a role="tab" class="tab" [routerLinkActive]="'tab-active'" [routerLink]="['/game/options', tab.link]"
+      [appAnalyticsClick]="'Options:Navigate:' + tab.name" [class.hidden]="!tab.showIf()">
+      {{ tab.name }}
+    </a>
+    }
+  </div>
+
+  <div class="p-3">
+    <router-outlet></router-outlet>
+  </div>
+
+</app-page-card>

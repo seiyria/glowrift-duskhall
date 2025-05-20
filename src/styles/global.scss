@@ -1,0 +1,50 @@
+body {
+  font-family: 'OtherText', serif;
+  overflow: hidden;
+  height: 100vh;
+
+  background: url(/asset/splash-dark.png) no-repeat center center/cover;
+}
+
+.title {
+  font-family: 'FancyText', sans-serif;
+  letter-spacing: 1px;
+}
+
+.card:not(.card-untextured) {
+  --bg-color: var(--color-base-300);
+
+  background: url(/asset/texture-bg.png),
+    linear-gradient(to bottom, var(--bg-color), var(--bg-color));
+}
+
+.btn:not(.btn-untextured):not(.btn-outline) {
+  background: url(/asset/texture-button.png),
+    linear-gradient(to bottom, var(--btn-color), var(--btn-color)) !important;
+
+  &:hover {
+    background: url(/asset/texture-button.png),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--btn-color) 90%, black),
+        color-mix(in oklab, var(--btn-color) 90%, black)
+      ) !important;
+  }
+}
+
+.label-checkbox {
+  justify-content: left;
+
+  .label-text {
+    @apply ml-3;
+  }
+}
+
+progress::-webkit-progress-value {
+  transition: 250ms width;
+}
+
+app-game {
+  display: block;
+  height: 100vh;
+}

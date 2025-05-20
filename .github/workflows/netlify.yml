@@ -1,0 +1,49 @@
+name: Automatic Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    name: Automatic Deploy
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+        node-version: [20]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: git fetch --prune --unshallow --tags
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm install
+
+      - run: npm run build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './dist/glowrift-duskhall/browser'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          overwrites-pull-request-comment: true
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

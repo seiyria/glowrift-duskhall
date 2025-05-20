@@ -1,0 +1,9 @@
+@for(ext of externalLinks; track $index) {
+<a class="btn btn-ghost btn-untextured social-icon" [tp]="ext.name" [href]="ext.link" target="_blank" rel="nofollow"
+  [style.--social-color]="ext.color" (mouseenter)="ext.currentColor = ext.color"
+  (mouseleave)="ext.currentColor = '#ccc'" [appAnalyticsClick]="'Meta:External:' + ext.name">
+  <ng-icon [name]="ext.icon" [color]="ext.currentColor || '#ccc'"></ng-icon>
+</a>
+}
+
+<app-changelog-modal></app-changelog-modal>

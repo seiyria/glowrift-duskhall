@@ -1,0 +1,7 @@
+:host {
+  @apply w-full h-full z-20 flex justify-center items-center;
+
+  backdrop-filter: blur(3px);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}

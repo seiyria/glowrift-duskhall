@@ -1,0 +1,4 @@
+@let asset = specificAsset();
+
+<img [src]="assetUrl()" [alt]="assetName()" [style.width.px]="asset.width" [style.height.px]="asset.height"
+  [style.object-position]="`-${asset.x}px -${asset.y}px`" [ngClass]="[cssClass()]" draggable="false" />

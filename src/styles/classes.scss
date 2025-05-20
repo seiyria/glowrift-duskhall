@@ -1,0 +1,22 @@
+@use 'sass:map';
+
+$classes: 'Attacker' 'Defender' 'Caster' 'Ranger' 'Healer' 'Hybrid';
+$classColorMap: (
+  'Attacker': 'red',
+  'Defender': 'yellow',
+  'Caster': 'blue',
+  'Ranger': 'green',
+  'Healer': 'purple',
+  'Hybrid': 'gray',
+);
+
+@each $class in $classes {
+  .class-#{$class} {
+    @apply bg-#{map.get($classColorMap, $class)}-500;
+    @apply border-2 border-#{map.get($classColorMap, $class)}-500;
+  }
+
+  .text-#{$class} {
+    @apply text-#{map.get($classColorMap, $class)}-500;
+  }
+}

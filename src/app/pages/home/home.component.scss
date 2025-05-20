@@ -1,0 +1,11 @@
+.card-image {
+  background-color: #e1bee7;
+}
+
+.title {
+  @apply text-4xl;
+}
+
+.social-icon:hover {
+  --icon-color: var(--social-color);
+}

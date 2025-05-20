@@ -1,0 +1,60 @@
+name: Tag New Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        type: choice
+        description: What kind of version?
+        required: true
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  tag:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - run: npm install
+
+      - run: npm run lint
+
+      - run: npm run build
+
+      - name: Run Versioning
+        run: npm run bump:${{ github.event.inputs.type }} --ignore-scripts -- --force
+
+      - name: Generate Changelogs
+        run: npm run util:changelog:generate && npm run util:changelog:generate:current
+
+      - name: Commit Changelogs
+        run: npm run util:changelog:commit && npm run util:version:reversion
+
+      - name: Push Changelogs
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PUSH_TO_REPO_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true

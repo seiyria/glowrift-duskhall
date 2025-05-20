@@ -1,0 +1,20 @@
+<div class="navbar bg-transparent-100 relative flex">
+  <div class="navbar-start flex-1">
+
+  </div>
+
+  <div class="navbar-end">
+    <ul class="menu menu-horizontal px-1 flex gap-2">
+      <li class="action-button">
+
+        <a class="btn btn-accent" [swal]="leaveSwal" [tp]="'Go Back'">
+          <app-icon name="gameExitDoor" size="2em" color="#000"></app-icon>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<swal #leaveSwal title="Go back to main menu?" icon="question" [showCancelButton]="true" [focusCancel]="true"
+  confirmButtonText="Yes, go back" cancelButtonText="No, stay here" (confirm)="router.navigate(['..'])">
+</swal>

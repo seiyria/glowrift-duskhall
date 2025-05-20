@@ -1,0 +1,37 @@
+.page-container {
+  height: 100vh;
+  max-height: 100vh;
+
+  @apply overflow-y-auto overflow-x-hidden;
+
+  &.playing {
+    @apply overflow-hidden;
+  }
+}
+
+.page-size {
+  height: calc(100vh - 64px);
+}
+
+.page-card {
+  height: calc(100vh - 64px - 36px);
+
+  @apply overflow-hidden;
+
+  .card-content {
+    height: calc(100vh - 64px - 36px - 32px - 64px);
+    @apply overflow-x-hidden overflow-y-auto;
+  }
+
+  .inner-card-content {
+    height: calc(100vh - 64px - 36px - 32px - 64px - 16px);
+    @apply overflow-x-hidden overflow-y-auto;
+  }
+}
+
+.has-help {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+
+  @apply cursor-help;
+}

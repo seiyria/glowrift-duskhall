@@ -1,0 +1,25 @@
+<button class="btn btn-ghost btn-untextured social-icon" [tp]="'View Changelog'" [style.--social-color]="color"
+  (mouseenter)="currentColor = color" (mouseleave)="currentColor = '#ccc'" (click)="changelogs.showModal()">
+  <ng-icon [name]="'tablerPackage'" [color]="currentColor || '#ccc'"></ng-icon>
+</button>
+
+<dialog #changelogs class="modal">
+  <div class="modal-box max-w-3xl">
+    <h3 class="text-lg font-bold">Changelog</h3>
+
+    <div class="tabs tabs-boxed mt-1">
+      <a class="tab" [class.tab-active]="currentView() === 'recent'" (click)="currentView.set('recent')"
+        (keydown.enter)="currentView.set('recent')" tabindex="1">Recent</a>
+      <a class="tab" [class.tab-active]="currentView() === 'all'" (click)="currentView.set('all')"
+        (keydown.enter)="currentView.set('all')" tabindex="1">All</a>
+    </div>
+
+    <div class="changelog p-1 my-4 overflow-hidden overflow-y-auto max-h-72" [innerHTML]="safeHtml()">
+      {{ text() }}
+    </div>
+
+    <div class="modal-action">
+      <button class="btn" (click)="changelogs.close()">Close</button>
+    </div>
+  </div>
+</dialog>

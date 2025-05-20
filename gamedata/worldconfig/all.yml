@@ -1,0 +1,35 @@
+- id: f102779b-8367-4cb7-81b0-27d2b98496bb
+  name: Small
+  width: 100
+  height: 100
+
+  nodeCount:
+    town: { min: 2, max: 5 }
+    village: { min: 25, max: 50 }
+    cave: { min: 1500, max: 1900 }
+    dungeon: { min: 700, max: 1000 }
+    castle: { min: 100, max: 250 }
+
+- id: c8d7c7ed-700f-40f0-bf23-2e5a274b497e
+  name: Medium
+  width: 250
+  height: 250
+
+  nodeCount:
+    town: { min: 8, max: 15 }
+    village: { min: 150, max: 350 }
+    cave: { min: 4500, max: 5500 }
+    dungeon: { min: 2000, max: 2500 }
+    castle: { min: 400, max: 550 }
+
+- id: 5d079e87-7e98-40e1-a886-b385617e6bf3
+  name: Large
+  width: 500
+  height: 500
+
+  nodeCount:
+    town: { min: 25, max: 35 }
+    village: { min: 450, max: 650 }
+    cave: { min: 7500, max: 9000 }
+    dungeon: { min: 4000, max: 4500 }
+    castle: { min: 700, max: 900 }

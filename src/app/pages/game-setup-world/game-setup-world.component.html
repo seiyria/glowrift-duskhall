@@ -1,0 +1,26 @@
+<div class="flex justify-center items-center h-full p-2 gap-2 xl:flex-row lg:flex-row sm:flex-col md:flex-col flex-col">
+  <div class="xl:w-1/4 w-1/2">
+
+    <div class="card bg-base-100 h-[300px]">
+
+      <div class="card-body items-center justify-between">
+        <div class="card-title text-center flex flex-col">
+          World Size
+        </div>
+
+        <div class="flex flex-row justify-center gap-2">
+          Smaller worlds are less challenging than larger ones.
+        </div>
+
+        <div class="card-actions pt-3 flex flex-row gap-2">
+          @for(config of allWorldSizes; track $index) {
+          <button class="btn btn-primary" appAnalyticsClick="Setup:World:{{ config.name }}"
+            [routerLink]="['/game/play']">{{ config.name }}</button>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,11 @@
+{
+  "scss.lint.unknownAtRules": "ignore",
+  "exportall.config.folderListener": [
+    "/src/app/interfaces",
+    "/src/app/helpers"
+  ],
+  "files.exclude": {
+    "dist\\glowrift-duskhall": true,
+    "dist": true
+  }
+}

@@ -1,0 +1,229 @@
+name: Release New Tags
+
+on:
+  push:
+    tags:
+      - 'v*' # Any pushed tag
+
+jobs:
+  build:
+    name: Create Release
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+        node-version: [20]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm install
+
+      - run: npm run lint
+
+      - run: npm run build
+
+      - uses: pCYSl5EDgo/cat@master
+        id: loadChangelog
+        with:
+          path: CHANGELOG-current.md
+
+      - name: Create Release
+        id: createRelease
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.loadChangelog.outputs.text }}
+          draft: false
+          prerelease: false
+
+      - name: Output Release URL File
+        run: echo "${{ steps.createRelease.outputs.upload_url }}" > release_url.txt
+
+      - name: Save Release URL File for Publish
+        uses: actions/upload-artifact@v4
+        with:
+          name: release_url
+          path: release_url.txt
+
+      - name: Build Blog Post for Version Update
+        run: npm run build:blogpost
+
+      - name: Read blog_post.txt file
+        id: getBlogPost
+        run: echo "filename=$(cat blog-post.txt)" >> $GITHUB_OUTPUT
+
+      - name: Publish Version Update Blog Post
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PUSH_TO_REPO_TOKEN }}
+        with:
+          source_file: '${{ steps.getBlogPost.outputs.filename }}'
+          destination_repo: 'BottleOfTheLightless/blog'
+          destination_folder: '_posts'
+          user_email: 'kyle@seiyria.com'
+          user_name: 'seiyria'
+          commit_message: 'Add version notes'
+          destination_branch: master
+
+  publish-windows:
+    needs: [build]
+    name: Create Windows Binary
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-latest]
+        node-version: [20]
+
+    steps:
+      - name: Load Release URL File from release job
+        uses: actions/download-artifact@v4
+        with:
+          name: release_url
+
+      - uses: pCYSl5EDgo/cat@master
+        id: loadReleaseUrl
+        with:
+          path: release_url/release_url.txt
+
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm install
+
+      - run: cd electron && npm install
+
+      - run: npm run lint
+
+      - run: npm run build:electron
+
+      - name: Upload Binary
+        id: uploadReleaseAsset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.loadReleaseUrl.outputs.text }}
+          asset_path: ./electron/out/make/squirrel.windows/x64/glowrift-duskhall.exe
+          asset_name: glowrift-duskhall.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: glowrift-duskhall.exe
+          path: ./electron/out/make/squirrel.windows/x64/glowrift-duskhall.exe
+#
+#  publish-linux:
+#    needs: [build]
+#    name: Create Linux Binary
+#
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest]
+#        node-version: [18.15.x]
+#
+#    steps:
+#      - name: Load Release URL File from release job
+#        uses: actions/download-artifact@v1
+#        with:
+#          name: release_url
+#
+#      - uses: pCYSl5EDgo/cat@master
+#        id: loadReleaseUrl
+#        with:
+#          path: release_url/release_url.txt
+#
+#      - uses: actions/checkout@v2
+#
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#
+#      - run: npm install
+#
+#      - run: cd electron && npm install
+#
+#      - run: npm run lint
+#
+#      - run: npm run build:electron
+#
+#      - name: Upload Binary
+#        id: uploadReleaseAsset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.loadReleaseUrl.outputs.text }}
+#          asset_path: ./electron/out/make/zip/linux/x64/Spellwriters.zip
+#          asset_name: Spellwriters-linux.zip
+#          asset_content_type: application/zip
+#
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: Spellwriters-linux.zip
+#          path: ./electron/out/make/zip/linux/x64/Spellwriters.zip
+#
+# upload-itch:
+#   needs: [publish-windows, publish-linux]
+#   name: Upload to Itch.io
+#
+#   runs-on: ${{ matrix.os }}
+#
+#   strategy:
+#     matrix:
+#       os: [ubuntu-latest]
+#       node-version: [18.15.x]
+#
+#   steps:
+#     - uses: little-core-labs/get-git-tag@v3.0.1
+#       id: loadTagName
+#
+#     - name: Load Windows Binary
+#       uses: actions/download-artifact@v1
+#       with:
+#         name: Spellwriters.exe
+#
+#     - name: Load Linux Binary
+#       uses: actions/download-artifact@v1
+#       with:
+#         name: Spellwriters-linux.zip
+#
+#     - uses: manleydev/butler-publish-itchio-action@master
+#       env:
+#         BUTLER_CREDENTIALS: ${{ secrets.ITCH_BUTLER_API_KEY }}
+#         CHANNEL: windows
+#         ITCH_GAME: spellwriters
+#         ITCH_USER: seiyria
+#         PACKAGE: ./Spellwriters.exe
+#         VERSION: ${{ steps.loadTagName.outputs.tag }}
+#
+#     - uses: manleydev/butler-publish-itchio-action@master
+#       env:
+#         BUTLER_CREDENTIALS: ${{ secrets.ITCH_BUTLER_API_KEY }}
+#         CHANNEL: linux
+#         ITCH_GAME: spellwriters
+#         ITCH_USER: seiyria
+#         PACKAGE: ./Spellwriters-linux.zip
+#         VERSION: ${{ steps.loadTagName.outputs.tag }}
