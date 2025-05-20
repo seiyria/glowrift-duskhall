@@ -2,17 +2,6 @@
   @apply block bg-black w-full h-full;
 }
 
-.scaled-to-page {
-  transform-origin: top left;
-  transform: scale(var(--page-scale-x), var(--page-scale-y));
-
-  .scaled {
-    display: block;
-    width: calc(var(--page-width) * 1px);
-    height: calc(var(--page-height) * 1px);
-  }
-}
-
 .should-layer {
   position: absolute;
 }

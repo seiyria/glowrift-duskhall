@@ -5,10 +5,10 @@
 
   nodeCount:
     town: { min: 2, max: 5 }
-    village: { min: 25, max: 50 }
-    cave: { min: 300, max: 500 }
-    dungeon: { min: 100, max: 200 }
-    castle: { min: 25, max: 50 }
+    village: { min: 15, max: 30 }
+    cave: { min: 100, max: 200 }
+    dungeon: { min: 30, max: 50 }
+    castle: { min: 10, max: 15 }
 
 - id: f102779b-8367-4cb7-81b0-27d2b98496bb
   name: Small

@@ -1,0 +1,16 @@
+:host {
+  position: relative;
+}
+
+.terrain {
+  z-index: 10;
+}
+
+.object {
+  z-index: 20;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

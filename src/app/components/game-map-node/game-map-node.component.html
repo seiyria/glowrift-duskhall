@@ -1,0 +1,7 @@
+@let nodeData = node();
+
+<app-atlas-image class="terrain" spritesheet="world-terrain" [assetName]="nodeData.sprite"></app-atlas-image>
+
+@if(nodeData.objectSprite) {
+<app-atlas-image class="object" spritesheet="world-object" [assetName]="nodeData.objectSprite"></app-atlas-image>
+}

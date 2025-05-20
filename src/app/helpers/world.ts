@@ -1,11 +1,40 @@
+import { PRNG } from 'seedrandom';
 import {
+  GameId,
   GameStateWorld,
   GameStateWorldNode,
   WorldConfig,
   WorldNodeType,
 } from '../interfaces';
-import { randomNumberRange, seededrng } from './rng';
-import { myGameId } from './state-game';
+import {
+  gamerng,
+  randomChoice,
+  randomNumber,
+  randomNumberRange,
+  uuid,
+} from './rng';
+import { blankGameState, gamestate, updateGamestate } from './state-game';
+
+function fillEmptySpaceWithEmptyNodes(
+  config: WorldConfig,
+  nodes: Record<string, GameStateWorldNode>,
+): void {
+  for (let x = 0; x < config.width; x++) {
+    for (let y = 0; y < config.height; y++) {
+      if (nodes[`${x},${y}`]) continue;
+
+      nodes[`${x},${y}`] = {
+        elements: [],
+        name: '',
+        nodeType: undefined,
+        sprite: '',
+        objectSprite: '',
+        x,
+        y,
+      };
+    }
+  }
+}
 
 function addElementsToWorld(nodes: Record<string, GameStateWorldNode>): void {
   Object.values(nodes).forEach((node) => {
@@ -13,26 +42,64 @@ function addElementsToWorld(nodes: Record<string, GameStateWorldNode>): void {
   });
 }
 
+function getSpriteFromNodeType(nodeType: WorldNodeType | undefined): string {
+  switch (nodeType) {
+    case 'town':
+      return '0021';
+    case 'castle':
+      return '0000';
+    case 'cave':
+      return '0020';
+    case 'dungeon':
+      return '0023';
+    case 'village':
+      return '0022';
+    default:
+      return '';
+  }
+}
+
+function determineSpritesForWorld(
+  nodes: Record<string, GameStateWorldNode>,
+  rng: PRNG,
+): void {
+  Object.values(nodes).forEach((node) => {
+    node.sprite = (16 + randomNumber(4, rng)).toString().padStart(4, '0');
+
+    node.objectSprite = getSpriteFromNodeType(node.nodeType);
+  });
+}
+
 export function generateWorld(config: WorldConfig): GameStateWorld {
+  const rng = gamerng();
+
   const nodes: Record<string, GameStateWorldNode> = {};
   const nodeList: GameStateWorldNode[] = [];
+  const nodePositionsAvailable: Record<
+    string,
+    { x: number; y: number; taken: boolean }
+  > = {};
+
+  for (let x = 0; x < config.width; x++) {
+    for (let y = 0; y < config.height; y++) {
+      nodePositionsAvailable[`${x},${y}`] = { x, y, taken: false };
+    }
+  }
 
   const findUnusedPosition: () => { x: number; y: number } = () => {
-    const rng = seededrng(myGameId());
-    let x: number;
-    let y: number;
+    const freeNodes = Object.values(nodePositionsAvailable).filter(
+      (n) => !n.taken,
+    );
+    if (freeNodes.length === 0) return { x: -1, y: -1 };
 
-    do {
-      x = Math.floor(rng() * config.width);
-      y = Math.floor(rng() * config.height);
-    } while (nodes[`${x},${y}`]);
-
-    return { x, y };
+    const chosenNode = randomChoice<{ x: number; y: number }>(freeNodes, rng);
+    return { x: chosenNode.x, y: chosenNode.y };
   };
 
   const addNode = (node: GameStateWorldNode): void => {
     nodeList.push(node);
     nodes[`${node.x},${node.y}`] = node;
+    nodePositionsAvailable[`${node.x},${node.y}`].taken = true;
   };
 
   const firstTown: GameStateWorldNode = {
@@ -41,13 +108,15 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     nodeType: 'town',
     name: 'LaFlotte',
     elements: [{ element: 'Neutral', intensity: 0 }],
+    sprite: '',
+    objectSprite: '',
   };
 
   addNode(firstTown);
 
   Object.keys(config.nodeCount).forEach((key) => {
     const count = config.nodeCount[key as WorldNodeType];
-    const nodeCount = randomNumberRange(count.min, count.max, myGameId());
+    const nodeCount = randomNumberRange(count.min, count.max, rng);
 
     for (let i = 0; i < nodeCount; i++) {
       const { x, y } = findUnusedPosition();
@@ -57,17 +126,44 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         nodeType: key as WorldNodeType,
         name: `${key} ${i + 1}`,
         elements: [],
+        sprite: '',
+        objectSprite: '',
       };
 
       addNode(node);
     }
   });
 
+  fillEmptySpaceWithEmptyNodes(config, nodes);
   addElementsToWorld(nodes);
+  determineSpritesForWorld(nodes, rng);
 
   return {
     width: config.width,
     height: config.height,
     nodes,
   };
+}
+
+export function resetWorld(): void {
+  updateGamestate((state) => {
+    state.meta.isSetup = false;
+    state.world = blankGameState().world;
+    state.gameId = uuid() as GameId;
+    return state;
+  });
+}
+
+export function setWorld(world: GameStateWorld): void {
+  updateGamestate((state) => {
+    state.world = world;
+    return state;
+  });
+}
+
+export function getWorldNode(
+  x: number,
+  y: number,
+): GameStateWorldNode | undefined {
+  return gamestate().world.nodes[`${x},${y}`];
 }

@@ -1,6 +1,7 @@
 import seedrandom, { type PRNG } from 'seedrandom';
 import { v4 as uuid4 } from 'uuid';
 import { Identifiable } from '../interfaces';
+import { myGameId } from './state-game';
 
 export function uuid(): string {
   return uuid4();
@@ -14,33 +15,34 @@ export function seededrng(seed = uuid()): PRNG {
   return seedrandom(seed);
 }
 
+export function gamerng(): PRNG {
+  return seededrng(myGameId());
+}
+
 export function randomIdentifiableChoice<T extends Identifiable>(
   choices: T[],
-  seed = uuid(),
+  rng = seededrng(uuid()),
 ): string {
-  const rng = seededrng(seed);
   return choices[Math.floor(rng() * choices.length)].id;
 }
 
-export function randomNumber(max: number, seed = uuid()): number {
-  return Math.floor(seededrng(seed)() * max);
+export function randomNumber(max: number, rng = seededrng(uuid())): number {
+  return Math.floor(rng() * max);
 }
 
 export function randomNumberRange(
   min: number,
   max: number,
-  seed = uuid(),
+  rng = seededrng(uuid()),
 ): number {
-  return Math.floor(min + seededrng(seed)() * (max - min));
+  return Math.floor(min + rng() * (max - min));
 }
 
-export function succeedsChance(max: number, seed = uuid()): boolean {
-  return seededrng(seed)() * 100 <= max;
+export function succeedsChance(max: number, rng = seededrng(uuid())): boolean {
+  return rng() * 100 <= max;
 }
 
-export function randomChoice<T>(choices: T[], seed = uuid()): T {
-  const rng = seededrng(seed);
-
+export function randomChoice<T>(choices: T[], rng = seededrng(uuid())): T {
   // throw away the first 2 rng values. who needs 'em anyway?
   rng();
   rng();

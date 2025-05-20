@@ -1,0 +1,11 @@
+<div class="map w-[100vw] h-[100vh]">
+  @for(row of map(); track $index) {
+  <div class="map-row">
+    @for(col of row; track $index) {
+    <div class="map-col">
+      <app-game-map-node [node]="col.nodeData" [x]="col.x" [y]="col.y"></app-game-map-node>
+    </div>
+    }
+  </div>
+  }
+</div>

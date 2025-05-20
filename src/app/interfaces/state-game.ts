@@ -24,8 +24,10 @@ export interface GameStateWorldNode {
   x: number;
   y: number;
   name: string;
-  nodeType: WorldNodeType;
+  nodeType?: WorldNodeType;
   elements: GameStateWorldNodeElement[];
+  sprite: string;
+  objectSprite: string;
 }
 
 export interface GameStateWorld {

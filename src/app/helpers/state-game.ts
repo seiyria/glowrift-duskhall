@@ -1,6 +1,6 @@
 import { Signal, signal, WritableSignal } from '@angular/core';
 import { cloneDeep } from 'lodash';
-import { GameId, GameState, GameStateWorld } from '../interfaces';
+import { GameId, GameState } from '../interfaces';
 import { uuid } from './rng';
 import { localStorageSignal } from './signal';
 
@@ -42,19 +42,4 @@ export function updateGamestate(func: (state: GameState) => GameState): void {
 
 export function myGameId(): GameId {
   return gamestate().gameId;
-}
-
-export function resetWorld(): void {
-  updateGamestate((state) => {
-    state.meta.isSetup = false;
-    state.world = blankGameState().world;
-    return state;
-  });
-}
-
-export function setWorld(world: GameStateWorld): void {
-  updateGamestate((state) => {
-    state.world = world;
-    return state;
-  });
 }
