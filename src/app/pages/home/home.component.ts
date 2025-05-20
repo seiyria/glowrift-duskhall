@@ -1,19 +1,27 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, inject, OnInit, viewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ConnectButtonsComponent } from '../../components/connect-buttons/connect-buttons.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { isSetup, setDiscordStatus } from '../../helpers';
+import { isSetup, resetWorld, setDiscordStatus } from '../../helpers';
 import { MetaService } from '../../services/meta.service';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, ConnectButtonsComponent, AnalyticsClickDirective],
+  imports: [
+    SweetAlert2Module,
+    ConnectButtonsComponent,
+    AnalyticsClickDirective,
+  ],
   providers: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   public meta = inject(MetaService);
+  private router = inject(Router);
+
+  public resetGameSwal = viewChild<SwalComponent>('newGameSwal');
 
   public hasStartedGame = computed(() => isSetup());
 
@@ -21,5 +29,24 @@ export class HomeComponent implements OnInit {
     setDiscordStatus({
       state: 'In Main Menu',
     });
+  }
+
+  async newGame() {
+    if (isSetup()) {
+      const res = await this.resetGameSwal()?.fire();
+      if (!res) return;
+
+      if (res.isConfirmed) {
+        resetWorld();
+        this.router.navigate(['/setup']);
+      }
+      return;
+    }
+
+    this.router.navigate(['/setup']);
+  }
+
+  resumeGame() {
+    this.router.navigate(['/game']);
   }
 }

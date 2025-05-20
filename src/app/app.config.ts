@@ -7,7 +7,12 @@ import {
   inject,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withNavigationErrorHandler,
+  withRouterConfig,
+} from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
 import {
@@ -17,11 +22,6 @@ import {
   withContextMenuVariation,
 } from '@ngneat/helipopper';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
-import {
-  provideNgxWebstorage,
-  withLocalStorage,
-  withNgxWebstorageConfig,
-} from 'ngx-webstorage';
 
 import { provideNgIconsConfig } from '@ng-icons/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -39,8 +39,16 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideNgxWebstorage(withNgxWebstorageConfig({}), withLocalStorage()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withRouterConfig({ paramsInheritanceStrategy: 'always' }),
+      withNavigationErrorHandler((error) => {
+        // Handle the error, e.g., redirect to an error page
+        console.error('Navigation error:', error);
+        return '/';
+      }),
+    ),
     provideNgIconsConfig({
       size: '1.5em',
     }),

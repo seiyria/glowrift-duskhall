@@ -10,13 +10,13 @@ export function randomrng(): PRNG {
   return seededrng(uuid());
 }
 
-export function seededrng(seed: string): PRNG {
+export function seededrng(seed = uuid()): PRNG {
   return seedrandom(seed);
 }
 
 export function randomIdentifiableChoice<T extends Identifiable>(
-  seed: string,
   choices: T[],
+  seed = uuid(),
 ): string {
   const rng = seededrng(seed);
   return choices[Math.floor(rng() * choices.length)].id;
@@ -24,6 +24,14 @@ export function randomIdentifiableChoice<T extends Identifiable>(
 
 export function randomNumber(max: number, seed = uuid()): number {
   return Math.floor(seededrng(seed)() * max);
+}
+
+export function randomNumberRange(
+  min: number,
+  max: number,
+  seed = uuid(),
+): number {
+  return Math.floor(min + seededrng(seed)() * (max - min));
 }
 
 export function succeedsChance(max: number, seed = uuid()): boolean {

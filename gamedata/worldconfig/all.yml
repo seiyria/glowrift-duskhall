@@ -1,3 +1,15 @@
+- id: aefcd943-92b3-42f3-bfcf-799407b726a6
+  name: Tiny
+  width: 50
+  height: 50
+
+  nodeCount:
+    town: { min: 2, max: 5 }
+    village: { min: 25, max: 50 }
+    cave: { min: 300, max: 500 }
+    dungeon: { min: 100, max: 200 }
+    castle: { min: 25, max: 50 }
+
 - id: f102779b-8367-4cb7-81b0-27d2b98496bb
   name: Small
   width: 100

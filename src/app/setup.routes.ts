@@ -5,6 +5,7 @@ export const setupRoutes: Routes = [
   {
     component: GameSetupWorldComponent,
     path: 'world',
+    data: { name: 'World Setup' },
   },
   {
     path: '**',

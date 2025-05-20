@@ -5,6 +5,7 @@ export const gameRoutes: Routes = [
   {
     component: GamePlayComponent,
     path: '',
+    data: { name: 'Play Game' },
   },
   {
     path: '**',

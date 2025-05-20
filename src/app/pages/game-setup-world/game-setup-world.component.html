@@ -12,12 +12,21 @@
           Smaller worlds are less challenging than larger ones.
         </div>
 
+        @if(isGeneratingWorld()) {
+        <div class="card-actions pt-3 flex flex-row gap-2">
+          <span class="loading loading-spinner loading-sm"></span>
+
+          Generating world...
+        </div>
+
+        } @else {
         <div class="card-actions pt-3 flex flex-row gap-2">
           @for(config of allWorldSizes; track $index) {
           <button class="btn btn-primary" appAnalyticsClick="Setup:World:{{ config.name }}"
-            [routerLink]="['/game/play']">{{ config.name }}</button>
+            (click)="createWorld(config)">{{ config.name }}</button>
           }
         </div>
+        }
       </div>
 
     </div>

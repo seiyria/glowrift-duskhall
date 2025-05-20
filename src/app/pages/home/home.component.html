@@ -19,8 +19,13 @@
         villages to unlock global upgrades that strengthen your entire magical civilization.
       </p>
 
-      <div class="card-actions pb-10 mt-3">
-        <button class="btn btn-primary" [routerLink]="['/setup']" appAnalyticsClick="Meta:Play:New">Play</button>
+      <div class="card-actions pb-10 mt-3 flex gap-2">
+        <button class="btn btn-primary" (click)="newGame()" appAnalyticsClick="Meta:Play:New">New Game</button>
+
+        @if(hasStartedGame()) {
+        <button class="btn btn-primary" (click)="resumeGame()" appAnalyticsClick="Meta:Play:Resume">Resume
+          Game</button>
+        }
       </div>
 
       <div class="card-actions absolute bottom-0 left-0 right-0 p-2">
@@ -43,3 +48,8 @@
   </button>
   }
 </div>
+
+
+<swal #newGameSwal title="Reset your game?" icon="warning" confirmButtonText="Yes, reset game"
+  cancelButtonText="No, cancel">
+</swal>

@@ -1,8 +1,8 @@
 import { signal, WritableSignal } from '@angular/core';
 
 export function localStorageSignal<T>(
-  initialValue: T,
   localStorageKey: string,
+  initialValue: T,
 ): WritableSignal<T> {
   const storedValueRaw = localStorage.getItem(localStorageKey);
   if (storedValueRaw) {
