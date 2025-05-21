@@ -40,7 +40,7 @@ export class ConnectButtonsComponent {
     },
     {
       name: 'GitHub',
-      link: 'https://github.com/BottleOfTheLightless/glowrift-duskhall',
+      link: 'https://github.com/seiyria/glowrift-duskhall',
       color: '#fff',
       currentColor: '#ccc',
       icon: 'tablerBrandGithub',

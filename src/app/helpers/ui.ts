@@ -7,3 +7,5 @@ export const windowWidthTiles = computed(() => Math.floor(windowWidth() / 64));
 export const windowHeightTiles = computed(() =>
   Math.floor(windowHeight() / 64),
 );
+
+export const showOptionsMenu: WritableSignal<boolean> = signal(false);

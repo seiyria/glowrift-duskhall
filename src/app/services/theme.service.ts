@@ -1,5 +1,5 @@
 import { effect, Injectable } from '@angular/core';
-import { getOption } from '../helpers';
+import { getOption, windowHeight, windowWidth } from '../helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +12,16 @@ export class ThemeService {
     });
   }
 
-  init() {}
+  private handleResize() {
+    windowWidth.set(window.innerWidth);
+    windowHeight.set(window.innerHeight);
+  }
+
+  init() {
+    this.handleResize();
+
+    window.addEventListener('resize', () => {
+      this.handleResize();
+    });
+  }
 }

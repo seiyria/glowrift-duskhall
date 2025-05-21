@@ -70,7 +70,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.PUSH_TO_REPO_TOKEN }}
         with:
           source_file: '${{ steps.getBlogPost.outputs.filename }}'
-          destination_repo: 'BottleOfTheLightless/blog'
+          destination_repo: 'GlowriftDuskhall/blog'
           destination_folder: '_posts'
           user_email: 'kyle@seiyria.com'
           user_name: 'seiyria'

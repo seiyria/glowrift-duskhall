@@ -8,6 +8,8 @@ export type GameElement = 'Fire' | 'Ice' | 'Earth' | 'Air' | 'Neutral';
 export interface GameStateMeta {
   version: number;
   isSetup: boolean;
+  createdAt: number;
+  numTicks: number;
 }
 
 export interface GameStateCamera {

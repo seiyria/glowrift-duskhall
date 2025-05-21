@@ -6,6 +6,6 @@
 <app-atlas-image class="object" spritesheet="world-object" [assetName]="nodeData.objectSprite"></app-atlas-image>
 }
 
-<div class="absolute bottom-0 left-0">
+<div class="absolute bottom-0 left-0" [appShowIfOption]="'debugMapNodePositions'">
   {{ nodeData.x }}, {{ nodeData.y }}
 </div>

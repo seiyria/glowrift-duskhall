@@ -2,10 +2,10 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { SavefileExportComponent } from '../../components/savefile-export/savefile-export.component';
-import { SavefileImportComponent } from '../../components/savefile-import/savefile-import.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import { blankGameState, gamestate, setGameState } from '../../helpers';
+import { SavefileExportComponent } from '../savefile-export/savefile-export.component';
+import { SavefileImportComponent } from '../savefile-import/savefile-import.component';
 
 @Component({
   selector: 'app-options-savefile',

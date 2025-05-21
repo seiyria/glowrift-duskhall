@@ -80,7 +80,7 @@
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "cpy-cli": "^5.0.0",
-    "daisyui": "^5.0.0",
+    "daisyui": "^5.0.35",
     "eslint": "8.57.0",
     "fs-extra": "^11.2.0",
     "git-describe": "^4.1.1",

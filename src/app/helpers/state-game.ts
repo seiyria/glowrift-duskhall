@@ -9,6 +9,8 @@ export function blankGameState(): GameState {
     meta: {
       version: 1,
       isSetup: false,
+      createdAt: Date.now(),
+      numTicks: 0,
     },
     gameId: uuid() as GameId,
     world: {

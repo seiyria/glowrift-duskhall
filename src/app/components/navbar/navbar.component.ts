@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TippyDirective } from '@ngneat/helipopper';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { showOptionsMenu } from '../../helpers';
 import { MetaService } from '../../services/meta.service';
 import { IconComponent } from '../icon/icon.component';
 
@@ -15,4 +16,8 @@ import { IconComponent } from '../icon/icon.component';
 export class NavbarComponent {
   public meta = inject(MetaService);
   public router = inject(Router);
+
+  public toggleOptions() {
+    showOptionsMenu.set(!showOptionsMenu());
+  }
 }

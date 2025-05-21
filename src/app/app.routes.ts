@@ -10,12 +10,10 @@ export const routes: Routes = [
   {
     component: HomeComponent,
     path: '',
-    data: { name: 'Home' },
   },
   {
     component: TransitionComponent,
     path: 'transition',
-    data: { name: 'Transition' },
   },
   {
     component: SetupComponent,
@@ -23,7 +21,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./setup.routes').then((routes) => routes.setupRoutes),
     canActivate: [requireNotSetupGuard],
-    data: { name: 'World Setup Parent' },
   },
   {
     component: GameComponent,
@@ -31,7 +28,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./game.routes').then((routes) => routes.gameRoutes),
     canActivate: [requireSetupGuard],
-    data: { name: 'Game Parent' },
   },
   {
     path: '**',

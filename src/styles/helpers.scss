@@ -14,9 +14,10 @@
 }
 
 .page-card {
-  height: calc(100vh - 64px - 36px);
-
   @apply overflow-hidden;
+
+  /*
+  height: calc(100vh - 64px - 36px);
 
   .card-content {
     height: calc(100vh - 64px - 36px - 32px - 64px);
@@ -27,6 +28,7 @@
     height: calc(100vh - 64px - 36px - 32px - 64px - 16px);
     @apply overflow-x-hidden overflow-y-auto;
   }
+  */
 }
 
 .has-help {

@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
+import { ShowIfOptionDirective } from '../../directives/option-hide.directive';
 import { GameStateWorldNode } from '../../interfaces';
 import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
 
 @Component({
   selector: 'app-game-map-node',
-  imports: [AtlasImageComponent],
+  imports: [AtlasImageComponent, ShowIfOptionDirective],
   templateUrl: './game-map-node.component.html',
   styleUrl: './game-map-node.component.scss',
 })

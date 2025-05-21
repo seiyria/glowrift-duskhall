@@ -1,0 +1,36 @@
+@let currentTab = activeTab();
+
+<app-page-card>
+  <span header>Options</span>
+
+  <div pageactions>
+    <app-connect-buttons></app-connect-buttons>
+  </div>
+
+  <div role="tablist" class="tabs tabs-boxed">
+    @for(tab of tabs; track $index) {
+    <button role="tab" class="tab" [class.tab-active]="currentTab === tab.link" (click)="activeTab.set(tab.link)"
+      (keydown)="activeTab.set(tab.link)" [appAnalyticsClick]="'Options:Navigate:' + tab.name"
+      [class.hidden]="!tab.showIf()">
+      {{ tab.name }}
+    </button>
+    }
+  </div>
+
+  <div class="p-3">
+    @switch(currentTab) {
+    @case('ui') {
+    <app-options-ui></app-options-ui>
+    }
+
+    @case('debug') {
+    <app-options-debug></app-options-debug>
+    }
+
+    @case('savefile') {
+    <app-options-savefile></app-options-savefile>
+    }
+    }
+  </div>
+
+</app-page-card>

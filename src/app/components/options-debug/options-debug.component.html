@@ -24,6 +24,15 @@
         <div class="card-title">
           Game Options
         </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="currentValueForOption('debugMapNodePositions') === true"
+              class="checkbox checkbox-secondary" appAnalyticsClick="Options:Debug:MapNodePositions"
+              (click)="setValueForOption('debugMapNodePositions', !currentValueForOption('debugMapNodePositions'))" />
+            <span class="label-text">Map Node Positions</span>
+          </label>
+        </div>
       </div>
     </div>
 
