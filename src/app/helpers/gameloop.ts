@@ -1,5 +1,10 @@
 import { isSetup } from './setup';
-import { blankGameState, isGameStateReady, setGameState } from './state-game';
+import {
+  blankGameState,
+  isGameStateReady,
+  setGameState,
+  updateGamestate,
+} from './state-game';
 
 export function isPlayingGame(): boolean {
   return window.location.href.includes('/game');
@@ -18,4 +23,9 @@ export function doGameloop(numTicks: number): void {
   if (!isPlayingGame()) return;
   if (!isGameStateReady()) return;
   if (isGameOver()) return;
+
+  updateGamestate((state) => {
+    state.meta.numTicks += numTicks;
+    return state;
+  });
 }
