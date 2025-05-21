@@ -1,4 +1,9 @@
-@import 'tailwindcss';
+@use 'tailwindcss';
+
+@use './styles/global';
+@use './styles/font';
+@use './styles/helpers';
+@use './styles/tailwind';
 
 @plugin "daisyui" {
   themes: light, dark --default --prefersdark, cupcake, synthwave, halloween,
@@ -6,8 +11,3 @@
     cupcake, bumblebee, emerald, corporate, retro, cyberpunk, valentine, garden,
     lofi, pastel, fantasy, wireframe, cmyk, autumn, acid, lemonade, winter, nord;
 }
-
-@import './styles/global';
-@import './styles/font';
-@import './styles/helpers';
-@import './styles/tailwind';
