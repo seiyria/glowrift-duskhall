@@ -1,7 +1,8 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { options } from '../../helpers';
+import { options, showOptionsMenu } from '../../helpers';
 import { ConnectButtonsComponent } from '../connect-buttons/connect-buttons.component';
+import { IconComponent } from '../icon/icon.component';
 import { OptionsDebugComponent } from '../options-debug/options-debug.component';
 import { OptionsSavefileComponent } from '../options-savefile/options-savefile.component';
 import { OptionsUIComponent } from '../options-ui/options-ui.component';
@@ -16,6 +17,7 @@ import { PageCardComponent } from '../page-card/page-card.component';
     OptionsDebugComponent,
     OptionsSavefileComponent,
     OptionsUIComponent,
+    IconComponent,
   ],
   templateUrl: './options.component.html',
   styleUrl: './options.component.scss',
@@ -42,5 +44,9 @@ export class OptionsComponent implements OnInit {
     if (firstVisibleTab) {
       this.activeTab.set(firstVisibleTab.link);
     }
+  }
+
+  closeOptions() {
+    showOptionsMenu.set(false);
   }
 }
