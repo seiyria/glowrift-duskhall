@@ -3,13 +3,8 @@
 }
 
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-
-  padding-top: 0;
+  @apply py-0 bg-primary;
+  min-height: 2rem;
 }
 
 .navbar-start,

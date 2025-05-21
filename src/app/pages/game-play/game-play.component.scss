@@ -5,3 +5,8 @@
 .should-layer {
   position: absolute;
 }
+
+.game-container {
+  width: 100vw;
+  height: calc(100vh - 48px);
+}
