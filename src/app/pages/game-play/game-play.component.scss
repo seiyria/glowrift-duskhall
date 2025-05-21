@@ -1,5 +1,5 @@
 :host {
-  @apply block bg-black w-full h-full;
+  @apply block w-full h-full;
 }
 
 .should-layer {
@@ -8,5 +8,5 @@
 
 .game-container {
   width: 100vw;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 40px);
 }
