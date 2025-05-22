@@ -3,6 +3,8 @@
   width: 50
   height: 50
 
+  maxLevel: 25
+
   nodeCount:
     town: { min: 2, max: 5 }
     village: { min: 15, max: 30 }
@@ -14,6 +16,8 @@
   name: Small
   width: 100
   height: 100
+
+  maxLevel: 100
 
   nodeCount:
     town: { min: 2, max: 5 }
@@ -27,6 +31,8 @@
   width: 250
   height: 250
 
+  maxLevel: 100
+
   nodeCount:
     town: { min: 8, max: 15 }
     village: { min: 150, max: 350 }
@@ -38,6 +44,8 @@
   name: Large
   width: 500
   height: 500
+
+  maxLevel: 100
 
   nodeCount:
     town: { min: 25, max: 35 }

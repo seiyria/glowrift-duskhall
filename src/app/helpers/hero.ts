@@ -63,7 +63,7 @@ export function heroGainXp(hero: Hero, xp: number): void {
   const newXp = clamp(hero.xp + xp, 0, maxXp);
   updateHeroData(hero.id, { xp: newXp });
 
-  if (newXp >= maxXp) {
+  if (newXp >= maxXp && hero.level < 99) {
     heroLevelUp(hero);
   }
 }

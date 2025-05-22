@@ -6,5 +6,6 @@ export interface WorldConfig extends Identifiable {
   width: number;
   height: number;
 
+  maxLevel: number;
   nodeCount: Record<WorldNodeType, { min: number; max: number }>;
 }

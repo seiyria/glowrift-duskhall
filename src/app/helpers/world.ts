@@ -25,6 +25,9 @@ function fillEmptySpaceWithEmptyNodes(
         objectSprite: '',
         x,
         y,
+        clearCount: 0,
+        currentlyClaimed: false,
+        encounterLevel: 0,
       };
     }
   }
@@ -51,6 +54,20 @@ function getSpriteFromNodeType(nodeType: WorldNodeType | undefined): string {
     default:
       return '';
   }
+}
+
+function setEncounterLevels(
+  config: WorldConfig,
+  nodes: Record<string, GameStateWorldNode>,
+  middleNode: GameStateWorldNode,
+): void {
+  const { maxLevel } = config;
+  const maxDistance = distanceBetweenNodes(nodes[`0,0`], middleNode);
+
+  Object.values(nodes).forEach((node) => {
+    const dist = distanceBetweenNodes(node, middleNode);
+    node.encounterLevel = Math.floor((dist / maxDistance) * maxLevel);
+  });
 }
 
 function determineSpritesForWorld(
@@ -104,6 +121,9 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     elements: [{ element: 'Neutral', intensity: 0 }],
     sprite: '',
     objectSprite: '',
+    clearCount: 0,
+    currentlyClaimed: true,
+    encounterLevel: 0,
   };
 
   addNode(firstTown);
@@ -122,6 +142,9 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         elements: [],
         sprite: '',
         objectSprite: '',
+        clearCount: 0,
+        currentlyClaimed: false,
+        encounterLevel: 0,
       };
 
       addNode(node);
@@ -129,6 +152,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   });
 
   fillEmptySpaceWithEmptyNodes(config, nodes);
+  setEncounterLevels(config, nodes, firstTown);
   addElementsToWorld(nodes);
   determineSpritesForWorld(nodes, rng);
 
@@ -151,4 +175,11 @@ export function getWorldNode(
   y: number,
 ): GameStateWorldNode | undefined {
   return gamestate().world.nodes[`${x},${y}`];
+}
+
+export function distanceBetweenNodes(
+  a: GameStateWorldNode,
+  b: GameStateWorldNode,
+): number {
+  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }

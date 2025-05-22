@@ -26,11 +26,16 @@ export interface GameStateWorldNodeElement {
 export interface GameStateWorldNode {
   x: number;
   y: number;
+
   name: string;
   nodeType?: WorldNodeType;
   elements: GameStateWorldNodeElement[];
   sprite: string;
   objectSprite: string;
+
+  currentlyClaimed: boolean;
+  clearCount: number;
+  encounterLevel: number;
 }
 
 export interface GameStateWorld {
