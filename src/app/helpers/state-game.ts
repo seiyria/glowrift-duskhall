@@ -48,6 +48,10 @@ export function blankGameState(): GameState {
         blankHero({ name: 'Terrus', sprite: '0060' }),
         blankHero({ name: 'Zephyra', sprite: '0036' }),
       ],
+      position: {
+        x: 0,
+        y: 0,
+      },
     },
   };
 }

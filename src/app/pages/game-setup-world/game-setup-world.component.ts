@@ -12,6 +12,7 @@ import {
   resetGameState,
   setCameraPosition,
   setDiscordStatus,
+  setHeroPosition,
   setWorld,
   updateHeroData,
 } from '../../helpers';
@@ -71,6 +72,7 @@ export class GameSetupWorldComponent implements OnInit {
 
     setWorld(world);
     setCameraPosition(config.width / 2, config.height / 2);
+    setHeroPosition(config.width / 2, config.height / 2);
     finishSetup();
 
     this.router.navigate(['/game']);

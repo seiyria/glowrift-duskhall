@@ -76,3 +76,11 @@ export function heroStats(hero: Hero): HeroStats {
     aura: heroTotalStat(hero, 'aura'),
   };
 }
+
+export function setHeroPosition(x: number, y: number): void {
+  updateGamestate((state) => {
+    state.hero.position.x = x;
+    state.hero.position.y = y;
+    return state;
+  });
+}

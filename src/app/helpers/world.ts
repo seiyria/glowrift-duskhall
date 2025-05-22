@@ -4,6 +4,7 @@ import {
   GameStateWorldNode,
   WorldConfig,
   WorldNodeType,
+  WorldPosition,
 } from '../interfaces';
 import { gamerng, randomChoice, randomNumber, randomNumberRange } from './rng';
 import { indexToSprite } from './sprite';
@@ -178,8 +179,8 @@ export function getWorldNode(
 }
 
 export function distanceBetweenNodes(
-  a: GameStateWorldNode,
-  b: GameStateWorldNode,
+  a: WorldPosition,
+  b: WorldPosition,
 ): number {
   return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }

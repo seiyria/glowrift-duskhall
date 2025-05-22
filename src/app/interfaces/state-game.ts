@@ -1,5 +1,6 @@
 import { Hero } from './hero';
 import { Branded } from './identifiable';
+import { WorldPosition } from './world';
 import { WorldNodeType } from './worldconfig';
 
 export type GameId = Branded<string, 'GameId'>;
@@ -13,20 +14,14 @@ export interface GameStateMeta {
   numTicks: number;
 }
 
-export interface GameStateCamera {
-  x: number;
-  y: number;
-}
+export type GameStateCamera = WorldPosition & {};
 
 export interface GameStateWorldNodeElement {
   element: GameElement;
   intensity: number;
 }
 
-export interface GameStateWorldNode {
-  x: number;
-  y: number;
-
+export type GameStateWorldNode = WorldPosition & {
   name: string;
   nodeType?: WorldNodeType;
   elements: GameStateWorldNodeElement[];
@@ -36,7 +31,7 @@ export interface GameStateWorldNode {
   currentlyClaimed: boolean;
   clearCount: number;
   encounterLevel: number;
-}
+};
 
 export interface GameStateWorld {
   width: number;
@@ -46,6 +41,7 @@ export interface GameStateWorld {
 
 export interface GameStateHeroes {
   heroes: Hero[];
+  position: WorldPosition;
 }
 
 export interface GameState {
