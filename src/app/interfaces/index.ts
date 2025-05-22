@@ -1,4 +1,6 @@
+export * from './content';
 export * from './discord';
+export * from './hero';
 export * from './identifiable';
 export * from './meta';
 export * from './state-game';

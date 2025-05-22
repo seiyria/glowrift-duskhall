@@ -1,19 +1,13 @@
 import { PRNG } from 'seedrandom';
 import {
-  GameId,
   GameStateWorld,
   GameStateWorldNode,
   WorldConfig,
   WorldNodeType,
 } from '../interfaces';
-import {
-  gamerng,
-  randomChoice,
-  randomNumber,
-  randomNumberRange,
-  uuid,
-} from './rng';
-import { blankGameState, gamestate, updateGamestate } from './state-game';
+import { gamerng, randomChoice, randomNumber, randomNumberRange } from './rng';
+import { indexToSprite } from './sprite';
+import { gamestate, updateGamestate } from './state-game';
 
 function fillEmptySpaceWithEmptyNodes(
   config: WorldConfig,
@@ -64,7 +58,7 @@ function determineSpritesForWorld(
   rng: PRNG,
 ): void {
   Object.values(nodes).forEach((node) => {
-    node.sprite = (16 + randomNumber(4, rng)).toString().padStart(4, '0');
+    node.sprite = indexToSprite(16 + randomNumber(4, rng));
 
     node.objectSprite = getSpriteFromNodeType(node.nodeType);
   });
@@ -143,15 +137,6 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     height: config.height,
     nodes,
   };
-}
-
-export function resetWorld(): void {
-  updateGamestate((state) => {
-    state.meta.isSetup = false;
-    state.world = blankGameState().world;
-    state.gameId = uuid() as GameId;
-    return state;
-  });
 }
 
 export function setWorld(world: GameStateWorld): void {

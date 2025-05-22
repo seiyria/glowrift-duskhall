@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const spritesmith = require('spritesmith');
 
-const spritesheetsToBuild = ['hero', 'world-object', 'world-terrain'];
+const spritesheetsToBuild = ['hero', 'enemy', 'world-object', 'world-terrain'];
 
 const assetsToCopy: string[] = [];
 

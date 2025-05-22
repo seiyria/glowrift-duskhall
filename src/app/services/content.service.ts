@@ -29,7 +29,7 @@ export class ContentService {
   public artImages = signal<Record<string, HTMLImageElement>>({});
   private hasLoadedArt = computed(() => this.artSignals.every((s) => s()));
   private hasLoadedAtlases = signal<boolean>(false);
-  private hasLoadedMaps = signal<boolean>(false);
+  private hasLoadedData = signal<boolean>(false);
 
   public artAtlases = signal<
     Record<
@@ -40,13 +40,8 @@ export class ContentService {
 
   public hasLoaded = computed(
     () =>
-      this.hasLoadedArt() &&
-      this.hasLoadedData() &&
-      this.hasLoadedAtlases() &&
-      this.hasLoadedMaps(),
+      this.hasLoadedArt() && this.hasLoadedData() && this.hasLoadedAtlases(),
   );
-
-  private hasLoadedData = signal<boolean>(false);
 
   async init() {
     this.loadJSON();
@@ -62,7 +57,12 @@ export class ContentService {
   }
 
   private loadArt() {
-    const spritesheetsToLoad = ['hero', 'world-object', 'world-terrain'];
+    const spritesheetsToLoad = [
+      'hero',
+      'enemy',
+      'world-object',
+      'world-terrain',
+    ];
 
     forkJoin(
       spritesheetsToLoad.map((s) =>
@@ -79,6 +79,7 @@ export class ContentService {
 
       this.artAtlases.set(atlasesByName);
       this.hasLoadedAtlases.set(true);
+      this.logger.info('Content:LoadArt', 'Loaded atlases.');
     });
 
     this.artSignals = spritesheetsToLoad.map(() => signal<boolean>(false));
@@ -94,6 +95,8 @@ export class ContentService {
 
         this.artImages.set(artImageHash);
         this.artSignals[idx].set(true);
+
+        this.logger.info('Content:LoadArt', `Loaded sheet: ${sheet}`);
       };
     });
   }
@@ -109,7 +112,7 @@ export class ContentService {
     forkJoin(jsonMaps).subscribe((assets) => {
       this.unfurlAssets(assets as unknown as Record<string, Content[]>);
 
-      this.logger.info('Content', 'Content loaded.');
+      this.logger.info('Content:LoadJSON', 'Content loaded.');
       this.hasLoadedData.set(true);
     });
   }

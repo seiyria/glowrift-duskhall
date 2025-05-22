@@ -1,10 +1,12 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
+import { interval } from 'rxjs';
 import {
   gamestate,
   getOption,
   isGameStateReady,
   migrateGameState,
   migrateOptionsState,
+  spriteIterationCount,
 } from '../helpers';
 import { ContentService } from './content.service';
 import { LoggerService } from './logger.service';
@@ -42,5 +44,9 @@ export class GamestateService {
     });
   }
 
-  async init() {}
+  async init() {
+    interval(100).subscribe(() => {
+      spriteIterationCount.set(spriteIterationCount() + 1);
+    });
+  }
 }

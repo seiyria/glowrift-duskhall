@@ -1,3 +1,4 @@
+import { Hero } from './hero';
 import { Branded } from './identifiable';
 import { WorldNodeType } from './worldconfig';
 
@@ -38,9 +39,14 @@ export interface GameStateWorld {
   nodes: Record<string, GameStateWorldNode>;
 }
 
+export interface GameStateHeroes {
+  heroes: Hero[];
+}
+
 export interface GameState {
   meta: GameStateMeta;
   gameId: GameId;
   world: GameStateWorld;
   camera: GameStateCamera;
+  hero: GameStateHeroes;
 }

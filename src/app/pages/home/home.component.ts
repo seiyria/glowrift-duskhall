@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ConnectButtonsComponent } from '../../components/connect-buttons/connect-buttons.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { isSetup, resetWorld, setDiscordStatus } from '../../helpers';
+import { isSetup, resetGameState, setDiscordStatus } from '../../helpers';
 import { MetaService } from '../../services/meta.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
       if (!res) return;
 
       if (res.isConfirmed) {
-        resetWorld();
+        resetGameState();
         this.router.navigate(['/setup']);
       }
       return;

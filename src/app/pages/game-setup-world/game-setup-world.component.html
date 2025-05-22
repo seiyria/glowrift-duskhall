@@ -1,7 +1,40 @@
-<div class="flex justify-center items-center h-full p-2 gap-2 xl:flex-row lg:flex-row sm:flex-col md:flex-col flex-col">
+<div class="flex justify-start items-center h-full p-2 flex-col gap-2">
+  <div class="h-20"></div>
+
   <div class="xl:w-1/4 w-1/2">
 
-    <div class="card bg-base-100 h-[300px]">
+    <div class="card bg-base-100 h-[200px]">
+
+      <div class="card-body items-center justify-between">
+        <div class="card-title text-center flex flex-col">
+          Heroes
+        </div>
+
+        <div class="card-actions pt-3 flex flex-row gap-2">
+          <div class="flex flex-row justify-center gap-2">
+            @for(name of heroNames; track $index) {
+            <div class="min-w-[128px] flex flex-col gap-2 items-center">
+              <app-atlas-animation [assetName]="heroSprites[$index]()" [spritesheet]="'hero'"></app-atlas-animation>
+
+              <button class="btn btn-info btn-block" [swal]="renameSwal">{{ name() }}</button>
+
+              <swal #renameSwal title="Rename Hero" text="Choose a name for this hero!" input="text"
+                inputPlaceholder="Enter new name..." inputValue="{{ name() }}"
+                [inputAttributes]="{ 'minlength': '2', 'maxlength': '12' }" icon="warning"
+                (confirm)="renameHero($index, $event)">
+              </swal>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="xl:w-1/4 w-1/2">
+
+    <div class="card bg-base-100 h-[200px]">
 
       <div class="card-body items-center justify-between">
         <div class="card-title text-center flex flex-col">
@@ -22,14 +55,16 @@
         } @else {
         <div class="card-actions pt-3 flex flex-row gap-2">
           @for(config of allWorldSizes; track $index) {
-          <button class="btn btn-primary" appAnalyticsClick="Setup:World:{{ config.name }}"
-            (click)="createWorld(config)">{{ config.name }}</button>
+          <div class="min-w-[128px]">
+            <button class="btn btn-primary btn-block" appAnalyticsClick="Setup:World:{{ config.name }}"
+              (click)="createWorld(config)">{{ config.name }}</button>
+          </div>
           }
         </div>
         }
       </div>
 
     </div>
-  </div>
 
+  </div>
 </div>
