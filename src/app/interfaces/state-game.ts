@@ -14,7 +14,7 @@ export interface GameStateMeta {
   numTicks: number;
 }
 
-export type GameStateCamera = WorldPosition & {};
+export type GameStateCamera = WorldPosition;
 
 export interface GameStateWorldNodeElement {
   element: GameElement;
