@@ -17,3 +17,17 @@ export function setCameraPosition(x: number, y: number) {
     return state;
   });
 }
+
+export function centerCameraOn(x: number, y: number): void {
+  const tileWidth = windowWidthTiles();
+  const tileHeight = windowHeightTiles();
+
+  setCameraPosition(x - tileWidth / 2, y - tileHeight / 2);
+}
+
+export function focusCameraOnPlayer() {
+  const width = gamestate().world.width;
+  const height = gamestate().world.height;
+
+  centerCameraOn(width / 2, height / 2);
+}

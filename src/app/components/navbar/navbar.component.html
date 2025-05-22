@@ -5,6 +5,13 @@
 
   <div class="navbar-end">
     <ul class="menu menu-horizontal px-1 flex gap-2">
+
+      <li class="action-button">
+        <button class="btn btn-xs btn-accent" [tp]="'Focus Camera'" (click)="focusCamera()">
+          <app-icon name="gameHumanTarget" size="2em" color="#000"></app-icon>
+        </button>
+      </li>
+
       <li class="action-button">
         <button class="btn btn-xs btn-accent" [tp]="'Options'" (click)="toggleOptions()">
           <app-icon name="tablerSettings" size="2em" color="#000"></app-icon>

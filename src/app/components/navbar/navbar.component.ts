@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TippyDirective } from '@ngneat/helipopper';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { showOptionsMenu } from '../../helpers';
+import { focusCameraOnPlayer, showOptionsMenu } from '../../helpers';
 import { MetaService } from '../../services/meta.service';
 import { IconComponent } from '../icon/icon.component';
 
@@ -19,5 +19,9 @@ export class NavbarComponent {
 
   public toggleOptions() {
     showOptionsMenu.set(!showOptionsMenu());
+  }
+
+  public focusCamera() {
+    focusCameraOnPlayer();
   }
 }
