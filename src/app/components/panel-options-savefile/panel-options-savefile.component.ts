@@ -8,7 +8,7 @@ import { SavefileExportComponent } from '../savefile-export/savefile-export.comp
 import { SavefileImportComponent } from '../savefile-import/savefile-import.component';
 
 @Component({
-  selector: 'app-options-savefile',
+  selector: 'app-panel-options-savefile',
   imports: [
     SweetAlert2Module,
     DatePipe,
@@ -17,10 +17,10 @@ import { SavefileImportComponent } from '../savefile-import/savefile-import.comp
     SavefileImportComponent,
     AnalyticsClickDirective,
   ],
-  templateUrl: './options-savefile.component.html',
-  styleUrl: './options-savefile.component.scss',
+  templateUrl: './panel-options-savefile.component.html',
+  styleUrl: './panel-options-savefile.component.css',
 })
-export class OptionsSavefileComponent {
+export class PanelOptionsSavefileComponent {
   private router = inject(Router);
 
   public startedAt = computed(() => gamestate().meta.createdAt);

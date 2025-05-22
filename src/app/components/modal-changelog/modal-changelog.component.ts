@@ -6,13 +6,13 @@ import { TippyDirective } from '@ngneat/helipopper';
 import { MetaService } from '../../services/meta.service';
 
 @Component({
-    selector: 'app-changelog-modal',
+    selector: 'app-modal-changelog',
     imports: [NgIconComponent, TippyDirective],
     providers: [provideIcons({ tablerPackage })],
-    templateUrl: './changelog-modal.component.html',
-    styleUrl: './changelog-modal.component.scss'
+    templateUrl: './modal-changelog.component.html',
+    styleUrl: './modal-changelog.component.css'
 })
-export class ChangelogModalComponent {
+export class ModalChangelogComponent {
   private meta = inject(MetaService);
   private sanitizer = inject(DomSanitizer);
 

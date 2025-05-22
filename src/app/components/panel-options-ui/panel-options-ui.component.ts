@@ -1,15 +1,15 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { OptionsBaseComponent } from '../options/option-base-page.component';
+import { OptionsBaseComponent } from '../panel-options/option-base-page.component';
 
 @Component({
-  selector: 'app-options-ui',
+  selector: 'app-panel-options-ui',
   imports: [FormsModule, TitleCasePipe],
-  templateUrl: './options-ui.component.html',
-  styleUrl: './options-ui.component.scss',
+  templateUrl: './panel-options-ui.component.html',
+  styleUrl: './panel-options-ui.component.css',
 })
-export class OptionsUIComponent extends OptionsBaseComponent {
+export class PanelOptionsUIComponent extends OptionsBaseComponent {
   public readonly themes = [
     { name: 'acid', type: 'light' },
     { name: 'autumn', type: 'light' },

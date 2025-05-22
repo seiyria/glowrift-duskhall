@@ -8,14 +8,14 @@ import {
 } from '@ng-icons/tabler-icons';
 import { TippyDirective } from '@ngneat/helipopper';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { ChangelogModalComponent } from '../changelog-modal/changelog-modal.component';
+import { ModalChangelogComponent } from '../modal-changelog/modal-changelog.component';
 
 @Component({
   selector: 'app-connect-buttons',
   imports: [
     NgIconComponent,
     TippyDirective,
-    ChangelogModalComponent,
+    ModalChangelogComponent,
     AnalyticsClickDirective,
   ],
   providers: [

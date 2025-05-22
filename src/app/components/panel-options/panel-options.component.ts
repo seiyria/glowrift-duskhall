@@ -1,28 +1,28 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import { options, showOptionsMenu } from '../../helpers';
+import { CardPageComponent } from '../card-page/card-page.component';
 import { ConnectButtonsComponent } from '../connect-buttons/connect-buttons.component';
 import { IconComponent } from '../icon/icon.component';
-import { OptionsDebugComponent } from '../options-debug/options-debug.component';
-import { OptionsSavefileComponent } from '../options-savefile/options-savefile.component';
-import { OptionsUIComponent } from '../options-ui/options-ui.component';
-import { PageCardComponent } from '../page-card/page-card.component';
+import { PanelOptionsDebugComponent } from '../panel-options-debug/panel-options-debug.component';
+import { PanelOptionsSavefileComponent } from '../panel-options-savefile/panel-options-savefile.component';
+import { PanelOptionsUIComponent } from '../panel-options-ui/panel-options-ui.component';
 
 @Component({
-  selector: 'app-options',
+  selector: 'app-panel-options',
   imports: [
-    PageCardComponent,
+    CardPageComponent,
     ConnectButtonsComponent,
     AnalyticsClickDirective,
-    OptionsDebugComponent,
-    OptionsSavefileComponent,
-    OptionsUIComponent,
+    PanelOptionsDebugComponent,
+    PanelOptionsSavefileComponent,
+    PanelOptionsUIComponent,
     IconComponent,
   ],
-  templateUrl: './options.component.html',
-  styleUrl: './options.component.scss',
+  templateUrl: './panel-options.component.html',
+  styleUrl: './panel-options.component.css',
 })
-export class OptionsComponent implements OnInit {
+export class PanelOptionsComponent implements OnInit {
   public activeTab = signal<string>('ui');
 
   public readonly tabs = [

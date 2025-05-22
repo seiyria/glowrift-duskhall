@@ -1,6 +1,6 @@
 @let currentTab = activeTab();
 
-<app-page-card>
+<app-card-page>
   <span header>Options</span>
 
   <div pageactions>
@@ -24,17 +24,17 @@
   <div class="p-3">
     @switch(currentTab) {
     @case('ui') {
-    <app-options-ui></app-options-ui>
+    <app-panel-options-ui></app-panel-options-ui>
     }
 
     @case('debug') {
-    <app-options-debug></app-options-debug>
+    <app-panel-options-debug></app-panel-options-debug>
     }
 
     @case('savefile') {
-    <app-options-savefile></app-options-savefile>
+    <app-panel-options-savefile></app-panel-options-savefile>
     }
     }
   </div>
 
-</app-page-card>
+</app-card-page>
