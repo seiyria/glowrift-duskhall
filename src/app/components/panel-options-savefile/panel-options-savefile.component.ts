@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import { blankGameState, gamestate, setGameState } from '../../helpers';
-import { SavefileExportComponent } from '../savefile-export/savefile-export.component';
-import { SavefileImportComponent } from '../savefile-import/savefile-import.component';
+import { ButtonSavefileExportComponent } from '../button-savefile-export/button-savefile-export.component';
+import { ButtonSavefileImportComponent } from '../button-savefile-import/button-savefile-import.component';
 
 @Component({
   selector: 'app-panel-options-savefile',
@@ -13,8 +13,8 @@ import { SavefileImportComponent } from '../savefile-import/savefile-import.comp
     SweetAlert2Module,
     DatePipe,
     DecimalPipe,
-    SavefileExportComponent,
-    SavefileImportComponent,
+    ButtonSavefileExportComponent,
+    ButtonSavefileImportComponent,
     AnalyticsClickDirective,
   ],
   templateUrl: './panel-options-savefile.component.html',

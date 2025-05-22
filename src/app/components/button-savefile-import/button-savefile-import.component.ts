@@ -5,12 +5,12 @@ import { migrateGameState, notifySuccess, setGameState } from '../../helpers';
 import { GameState } from '../../interfaces';
 
 @Component({
-  selector: 'app-savefile-import',
+  selector: 'app-button-savefile-import',
   imports: [AnalyticsClickDirective],
-  templateUrl: './savefile-import.component.html',
-  styleUrl: './savefile-import.component.scss',
+  templateUrl: './button-savefile-import.component.html',
+  styleUrl: './button-savefile-import.component.css',
 })
-export class SavefileImportComponent {
+export class ButtonSavefileImportComponent {
   private router = inject(Router);
 
   importSavefile(e: Event) {

@@ -3,16 +3,16 @@ import { AnalyticsClickDirective } from '../../directives/analytics-click.direct
 import { gamestate } from '../../helpers';
 
 @Component({
-  selector: 'app-savefile-export',
+  selector: 'app-button-savefile-export',
   imports: [AnalyticsClickDirective],
-  templateUrl: './savefile-export.component.html',
-  styleUrl: './savefile-export.component.scss',
+  templateUrl: './button-savefile-export.component.html',
+  styleUrl: './button-savefile-export.component.css',
 })
-export class SavefileExportComponent {
+export class ButtonSavefileExportComponent {
   exportSavefile() {
     const state = gamestate();
 
-    const fileName = `glowrift-duskhall-${Date.now()}.glowrift-duskhall`;
+    const fileName = `${Date.now()}.grdh`;
     const dataStr =
       'data:text/json;charset=utf-8,' +
       encodeURIComponent(JSON.stringify(state));

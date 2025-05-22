@@ -1,6 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { interval } from 'rxjs';
 import {
+  doGameloop,
   gamestate,
   getOption,
   isGameStateReady,
@@ -45,8 +46,32 @@ export class GamestateService {
   }
 
   async init() {
+    this.doSpriteloop();
+    this.doGameloop();
+  }
+
+  private doSpriteloop() {
     interval(100).subscribe(() => {
       spriteIterationCount.set(spriteIterationCount() + 1);
+    });
+  }
+
+  private doGameloop() {
+    let lastRunTime = 0;
+
+    function runLoop(numTicks: number) {
+      lastRunTime = Date.now();
+      doGameloop(numTicks);
+    }
+
+    runLoop(1);
+
+    interval(1000).subscribe(() => {
+      if (lastRunTime <= 0 || !this.hasLoaded() || !isGameStateReady()) return;
+
+      const secondsElapsed = Math.round((Date.now() - lastRunTime) / 1000);
+
+      runLoop(secondsElapsed);
     });
   }
 }
