@@ -46,7 +46,7 @@ export class PanelOptionsComponent implements OnInit {
     }
   }
 
-  closeOptions() {
+  closeMenu() {
     showOptionsMenu.set(false);
   }
 }

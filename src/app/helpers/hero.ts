@@ -1,4 +1,6 @@
-import { Hero, HeroId } from '../interfaces';
+import { clamp } from 'lodash';
+import { Hero, HeroId, HeroStat, HeroStats } from '../interfaces';
+import { randomNumber, seededrng } from './rng';
 import { indexToSprite } from './sprite';
 import { updateGamestate } from './state-game';
 
@@ -26,4 +28,51 @@ export function pickSpriteForHeroName(heroName: string): string {
   );
   const spriteIndex = 4 * (nameHash % 27);
   return indexToSprite(spriteIndex);
+}
+
+export function heroTotalStat(hero: Hero, stat: HeroStat): number {
+  const baseStat = hero.baseStats[stat];
+  return baseStat;
+}
+
+export function heroXpRequiredForLevelUp(level: number): number {
+  return 10 * (level + 1) ** 2;
+}
+
+export function heroLevelUp(hero: Hero): void {
+  const levelUpSeed = `${hero.id}-${hero.level}`;
+  const rng = seededrng(levelUpSeed);
+
+  const newStats = {
+    force: hero.baseStats.force + randomNumber(3, rng),
+    health: hero.baseStats.health + randomNumber(10, rng),
+    speed: hero.baseStats.speed + randomNumber(1, rng),
+    aura: hero.baseStats.aura + randomNumber(2, rng),
+  };
+
+  updateHeroData(hero.id, {
+    level: hero.level + 1,
+    xp: 0,
+    baseStats: newStats,
+    hp: newStats.health,
+  });
+}
+
+export function heroGainXp(hero: Hero, xp: number): void {
+  const maxXp = heroXpRequiredForLevelUp(hero.level);
+  const newXp = clamp(hero.xp + xp, 0, maxXp);
+  updateHeroData(hero.id, { xp: newXp });
+
+  if (newXp >= maxXp) {
+    heroLevelUp(hero);
+  }
+}
+
+export function heroStats(hero: Hero): HeroStats {
+  return {
+    force: heroTotalStat(hero, 'force'),
+    health: heroTotalStat(hero, 'health'),
+    speed: heroTotalStat(hero, 'speed'),
+    aura: heroTotalStat(hero, 'aura'),
+  };
 }

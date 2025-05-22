@@ -12,7 +12,7 @@ export interface Hero extends Identifiable {
   sprite: string;
   level: number;
   xp: number;
+  hp: number;
 
   baseStats: HeroStats;
-  totalStats: HeroStats;
 }

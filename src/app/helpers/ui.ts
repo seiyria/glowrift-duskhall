@@ -9,3 +9,9 @@ export const windowHeightTiles = computed(() =>
 );
 
 export const showOptionsMenu: WritableSignal<boolean> = signal(false);
+export const showHeroesMenu: WritableSignal<boolean> = signal(true);
+
+export function closeAllMenus() {
+  showHeroesMenu.set(false);
+  showOptionsMenu.set(false);
+}

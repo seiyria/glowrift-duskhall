@@ -70,7 +70,6 @@ export class GamestateService {
       if (lastRunTime <= 0 || !this.hasLoaded() || !isGameStateReady()) return;
 
       const secondsElapsed = Math.round((Date.now() - lastRunTime) / 1000);
-
       runLoop(secondsElapsed);
     });
   }

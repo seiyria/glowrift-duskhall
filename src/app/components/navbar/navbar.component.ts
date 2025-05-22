@@ -3,7 +3,12 @@ import { Router } from '@angular/router';
 import { TippyDirective } from '@ngneat/helipopper';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RequireSetupDirective } from '../../directives/require-setup.directive';
-import { focusCameraOnPlayer, showOptionsMenu } from '../../helpers';
+import {
+  closeAllMenus,
+  focusCameraOnPlayer,
+  showHeroesMenu,
+  showOptionsMenu,
+} from '../../helpers';
 import { MetaService } from '../../services/meta.service';
 import { IconComponent } from '../icon/icon.component';
 
@@ -24,7 +29,23 @@ export class NavbarComponent {
   public router = inject(Router);
 
   public toggleOptions() {
+    if (showOptionsMenu()) {
+      showOptionsMenu.set(false);
+      return;
+    }
+
+    closeAllMenus();
     showOptionsMenu.set(!showOptionsMenu());
+  }
+
+  public toggleHeroes() {
+    if (showHeroesMenu()) {
+      showHeroesMenu.set(false);
+      return;
+    }
+
+    closeAllMenus();
+    showHeroesMenu.set(!showHeroesMenu());
   }
 
   public focusCamera() {

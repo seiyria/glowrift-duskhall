@@ -11,17 +11,12 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
     sprite: '',
     level: 1,
     xp: 0,
+    hp: 10,
     baseStats: {
       force: 5,
       health: 10,
       speed: 1,
       aura: 1,
-    },
-    totalStats: {
-      force: 0,
-      health: 0,
-      speed: 0,
-      aura: 0,
     },
 
     ...props,
