@@ -1,4 +1,4 @@
-import { Signal, signal, WritableSignal } from '@angular/core';
+import { Signal, signal } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { GameId, GameState, Hero, HeroId } from '../interfaces';
 import { uuid } from './rng';
@@ -57,10 +57,7 @@ export function blankGameState(): GameState {
   };
 }
 
-const _gamestate: WritableSignal<GameState> = localStorageSignal(
-  'gamestate',
-  blankGameState(),
-);
+const _gamestate = localStorageSignal<GameState>('gamestate', blankGameState());
 export const gamestate: Signal<GameState> = _gamestate.asReadonly();
 
 export const isGameStateReady = signal<boolean>(false);

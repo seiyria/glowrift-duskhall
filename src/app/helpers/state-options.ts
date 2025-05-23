@@ -1,4 +1,4 @@
-import { Signal, WritableSignal } from '@angular/core';
+import { Signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { GameOptions } from '../interfaces';
 import { localStorageSignal } from './signal';
@@ -15,10 +15,7 @@ export function defaultOptions(): GameOptions {
   };
 }
 
-const _options: WritableSignal<GameOptions> = localStorageSignal(
-  'options',
-  defaultOptions(),
-);
+const _options = localStorageSignal<GameOptions>('options', defaultOptions());
 export const options: Signal<GameOptions> = _options.asReadonly();
 
 export function toggleDebugOn() {

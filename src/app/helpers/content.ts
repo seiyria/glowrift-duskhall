@@ -1,11 +1,11 @@
-import { signal, Signal, WritableSignal } from '@angular/core';
+import { signal, Signal } from '@angular/core';
 import { Content, ContentType } from '../interfaces';
 
-const _allIdsByName: WritableSignal<Map<string, string>> = signal(new Map());
+const _allIdsByName = signal<Map<string, string>>(new Map());
 export const allIdsByName: Signal<Map<string, string>> =
   _allIdsByName.asReadonly();
 
-const _allContentById: WritableSignal<Map<string, Content>> = signal(new Map());
+const _allContentById = signal<Map<string, Content>>(new Map());
 export const allContentById: Signal<Map<string, Content>> =
   _allContentById.asReadonly();
 
