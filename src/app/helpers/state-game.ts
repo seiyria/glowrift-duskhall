@@ -50,8 +50,15 @@ export function blankGameState(): GameState {
         blankHero({ name: 'Zephyra', sprite: '0036' }),
       ],
       position: {
+        nodeId: '',
         x: 0,
         y: 0,
+      },
+      travel: {
+        nodeId: '',
+        x: 0,
+        y: 0,
+        ticksLeft: 0,
       },
     },
   };

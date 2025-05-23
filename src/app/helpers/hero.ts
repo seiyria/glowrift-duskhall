@@ -9,6 +9,7 @@ import {
 import { randomNumber, seededrng } from './rng';
 import { indexToSprite } from './sprite';
 import { gamestate, updateGamestate } from './state-game';
+import { getWorldNode } from './world';
 
 export function updateHeroData(heroId: HeroId, heroData: Partial<Hero>): void {
   updateGamestate((state) => {
@@ -92,7 +93,10 @@ export function getHeroPosition(): WorldPosition {
 }
 
 export function setHeroPosition(x: number, y: number): void {
+  const node = getWorldNode(x, y);
+
   updateGamestate((state) => {
+    state.hero.position.nodeId = node?.id ?? '';
     state.hero.position.x = x;
     state.hero.position.y = y;
     return state;

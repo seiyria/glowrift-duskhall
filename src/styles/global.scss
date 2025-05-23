@@ -18,7 +18,11 @@ body {
     linear-gradient(to bottom, var(--bg-color), var(--bg-color));
 }
 
-.btn:not(.btn-untextured):not(.btn-outline) {
+.btn:not(.btn-untextured):not(.btn-outline):not(
+    :disabled,
+    [disabled],
+    .btn-disabled
+  ) {
   background: url(/asset/texture-button.png),
     linear-gradient(to bottom, var(--btn-color), var(--btn-color)) !important;
 

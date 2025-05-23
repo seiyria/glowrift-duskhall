@@ -17,18 +17,25 @@
     </button>
   </div>
 
-  <div class="flex flex-row">
-    <div class="flex flex-1 flex-col gap-2">
+  <div class="h-full flex flex-row">
+    <div class="h-full flex flex-1 flex-col gap-2 justify-between">
       <div>Encounter Level: {{ locationData.encounterLevel }}</div>
 
-      <div>
-        Travel Time:
 
-        <app-countdown [secondsLeft]="travelTimeSeconds()"></app-countdown>
+      <div class="flex flex-col gap-2">
+        @if(isAtThisNode()) {
+        <div class="flex gap-2 items-center">
+          <app-icon name="gameSevenPointedStar" size="1.5em"></app-icon> You are here!
+        </div>
+        }
+
+        <button class="btn btn-info btn-block" [disabled]="!canTravelToThisNode()" (click)="travelToThisNode()">
+          <app-countdown [secondsLeft]="travelTimeSeconds()" [parenthesize]="true" label="Travel"></app-countdown>
+        </button>
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2">
+    <div class="h-full flex flex-1 flex-col gap-2">
       <div>Location Elements</div>
 
       @for(el of locationData.elements; track $index) {
@@ -36,11 +43,11 @@
       }
     </div>
 
-    <div class="flex flex-1 flex-col gap-2">
+    <div class="h-full flex flex-1 flex-col gap-2">
       <div></div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2">
+    <div class="h-full flex flex-1 flex-col gap-2">
       <div></div>
     </div>
   </div>

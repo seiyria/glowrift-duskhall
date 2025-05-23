@@ -3,10 +3,17 @@
   <span>{{ label }}</span>
   }
 
-  <span class="ml-1 countdown">
-    <span [style.--value]="minutesUntilReset()"></span>
-    m
-    <span class="ml-1" [style.--value]="secondsUntilReset()"></span>
-    s
+  <span class="ml-1">
+    @if(parenthesize()) {&lpar;}
+
+    <span class="countdown m">
+      <span [style.--value]="minutesUntilReset()"></span>
+    </span>
+
+    <span class="countdown s ml-1">
+      <span [style.--value]="secondsUntilReset()"></span>
+    </span>
+
+    @if(parenthesize()) {&rpar;}
   </span>
 </span>

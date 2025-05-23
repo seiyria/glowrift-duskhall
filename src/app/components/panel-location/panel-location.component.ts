@@ -1,7 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import {
+  gamestate,
+  isAtNode,
+  isTravelingToNode,
   showLocationMenu,
   travelTimeFromCurrentLocationTo,
+  travelToNode,
 } from '../../helpers';
 import { WorldLocation } from '../../interfaces';
 import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
@@ -27,11 +31,31 @@ import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-lo
 export class PanelLocationComponent {
   public location = input.required<WorldLocation>();
 
-  public travelTimeSeconds = computed(() =>
-    travelTimeFromCurrentLocationTo(this.location()),
+  public travelTimeSeconds = computed(() => {
+    if (this.isTravelingToThisNode()) {
+      return gamestate().hero.travel.ticksLeft;
+    }
+
+    return travelTimeFromCurrentLocationTo(this.location());
+  });
+
+  public isTravelingToThisNode = computed(() =>
+    isTravelingToNode(this.location()),
+  );
+  public travelTimeRemaining = computed(
+    () => gamestate().hero.travel.ticksLeft,
+  );
+  public isAtThisNode = computed(() => isAtNode(this.location()));
+
+  public canTravelToThisNode = computed(
+    () => !this.isAtThisNode() && !this.isTravelingToThisNode(),
   );
 
   closeMenu() {
     showLocationMenu.set(undefined);
+  }
+
+  travelToThisNode() {
+    travelToNode(this.location());
   }
 }

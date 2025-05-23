@@ -202,3 +202,27 @@ export function travelTimeFromCurrentLocationTo(node: WorldPosition): number {
   const currentLocation = gamestate().hero.position;
   return travelTimeBetweenNodes(currentLocation, node);
 }
+
+export function travelToNode(node: WorldLocation): void {
+  const travelTime = travelTimeFromCurrentLocationTo(node);
+  updateGamestate((state) => {
+    state.hero.travel.nodeId = node.id;
+    state.hero.travel.x = node.x;
+    state.hero.travel.y = node.y;
+    state.hero.travel.ticksLeft = travelTime;
+    return state;
+  });
+}
+
+export function isAtNode(node: WorldLocation): boolean {
+  const currentLocation = gamestate().hero.position;
+  return currentLocation.nodeId === node.id;
+}
+
+export function isTravelingToNode(node: WorldLocation): boolean {
+  return gamestate().hero.travel.nodeId === node.id;
+}
+
+export function isTravelingSomewhere(): boolean {
+  return gamestate().hero.travel.ticksLeft > 0;
+}

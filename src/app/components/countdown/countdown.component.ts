@@ -9,6 +9,7 @@ import { Component, computed, input } from '@angular/core';
 export class CountdownComponent {
   public secondsLeft = input.required<number>();
   public label = input<string>();
+  public parenthesize = input<boolean>();
 
   public secondsUntilReset = computed(() =>
     Math.floor(this.secondsLeft() % 60),
