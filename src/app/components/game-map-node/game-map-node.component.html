@@ -12,6 +12,12 @@
 </div>
 }
 
+@if(isAtThisNode()) {
+<div
+  class="bottom-0 left-0 h-full w-full absolute border-4 border-dashed border-gray-500 animate-pulse z-40 pointer-events-none">
+</div>
+}
+
 <div class="absolute bottom-0 left-0 pointer-events-none" [appShowIfOption]="'debugMapNodePositions'">
   {{ nodeData.x }}, {{ nodeData.y }}
 </div>
