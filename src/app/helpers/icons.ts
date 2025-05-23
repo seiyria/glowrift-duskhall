@@ -9,7 +9,12 @@ import {
   gamePlayButton,
   gameVibratingShield,
 } from '@ng-icons/game-icons';
-import { tablerPlus, tablerSettings, tablerX } from '@ng-icons/tabler-icons';
+import {
+  tablerCheck,
+  tablerPlus,
+  tablerSettings,
+  tablerX,
+} from '@ng-icons/tabler-icons';
 
 export const ALL_ICONS = {
   gameExitDoor,
@@ -24,4 +29,5 @@ export const ALL_ICONS = {
   tablerPlus,
   tablerSettings,
   tablerX,
+  tablerCheck,
 };

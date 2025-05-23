@@ -1,5 +1,5 @@
 import { Hero } from './hero';
-import { Branded } from './identifiable';
+import { Branded, Identifiable } from './identifiable';
 import { WorldPosition } from './world';
 import { WorldNodeType } from './worldconfig';
 
@@ -22,17 +22,17 @@ export interface GameStateWorldNodeElement {
   intensity: number;
 }
 
-export type GameStateWorldNode = WorldPosition & {
-  name: string;
-  nodeType?: WorldNodeType;
-  elements: GameStateWorldNodeElement[];
-  sprite: string;
-  objectSprite: string;
+export type GameStateWorldNode = WorldPosition &
+  Identifiable & {
+    nodeType?: WorldNodeType;
+    elements: GameStateWorldNodeElement[];
+    sprite: string;
+    objectSprite: string;
 
-  currentlyClaimed: boolean;
-  clearCount: number;
-  encounterLevel: number;
-};
+    currentlyClaimed: boolean;
+    clearCount: number;
+    encounterLevel: number;
+  };
 
 export interface GameStateWorld {
   width: number;

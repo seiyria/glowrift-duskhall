@@ -3,5 +3,6 @@
 }
 
 .camera-controller {
+  @apply pointer-events-auto;
   background-color: #000;
 }

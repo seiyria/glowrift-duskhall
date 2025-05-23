@@ -3,7 +3,14 @@
 <app-atlas-image class="terrain" spritesheet="world-terrain" [assetName]="nodeData.sprite"></app-atlas-image>
 
 @if(nodeData.objectSprite) {
-<app-atlas-image class="object" spritesheet="world-object" [assetName]="nodeData.objectSprite"></app-atlas-image>
+<app-atlas-image class="object cursor-pointer" spritesheet="world-object" [assetName]="nodeData.objectSprite"
+  [tp]="nodeData.name"></app-atlas-image>
+
+@if(nodeData.currentlyClaimed) {
+<app-icon name="tablerCheck" size="1.5em" class="absolute bottom-0 left-0 z-40 text-success"></app-icon>
+} @else {
+<app-icon name="tablerX" size="1.5em" class="absolute bottom-0 left-0 z-40 text-error"></app-icon>
+}
 }
 
 <div class="absolute bottom-0 left-0" [appShowIfOption]="'debugMapNodePositions'">

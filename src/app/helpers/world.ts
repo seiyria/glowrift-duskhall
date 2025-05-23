@@ -6,7 +6,13 @@ import {
   WorldNodeType,
   WorldPosition,
 } from '../interfaces';
-import { gamerng, randomChoice, randomNumber, randomNumberRange } from './rng';
+import {
+  gamerng,
+  randomChoice,
+  randomNumber,
+  randomNumberRange,
+  uuid,
+} from './rng';
 import { indexToSprite } from './sprite';
 import { gamestate, updateGamestate } from './state-game';
 
@@ -19,6 +25,7 @@ function fillEmptySpaceWithEmptyNodes(
       if (nodes[`${x},${y}`]) continue;
 
       nodes[`${x},${y}`] = {
+        id: uuid(),
         elements: [],
         name: '',
         nodeType: undefined,
@@ -115,6 +122,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   };
 
   const firstTown: GameStateWorldNode = {
+    id: uuid(),
     x: Math.floor(config.width / 2),
     y: Math.floor(config.height / 2),
     nodeType: 'town',
@@ -136,6 +144,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     for (let i = 0; i < nodeCount; i++) {
       const { x, y } = findUnusedPosition();
       const node: GameStateWorldNode = {
+        id: uuid(),
         x,
         y,
         nodeType: key as WorldNodeType,
