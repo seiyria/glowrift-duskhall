@@ -1,10 +1,10 @@
 import { DecimalPipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { ALL_ICONS } from '../../helpers';
-import { HeroStat } from '../../interfaces';
+import { GameStat } from '../../interfaces';
 import { IconComponent } from '../icon/icon.component';
 
-const icons: Record<HeroStat, keyof typeof ALL_ICONS> = {
+const icons: Record<GameStat, keyof typeof ALL_ICONS> = {
   aura: 'gameVibratingShield',
   force: 'gameGooeyImpact',
   health: 'gameGlassHeart',
@@ -12,13 +12,13 @@ const icons: Record<HeroStat, keyof typeof ALL_ICONS> = {
 };
 
 @Component({
-  selector: 'app-hero-stat',
+  selector: 'app-marker-stat',
   imports: [IconComponent, DecimalPipe, TitleCasePipe],
-  templateUrl: './hero-stat.component.html',
-  styleUrl: './hero-stat.component.scss',
+  templateUrl: './marker-stat.component.html',
+  styleUrl: './marker-stat.component.css',
 })
-export class HeroStatComponent {
-  public stat = input.required<HeroStat>();
+export class MarkerStatComponent {
+  public stat = input.required<GameStat>();
   public value = input.required<number>();
 
   public icon = computed(() => icons[this.stat()]);

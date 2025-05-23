@@ -1,0 +1,48 @@
+@let locationData = location();
+
+<app-card-page>
+  <span header class="flex gap-2 items-center">
+    <div class="relative w-[64px] h-[64px]">
+      <app-atlas-image spritesheet="world-object" [assetName]="locationData.objectSprite"></app-atlas-image>
+      <app-marker-location-claim class="absolute bottom-0 left-0" [location]="locationData"></app-marker-location-claim>
+    </div>
+
+    {{ locationData.name }}
+
+  </span>
+
+  <div pageactions>
+    <button class="ml-8 btn btn-clear" (click)="closeMenu()">
+      <app-icon name="tablerX"></app-icon>
+    </button>
+  </div>
+
+  <div class="flex flex-row">
+    <div class="flex flex-1 flex-col gap-2">
+      <div>Encounter Level: {{ locationData.encounterLevel }}</div>
+
+      <div>
+        Travel Time:
+
+        <app-countdown [secondsLeft]="travelTimeSeconds()"></app-countdown>
+      </div>
+    </div>
+
+    <div class="flex flex-1 flex-col gap-2">
+      <div>Location Elements</div>
+
+      @for(el of locationData.elements; track $index) {
+      <app-marker-element [element]="el.element" [value]="`${el.intensity}%`"></app-marker-element>
+      }
+    </div>
+
+    <div class="flex flex-1 flex-col gap-2">
+      <div></div>
+    </div>
+
+    <div class="flex flex-1 flex-col gap-2">
+      <div></div>
+    </div>
+  </div>
+
+</app-card-page>

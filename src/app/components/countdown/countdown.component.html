@@ -1,5 +1,7 @@
-<span class="badge badge-warning">
-  <span>{{ label() }}</span>
+<span>
+  @if(label(); as label) {
+  <span>{{ label }}</span>
+  }
 
   <span class="ml-1 countdown">
     <span [style.--value]="minutesUntilReset()"></span>

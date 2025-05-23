@@ -1,9 +1,9 @@
 import { PRNG } from 'seedrandom';
 import {
   GameStateWorld,
-  GameStateWorldNode,
+  LocationType,
   WorldConfig,
-  WorldNodeType,
+  WorldLocation,
   WorldPosition,
 } from '../interfaces';
 import {
@@ -18,7 +18,7 @@ import { gamestate, updateGamestate } from './state-game';
 
 function fillEmptySpaceWithEmptyNodes(
   config: WorldConfig,
-  nodes: Record<string, GameStateWorldNode>,
+  nodes: Record<string, WorldLocation>,
 ): void {
   for (let x = 0; x < config.width; x++) {
     for (let y = 0; y < config.height; y++) {
@@ -33,7 +33,7 @@ function fillEmptySpaceWithEmptyNodes(
         objectSprite: '',
         x,
         y,
-        clearCount: 0,
+        claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
       };
@@ -41,13 +41,13 @@ function fillEmptySpaceWithEmptyNodes(
   }
 }
 
-function addElementsToWorld(nodes: Record<string, GameStateWorldNode>): void {
+function addElementsToWorld(nodes: Record<string, WorldLocation>): void {
   Object.values(nodes).forEach((node) => {
     node.elements = [{ element: 'Fire', intensity: 0 }];
   });
 }
 
-function getSpriteFromNodeType(nodeType: WorldNodeType | undefined): string {
+function getSpriteFromNodeType(nodeType: LocationType | undefined): string {
   switch (nodeType) {
     case 'town':
       return '0021';
@@ -66,8 +66,8 @@ function getSpriteFromNodeType(nodeType: WorldNodeType | undefined): string {
 
 function setEncounterLevels(
   config: WorldConfig,
-  nodes: Record<string, GameStateWorldNode>,
-  middleNode: GameStateWorldNode,
+  nodes: Record<string, WorldLocation>,
+  middleNode: WorldLocation,
 ): void {
   const { maxLevel } = config;
   const maxDistance = distanceBetweenNodes(nodes[`0,0`], middleNode);
@@ -79,7 +79,7 @@ function setEncounterLevels(
 }
 
 function determineSpritesForWorld(
-  nodes: Record<string, GameStateWorldNode>,
+  nodes: Record<string, WorldLocation>,
   rng: PRNG,
 ): void {
   Object.values(nodes).forEach((node) => {
@@ -92,8 +92,8 @@ function determineSpritesForWorld(
 export function generateWorld(config: WorldConfig): GameStateWorld {
   const rng = gamerng();
 
-  const nodes: Record<string, GameStateWorldNode> = {};
-  const nodeList: GameStateWorldNode[] = [];
+  const nodes: Record<string, WorldLocation> = {};
+  const nodeList: WorldLocation[] = [];
   const nodePositionsAvailable: Record<
     string,
     { x: number; y: number; taken: boolean }
@@ -115,13 +115,13 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     return { x: chosenNode.x, y: chosenNode.y };
   };
 
-  const addNode = (node: GameStateWorldNode): void => {
+  const addNode = (node: WorldLocation): void => {
     nodeList.push(node);
     nodes[`${node.x},${node.y}`] = node;
     nodePositionsAvailable[`${node.x},${node.y}`].taken = true;
   };
 
-  const firstTown: GameStateWorldNode = {
+  const firstTown: WorldLocation = {
     id: uuid(),
     x: Math.floor(config.width / 2),
     y: Math.floor(config.height / 2),
@@ -130,7 +130,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     elements: [{ element: 'Neutral', intensity: 0 }],
     sprite: '',
     objectSprite: '',
-    clearCount: 0,
+    claimCount: 0,
     currentlyClaimed: true,
     encounterLevel: 0,
   };
@@ -138,21 +138,21 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   addNode(firstTown);
 
   Object.keys(config.nodeCount).forEach((key) => {
-    const count = config.nodeCount[key as WorldNodeType];
+    const count = config.nodeCount[key as LocationType];
     const nodeCount = randomNumberRange(count.min, count.max, rng);
 
     for (let i = 0; i < nodeCount; i++) {
       const { x, y } = findUnusedPosition();
-      const node: GameStateWorldNode = {
+      const node: WorldLocation = {
         id: uuid(),
         x,
         y,
-        nodeType: key as WorldNodeType,
+        nodeType: key as LocationType,
         name: `${key} ${i + 1}`,
         elements: [],
         sprite: '',
         objectSprite: '',
-        clearCount: 0,
+        claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
       };
@@ -180,10 +180,7 @@ export function setWorld(world: GameStateWorld): void {
   });
 }
 
-export function getWorldNode(
-  x: number,
-  y: number,
-): GameStateWorldNode | undefined {
+export function getWorldNode(x: number, y: number): WorldLocation | undefined {
   return gamestate().world.nodes[`${x},${y}`];
 }
 
@@ -192,4 +189,16 @@ export function distanceBetweenNodes(
   b: WorldPosition,
 ): number {
   return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+}
+
+export function travelTimeBetweenNodes(
+  a: WorldPosition,
+  b: WorldPosition,
+): number {
+  return Math.floor(distanceBetweenNodes(a, b) * 5);
+}
+
+export function travelTimeFromCurrentLocationTo(node: WorldPosition): number {
+  const currentLocation = gamestate().hero.position;
+  return travelTimeBetweenNodes(currentLocation, node);
 }

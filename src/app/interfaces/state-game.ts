@@ -1,11 +1,8 @@
 import { Hero } from './hero';
-import { Branded, Identifiable } from './identifiable';
-import { WorldPosition } from './world';
-import { WorldNodeType } from './worldconfig';
+import { Branded } from './identifiable';
+import { WorldLocation, WorldPosition } from './world';
 
 export type GameId = Branded<string, 'GameId'>;
-
-export type GameElement = 'Fire' | 'Ice' | 'Earth' | 'Air' | 'Neutral';
 
 export interface GameStateMeta {
   version: number;
@@ -17,27 +14,10 @@ export interface GameStateMeta {
 
 export type GameStateCamera = WorldPosition;
 
-export interface GameStateWorldNodeElement {
-  element: GameElement;
-  intensity: number;
-}
-
-export type GameStateWorldNode = WorldPosition &
-  Identifiable & {
-    nodeType?: WorldNodeType;
-    elements: GameStateWorldNodeElement[];
-    sprite: string;
-    objectSprite: string;
-
-    currentlyClaimed: boolean;
-    clearCount: number;
-    encounterLevel: number;
-  };
-
 export interface GameStateWorld {
   width: number;
   height: number;
-  nodes: Record<string, GameStateWorldNode>;
+  nodes: Record<string, WorldLocation>;
 }
 
 export interface GameStateHeroes {

@@ -1,4 +1,5 @@
 import { clamp } from 'lodash';
+import { getHeroPosition } from './hero';
 import { gamestate, updateGamestate } from './state-game';
 import { windowHeightTiles, windowWidthTiles } from './ui';
 
@@ -26,8 +27,7 @@ export function centerCameraOn(x: number, y: number): void {
 }
 
 export function focusCameraOnPlayer() {
-  const width = gamestate().world.width;
-  const height = gamestate().world.height;
+  const { x, y } = getHeroPosition();
 
-  centerCameraOn(width / 2, height / 2);
+  centerCameraOn(x, y);
 }

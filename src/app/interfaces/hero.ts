@@ -1,10 +1,9 @@
 import { Branded, Identifiable } from './identifiable';
+import { GameStat } from './stat';
 
 export type HeroId = Branded<string, 'HeroId'>;
 
-export type HeroStat = 'force' | 'health' | 'speed' | 'aura';
-
-export type HeroStats = Record<HeroStat, number>;
+export type HeroStats = Record<GameStat, number>;
 
 export interface Hero extends Identifiable {
   id: HeroId;

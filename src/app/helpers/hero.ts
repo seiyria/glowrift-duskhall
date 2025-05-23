@@ -1,8 +1,14 @@
 import { clamp } from 'lodash';
-import { Hero, HeroId, HeroStat, HeroStats } from '../interfaces';
+import {
+  GameStat,
+  Hero,
+  HeroId,
+  HeroStats,
+  WorldPosition,
+} from '../interfaces';
 import { randomNumber, seededrng } from './rng';
 import { indexToSprite } from './sprite';
-import { updateGamestate } from './state-game';
+import { gamestate, updateGamestate } from './state-game';
 
 export function updateHeroData(heroId: HeroId, heroData: Partial<Hero>): void {
   updateGamestate((state) => {
@@ -30,7 +36,7 @@ export function pickSpriteForHeroName(heroName: string): string {
   return indexToSprite(spriteIndex);
 }
 
-export function heroTotalStat(hero: Hero, stat: HeroStat): number {
+export function heroTotalStat(hero: Hero, stat: GameStat): number {
   const baseStat = hero.baseStats[stat];
   return baseStat;
 }
@@ -74,6 +80,14 @@ export function heroStats(hero: Hero): HeroStats {
     health: heroTotalStat(hero, 'health'),
     speed: heroTotalStat(hero, 'speed'),
     aura: heroTotalStat(hero, 'aura'),
+  };
+}
+
+export function getHeroPosition(): WorldPosition {
+  const hero = gamestate().hero;
+  return {
+    x: hero.position.x,
+    y: hero.position.y,
   };
 }
 

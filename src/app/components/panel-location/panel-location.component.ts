@@ -1,0 +1,37 @@
+import { Component, computed, input } from '@angular/core';
+import {
+  showLocationMenu,
+  travelTimeFromCurrentLocationTo,
+} from '../../helpers';
+import { WorldLocation } from '../../interfaces';
+import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
+import { CardPageComponent } from '../card-page/card-page.component';
+import { CountdownComponent } from '../countdown/countdown.component';
+import { IconComponent } from '../icon/icon.component';
+import { MarkerElementComponent } from '../marker-element/marker-element.component';
+import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-location-claim.component';
+
+@Component({
+  selector: 'app-panel-location',
+  imports: [
+    CardPageComponent,
+    IconComponent,
+    MarkerLocationClaimComponent,
+    AtlasImageComponent,
+    MarkerElementComponent,
+    CountdownComponent,
+  ],
+  templateUrl: './panel-location.component.html',
+  styleUrl: './panel-location.component.css',
+})
+export class PanelLocationComponent {
+  public location = input.required<WorldLocation>();
+
+  public travelTimeSeconds = computed(() =>
+    travelTimeFromCurrentLocationTo(this.location()),
+  );
+
+  closeMenu() {
+    showLocationMenu.set(undefined);
+  }
+}

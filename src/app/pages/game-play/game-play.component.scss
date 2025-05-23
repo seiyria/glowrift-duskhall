@@ -10,3 +10,15 @@
   width: 100vw;
   height: calc(100vh - 40px);
 }
+
+.map-layer {
+  @apply z-10;
+}
+
+.camera-layer {
+  @apply z-20;
+}
+
+.panel-layer {
+  @apply z-50;
+}

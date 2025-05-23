@@ -1,13 +1,24 @@
 <div class="game-container relative">
-  <app-game-map class="absolute top-0 left-0 right-0 bottom-0 z-10"></app-game-map>
+  <app-game-map class="absolute top-0 left-0 right-0 bottom-0 map-layer"></app-game-map>
   <app-game-camera-controller
-    class="absolute top-0 left-0 right-0 bottom-0 z-20 pointer-events-none"></app-game-camera-controller>
+    class="absolute top-0 left-0 right-0 bottom-0 camera-layer pointer-events-none"></app-game-camera-controller>
 
   @if(showOptions()) {
-  <app-navbar-menu-options class="absolute top-0 left-0 right-0 bottom-0 z-50"></app-navbar-menu-options>
+  <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
+    <app-panel-options class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-options>
+  </div>
   }
 
   @if(showHeroes()) {
-  <app-navbar-menu-heroes class="absolute top-0 left-0 right-0 bottom-0 z-50"></app-navbar-menu-heroes>
+  <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
+    <app-panel-heroes class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-heroes>
+  </div>
+  }
+
+  @if(showLocation(); as location) {
+  <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
+    <app-panel-location class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
+      [location]="location"></app-panel-location>
+  </div>
   }
 </div>

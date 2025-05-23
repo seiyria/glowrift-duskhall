@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { TippyDirective } from '@ngneat/helipopper';
 import { ShowIfOptionDirective } from '../../directives/option-hide.directive';
-import { GameStateWorldNode } from '../../interfaces';
+import { showLocationMenu } from '../../helpers';
+import { WorldLocation } from '../../interfaces';
 import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
-import { IconComponent } from '../icon/icon.component';
+import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-location-claim.component';
 
 @Component({
   selector: 'app-game-map-node',
@@ -11,13 +12,17 @@ import { IconComponent } from '../icon/icon.component';
     AtlasImageComponent,
     ShowIfOptionDirective,
     TippyDirective,
-    IconComponent,
+    MarkerLocationClaimComponent,
   ],
   templateUrl: './game-map-node.component.html',
   styleUrl: './game-map-node.component.scss',
 })
 export class GameMapNodeComponent {
-  public node = input.required<GameStateWorldNode>();
+  public node = input.required<WorldLocation>();
   public x = input.required<number>();
   public y = input.required<number>();
+
+  public investigateLocation() {
+    showLocationMenu.set(this.node());
+  }
 }
