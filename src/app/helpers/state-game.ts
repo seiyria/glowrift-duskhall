@@ -43,6 +43,7 @@ export function blankGameState(): GameState {
       y: 0,
     },
     hero: {
+      riskTolerance: 'low',
       heroes: [
         blankHero({ name: 'Ignatius', sprite: '0004' }),
         blankHero({ name: 'Aquara', sprite: '0000' }),

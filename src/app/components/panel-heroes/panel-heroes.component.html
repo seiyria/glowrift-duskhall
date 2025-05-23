@@ -2,6 +2,19 @@
   <span header>Heroes</span>
 
   <div pageactions>
+    <div class="join">
+
+      @let tolerance = currentRiskTolerance();
+      <button class="btn btn-info join-item" [class.btn-outline]="tolerance !== 'low'"
+        (click)="changeRiskTolerance('low')"
+        [tp]="'Heroes will attempt locations no more than 5 levels higher than them.'">Safe</button>
+      <button class="btn btn-warning join-item" [class.btn-outline]="tolerance !== 'medium'"
+        (click)="changeRiskTolerance('medium')"
+        [tp]="'Heroes will attempt locations no more than 15 levels higher than them.'">Cautious</button>
+      <button class="btn btn-error join-item" [class.btn-outline]="tolerance !== 'high'"
+        (click)="changeRiskTolerance('high')" [tp]="'Heroes will attempt any location.'">Risky</button>
+    </div>
+
     <button class="ml-8 btn btn-clear" (click)="closeMenu()">
       <app-icon name="tablerX"></app-icon>
     </button>

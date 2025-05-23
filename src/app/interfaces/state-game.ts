@@ -1,4 +1,4 @@
-import { Hero } from './hero';
+import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
 import { WorldLocation, WorldPosition } from './world';
 
@@ -28,6 +28,7 @@ export type GameStateHeroesTraveling = WorldPosition & {
 };
 
 export interface GameStateHeroes {
+  riskTolerance: HeroRiskTolerance;
   heroes: Hero[];
   position: GameStateHeroesPosition;
   travel: GameStateHeroesTraveling;

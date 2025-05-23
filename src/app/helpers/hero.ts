@@ -3,6 +3,7 @@ import {
   GameStat,
   Hero,
   HeroId,
+  HeroRiskTolerance,
   HeroStats,
   WorldPosition,
 } from '../interfaces';
@@ -99,6 +100,13 @@ export function setHeroPosition(x: number, y: number): void {
     state.hero.position.nodeId = node?.id ?? '';
     state.hero.position.x = x;
     state.hero.position.y = y;
+    return state;
+  });
+}
+
+export function setHeroRiskTolerance(riskTolerance: HeroRiskTolerance): void {
+  updateGamestate((state) => {
+    state.hero.riskTolerance = riskTolerance;
     return state;
   });
 }
