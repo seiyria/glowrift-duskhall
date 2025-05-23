@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TippyDirective } from '@ngneat/helipopper';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -6,6 +6,7 @@ import { RequireSetupDirective } from '../../directives/require-setup.directive'
 import {
   closeAllMenus,
   focusCameraOnPlayer,
+  isGameloopPaused,
   showHeroesMenu,
   showOptionsMenu,
 } from '../../helpers';
@@ -27,6 +28,8 @@ import { IconComponent } from '../icon/icon.component';
 export class NavbarComponent {
   public meta = inject(MetaService);
   public router = inject(Router);
+
+  public isPaused = computed(() => isGameloopPaused());
 
   public toggleOptions() {
     if (showOptionsMenu()) {
@@ -50,5 +53,9 @@ export class NavbarComponent {
 
   public focusCamera() {
     focusCameraOnPlayer();
+  }
+
+  public togglePause() {
+    isGameloopPaused.set(!isGameloopPaused());
   }
 }

@@ -10,11 +10,12 @@ export type GameElement = 'Fire' | 'Ice' | 'Earth' | 'Air' | 'Neutral';
 export interface GameStateMeta {
   version: number;
   isSetup: boolean;
+  isPaused: boolean;
   createdAt: number;
   numTicks: number;
 }
 
-export type GameStateCamera = WorldPosition & {};
+export type GameStateCamera = WorldPosition;
 
 export interface GameStateWorldNodeElement {
   element: GameElement;

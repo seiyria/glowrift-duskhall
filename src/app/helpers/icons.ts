@@ -5,6 +5,8 @@ import {
   gameGlassHeart,
   gameGooeyImpact,
   gameHumanTarget,
+  gamePauseButton,
+  gamePlayButton,
   gameVibratingShield,
 } from '@ng-icons/game-icons';
 import { tablerPlus, tablerSettings, tablerX } from '@ng-icons/tabler-icons';
@@ -17,6 +19,8 @@ export const ALL_ICONS = {
   gameGlassHeart,
   gameClockwork,
   gameVibratingShield,
+  gamePauseButton,
+  gamePlayButton,
   tablerPlus,
   tablerSettings,
   tablerX,

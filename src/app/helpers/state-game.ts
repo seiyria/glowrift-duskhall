@@ -28,6 +28,7 @@ export function blankGameState(): GameState {
     meta: {
       version: 1,
       isSetup: false,
+      isPaused: false,
       createdAt: Date.now(),
       numTicks: 0,
     },

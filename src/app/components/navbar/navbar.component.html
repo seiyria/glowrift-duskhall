@@ -7,6 +7,12 @@
     <ul class="menu menu-horizontal px-1 flex gap-2">
 
       <li class="action-button" appRequireSetup>
+        <button class="btn btn-xs btn-info" [tp]="isPaused() ? 'Resume Game' : 'Pause Game'" (click)="togglePause()">
+          <app-icon [name]="isPaused() ? 'gamePlayButton' : 'gamePauseButton'" size="2em" color="#000"></app-icon>
+        </button>
+      </li>
+
+      <li class="action-button" appRequireSetup>
         <button class="btn btn-xs btn-accent" [tp]="'Heroes'" (click)="toggleHeroes()">
           <app-icon name="gameAges" size="2em" color="#000"></app-icon>
         </button>
