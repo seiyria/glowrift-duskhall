@@ -12,6 +12,10 @@ import { indexToSprite } from './sprite';
 import { gamestate, updateGamestate } from './state-game';
 import { getWorldNode } from './world';
 
+export function allHeroes(): Hero[] {
+  return gamestate().hero.heroes;
+}
+
 export function updateHeroData(heroId: HeroId, heroData: Partial<Hero>): void {
   updateGamestate((state) => {
     const hero = state.hero.heroes.find((f) => f.id === heroId);

@@ -61,6 +61,9 @@ export function blankGameState(): GameState {
         y: 0,
         ticksLeft: 0,
       },
+      location: {
+        ticksLeft: 0,
+      },
     },
   };
 }

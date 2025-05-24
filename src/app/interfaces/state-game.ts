@@ -27,11 +27,16 @@ export type GameStateHeroesTraveling = WorldPosition & {
   ticksLeft: number;
 };
 
+export type GameStateHeroesLocation = {
+  ticksLeft: number;
+};
+
 export interface GameStateHeroes {
   riskTolerance: HeroRiskTolerance;
   heroes: Hero[];
   position: GameStateHeroesPosition;
   travel: GameStateHeroesTraveling;
+  location: GameStateHeroesLocation;
 }
 
 export interface GameState {
