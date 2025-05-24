@@ -1,4 +1,5 @@
 import { WorldLocation, WorldPosition } from '../interfaces';
+import { notify } from './notify';
 import { gamestate, updateGamestate } from './state-game';
 
 export function isTraveling() {
@@ -26,6 +27,9 @@ export function travelTimeFromCurrentLocationTo(node: WorldPosition): number {
 
 export function travelToNode(node: WorldLocation): void {
   const travelTime = travelTimeFromCurrentLocationTo(node);
+
+  notify(`Travel to ${node.name} initiated...`, 'Travel');
+
   updateGamestate((state) => {
     state.hero.travel.nodeId = node.id;
     state.hero.travel.x = node.x;

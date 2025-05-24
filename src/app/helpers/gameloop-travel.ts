@@ -1,3 +1,4 @@
+import { notify } from './notify';
 import { gamestate, updateGamestate } from './state-game';
 import { isTraveling } from './travel';
 import { getCurrentWorldNode } from './world';
@@ -6,6 +7,8 @@ export function travelGameloop(numTicks: number): void {
   if (!isTraveling()) return;
 
   const travel = gamestate().hero.travel;
+
+  let didFinishTravel = false;
 
   updateGamestate((state) => {
     state.hero.travel.ticksLeft -= numTicks;
@@ -20,11 +23,20 @@ export function travelGameloop(numTicks: number): void {
     state.hero.travel.x = 0;
     state.hero.travel.y = 0;
 
-    const newNode = getCurrentWorldNode(state);
-    state.hero.location.ticksLeft = newNode?.currentlyClaimed
-      ? 0
-      : ((newNode?.encounterLevel ?? 1) + 1) * 5;
+    didFinishTravel = true;
 
     return state;
   });
+
+  if (didFinishTravel) {
+    const newNode = getCurrentWorldNode();
+
+    notify(`Arrived at ${newNode?.name ?? 'destination'}!`, 'Travel');
+    updateGamestate((state) => {
+      state.hero.location.ticksLeft = newNode?.currentlyClaimed
+        ? 0
+        : ((newNode?.encounterLevel ?? 1) + 1) * 5;
+      return state;
+    });
+  }
 }

@@ -4,16 +4,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AtlasAnimationComponent } from '../../components/atlas-animation/atlas-animation.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import {
-  finishSetup,
   gamestate,
-  generateWorld,
   getEntriesByType,
   pickSpriteForHeroName,
   resetGameState,
-  setCameraPosition,
   setDiscordStatus,
-  setHeroPosition,
-  setWorld,
+  startGame,
   updateHeroData,
 } from '../../helpers';
 import { WorldConfig } from '../../interfaces';
@@ -68,12 +64,7 @@ export class GameSetupWorldComponent implements OnInit {
       });
     }
 
-    const world = generateWorld(config);
-
-    setWorld(world);
-    setCameraPosition(config.width / 2, config.height / 2);
-    setHeroPosition(config.width / 2, config.height / 2);
-    finishSetup();
+    startGame(config);
 
     this.router.navigate(['/game']);
 

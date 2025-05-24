@@ -1,5 +1,6 @@
 import { isExploring } from './explore';
 import { allHeroes, heroGainXp } from './hero';
+import { notify } from './notify';
 import { updateGamestate } from './state-game';
 import { isTraveling } from './travel';
 import { getCurrentWorldNode } from './world';
@@ -18,6 +19,7 @@ export function exploreGameloop(numTicks: number): void {
       node.claimCount++;
       node.currentlyClaimed = true;
     }
+
     claimedNode = true;
 
     return state;
@@ -25,6 +27,8 @@ export function exploreGameloop(numTicks: number): void {
 
   const currentNode = getCurrentWorldNode();
   if (claimedNode && currentNode) {
+    notify(`You have claimed ${currentNode.name}!`, 'LocationClaim');
+
     allHeroes().forEach((hero) => {
       heroGainXp(hero, currentNode.encounterLevel * 10);
     });

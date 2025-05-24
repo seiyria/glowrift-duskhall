@@ -1,9 +1,9 @@
 import { signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
-export const canSendNotifications = signal<boolean>(false);
+export const canSendNotifications = signal<boolean>(true);
 
-type NotificationCategory = 'Error' | 'Success';
+type NotificationCategory = 'Error' | 'Success' | 'Travel' | 'LocationClaim';
 
 const notification = new Subject<{
   message: string;
