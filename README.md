@@ -1,5 +1,10 @@
 # Glowrift Duskhall
 
+## Setup
+
+1. `npm install`
+1. `npm run setup`
+
 ## Development
 
-` npm start`
+1. ` npm start`
