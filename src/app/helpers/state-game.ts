@@ -63,6 +63,7 @@ export function blankGameState(): GameState {
       },
       location: {
         ticksLeft: 0,
+        ticksTotal: 0,
       },
     },
   };

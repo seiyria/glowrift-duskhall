@@ -33,9 +33,11 @@ export function travelGameloop(numTicks: number): void {
 
     notify(`Arrived at ${newNode?.name ?? 'destination'}!`, 'Travel');
     updateGamestate((state) => {
-      state.hero.location.ticksLeft = newNode?.currentlyClaimed
+      const exploreTicks = newNode?.currentlyClaimed
         ? 0
         : ((newNode?.encounterLevel ?? 1) + 1) * 5;
+      state.hero.location.ticksTotal = exploreTicks;
+      state.hero.location.ticksLeft = exploreTicks;
       return state;
     });
   }

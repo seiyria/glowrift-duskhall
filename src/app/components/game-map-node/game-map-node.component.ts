@@ -4,6 +4,7 @@ import { ShowIfOptionDirective } from '../../directives/option-hide.directive';
 import { isAtNode, showLocationMenu } from '../../helpers';
 import { WorldLocation } from '../../interfaces';
 import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
+import { LocationClaimProgressBarComponent } from '../location-claim-progress-bar/location-claim-progress-bar.component';
 import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-location-claim.component';
 
 @Component({
@@ -13,6 +14,7 @@ import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-lo
     ShowIfOptionDirective,
     TippyDirective,
     MarkerLocationClaimComponent,
+    LocationClaimProgressBarComponent,
   ],
   templateUrl: './game-map-node.component.html',
   styleUrl: './game-map-node.component.scss',

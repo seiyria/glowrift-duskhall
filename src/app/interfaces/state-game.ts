@@ -28,6 +28,7 @@ export type GameStateHeroesTraveling = WorldPosition & {
 };
 
 export type GameStateHeroesLocation = {
+  ticksTotal: number;
   ticksLeft: number;
 };
 

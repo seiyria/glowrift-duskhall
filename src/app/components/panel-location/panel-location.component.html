@@ -27,6 +27,8 @@
         <div class="flex gap-2 items-center">
           <app-icon name="gameSevenPointedStar" size="1.5em"></app-icon> You are here!
         </div>
+
+        <app-location-claim-progress-text></app-location-claim-progress-text>
         }
 
         <button class="btn btn-info btn-block" [disabled]="!canTravelToThisNode()" (click)="travelToThisNode()">
