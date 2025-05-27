@@ -1,7 +1,8 @@
 import { notify } from './notify';
 import { gamestate, updateGamestate } from './state-game';
 import { isTraveling } from './travel';
-import { getCurrentWorldNode } from './world';
+import { globalStatusText } from './ui';
+import { getCurrentWorldNode, getWorldNode } from './world';
 
 export function travelGameloop(numTicks: number): void {
   if (!isTraveling()) return;
@@ -27,6 +28,13 @@ export function travelGameloop(numTicks: number): void {
 
     return state;
   });
+
+  const travelingToNode = getWorldNode(travel.x, travel.y);
+  if (travelingToNode) {
+    globalStatusText.set(
+      `Traveling to ${travelingToNode.name}... ${travel.ticksLeft} ticks left.`,
+    );
+  }
 
   if (didFinishTravel) {
     const newNode = getCurrentWorldNode();

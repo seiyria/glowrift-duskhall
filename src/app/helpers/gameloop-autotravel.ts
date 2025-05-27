@@ -1,0 +1,39 @@
+import { isExploring } from './explore';
+import { isTraveling, travelToNode } from './travel';
+import { globalStatusText } from './ui';
+import {
+  getAllNodesInOrderOfCloseness,
+  getClosestUnclaimedClaimableNode,
+  getCurrentWorldNode,
+  getNodesWithinRiskTolerance,
+} from './world';
+
+export function autoTravelGameloop(): void {
+  if (isExploring()) return;
+  if (isTraveling()) return;
+
+  const currentNode = getCurrentWorldNode();
+  if (currentNode) {
+    const anyUnclaimedNode = getClosestUnclaimedClaimableNode(
+      currentNode,
+      getAllNodesInOrderOfCloseness(currentNode),
+    );
+    if (!anyUnclaimedNode) {
+      globalStatusText.set('No unclaimed nodes available; idle.');
+      return;
+    }
+
+    const nodesWithinRiskTolerance = getNodesWithinRiskTolerance(currentNode);
+    const nextNode = getClosestUnclaimedClaimableNode(
+      currentNode,
+      nodesWithinRiskTolerance,
+    );
+    if (!nextNode) {
+      globalStatusText.set('Hero party idle; adjust risk tolerance.');
+      return;
+    }
+
+    globalStatusText.set('');
+    travelToNode(nextNode);
+  }
+}

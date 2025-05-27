@@ -1,3 +1,4 @@
+import { sortBy } from 'lodash';
 import { PRNG } from 'seedrandom';
 import {
   GameStateWorld,
@@ -189,4 +190,33 @@ export function getCurrentWorldNode(
 ): WorldLocation | undefined {
   const currentPosition = state.hero.position;
   return getWorldNode(currentPosition.x, currentPosition.y);
+}
+
+export function getAllNodesInOrderOfCloseness(
+  node: WorldLocation,
+): WorldLocation[] {
+  const nodes = Object.values(gamestate().world.nodes);
+  return sortBy(nodes, (n) => distanceBetweenNodes(node, n)).filter(
+    (n) => n.nodeType && n.id !== node.id,
+  );
+}
+
+export function getClosestUnclaimedClaimableNode(
+  node: WorldLocation,
+  nodes = getAllNodesInOrderOfCloseness(node),
+): WorldLocation {
+  return nodes.filter((n) => !n.currentlyClaimed)[0];
+}
+
+export function getNodesWithinRiskTolerance(
+  node: WorldLocation,
+  nodes = getAllNodesInOrderOfCloseness(node),
+): WorldLocation[] {
+  const riskTolerance = gamestate().hero.riskTolerance;
+  const heroLevel = gamestate().hero.heroes[0].level;
+
+  let levelThreshold = 5;
+  if (riskTolerance === 'medium') levelThreshold = 10;
+  else if (riskTolerance === 'high') levelThreshold = 100;
+  return nodes.filter((n) => n.encounterLevel <= heroLevel + levelThreshold);
 }

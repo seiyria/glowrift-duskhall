@@ -66,7 +66,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHotToastConfig({
       position: 'bottom-right',
-      stacking: 'depth',
+      stacking: 'vertical',
       visibleToasts: 10,
     }),
     provideTippyConfig({

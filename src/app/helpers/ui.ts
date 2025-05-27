@@ -9,6 +9,8 @@ export const windowHeightTiles = computed(() =>
   Math.floor(windowHeight() / 64),
 );
 
+export const globalStatusText = signal<string>('');
+
 export const showLocationMenu = signal<WorldLocation | undefined>(undefined);
 export const showOptionsMenu = signal<boolean>(false);
 export const showHeroesMenu = signal<boolean>(false);

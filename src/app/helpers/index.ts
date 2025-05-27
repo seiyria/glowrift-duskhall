@@ -5,6 +5,7 @@ export * from './discord';
 export * from './explore';
 export * from './game-init';
 export * from './gameloop';
+export * from './gameloop-autotravel';
 export * from './gameloop-explore';
 export * from './gameloop-town';
 export * from './gameloop-travel';

@@ -12,11 +12,10 @@ export class NotifyService {
 
   async init() {
     notification$.subscribe((messageData) => {
-      console.log({ messageData });
       const { message, type } = messageData;
       this.logger.debug('Notify', message);
 
-      this.toast[type]?.(message);
+      this.toast[type]?.(message, {});
     });
   }
 }

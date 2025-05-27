@@ -6,6 +6,7 @@ import { RequireSetupDirective } from '../../directives/require-setup.directive'
 import {
   closeAllMenus,
   focusCameraOnPlayer,
+  globalStatusText,
   isGameloopPaused,
   showHeroesMenu,
   showOptionsMenu,
@@ -30,6 +31,7 @@ export class NavbarComponent {
   public router = inject(Router);
 
   public isPaused = computed(() => isGameloopPaused());
+  public currentStatus = computed(() => globalStatusText());
 
   public toggleOptions() {
     if (showOptionsMenu()) {
