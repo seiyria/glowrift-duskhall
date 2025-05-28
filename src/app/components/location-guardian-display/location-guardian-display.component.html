@@ -1,0 +1,15 @@
+@let guardianData = guardian();
+
+<div [tp]="guardianInfo">
+  <app-atlas-animation [assetName]="guardianData.sprite" [spritesheet]="'enemy'"></app-atlas-animation>
+</div>
+
+<ng-template #guardianInfo let-hide>
+  <h6 class="text-lg">{{ guardianData.name }}</h6>
+  <div class="mt-3">
+    <app-marker-stat stat="health" [value]="guardianData.hp"></app-marker-stat>
+    <app-marker-stat stat="force" [value]="guardianData.stats.force"></app-marker-stat>
+    <app-marker-stat stat="aura" [value]="guardianData.stats.aura"></app-marker-stat>
+    <app-marker-stat stat="speed" [value]="guardianData.stats.speed"></app-marker-stat>
+  </div>
+</ng-template>

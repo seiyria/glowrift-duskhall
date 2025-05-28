@@ -7,7 +7,15 @@
       <app-marker-location-claim class="absolute bottom-0 left-0" [location]="locationData"></app-marker-location-claim>
     </div>
 
-    {{ locationData.name }}
+    <div>
+      <div>
+        {{ locationData.name }}
+      </div>
+
+      <div class="italic text-sm font-normal">
+        Encounter Level: {{ locationData.encounterLevel }}
+      </div>
+    </div>
 
   </span>
 
@@ -19,7 +27,19 @@
 
   <div class="h-full flex flex-row">
     <div class="h-full flex flex-1 flex-col gap-2 justify-between">
-      <div>Encounter Level: {{ locationData.encounterLevel }}</div>
+      <div>
+        <div class="mt-1 text-lg">
+          Guardians
+        </div>
+
+        <div class="w-full grid grid-cols-2">
+          @for(guardian of locationData.guardians; track guardian.id) {
+          <div>
+            <app-location-guardian-display [guardian]="guardian"></app-location-guardian-display>
+          </div>
+          }
+        </div>
+      </div>
 
 
       <div class="flex flex-col gap-2">
@@ -38,7 +58,7 @@
     </div>
 
     <div class="h-full flex flex-1 flex-col gap-2">
-      <div>Location Elements</div>
+      <div class="text-lg">Location Elements</div>
 
       @for(el of locationData.elements; track $index) {
       <app-marker-element [element]="el.element" [value]="`${el.intensity}%`"></app-marker-element>
