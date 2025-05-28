@@ -102,7 +102,10 @@ export class ContentService {
   }
 
   private loadJSON() {
-    const allJsons = ['worldconfig'];
+    const contentTypeObject: {
+      [key in ContentType]: undefined;
+    } = { worldconfig: undefined, guardian: undefined };
+    const allJsons = Object.keys(contentTypeObject);
 
     const jsonMaps = allJsons.reduce((prev, cur) => {
       prev[cur] = this.http.get<Content[]>(this.toJSONURL(cur));
@@ -112,7 +115,10 @@ export class ContentService {
     forkJoin(jsonMaps).subscribe((assets) => {
       this.unfurlAssets(assets as unknown as Record<string, Content[]>);
 
-      this.logger.info('Content:LoadJSON', 'Content loaded.');
+      this.logger.info(
+        'Content:LoadJSON',
+        `Content loaded: ${allJsons.join(', ')}`,
+      );
       this.hasLoadedData.set(true);
     });
   }

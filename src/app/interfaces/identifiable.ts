@@ -1,4 +1,4 @@
-export type ContentType = 'worldconfig';
+export type ContentType = 'worldconfig' | 'guardian';
 
 export interface Identifiable {
   id: string;

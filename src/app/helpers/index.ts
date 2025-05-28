@@ -9,6 +9,7 @@ export * from './gameloop-autotravel';
 export * from './gameloop-explore';
 export * from './gameloop-town';
 export * from './gameloop-travel';
+export * from './guardian';
 export * from './hero';
 export * from './icons';
 export * from './migrate';

@@ -1,0 +1,19 @@
+- id: 85d739fe-1955-487c-ad42-2ef32f8388ae
+  name: Slash Goblin
+  sprite: '0136'
+
+  statScaling:
+    force: 0.5
+    health: 5
+    speed: 0.3
+    aura: 0.2
+
+- id: be3d7ddc-dcc6-47c1-afe0-6ac4286216f8
+  name: Shield Goblin
+  sprite: '0140'
+
+  statScaling:
+    force: 0.2
+    health: 9
+    speed: 0.2
+    aura: 0.8

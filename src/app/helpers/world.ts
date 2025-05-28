@@ -6,6 +6,7 @@ import {
   WorldConfig,
   WorldLocation,
 } from '../interfaces';
+import { populateLocationWithGuardians } from './guardian';
 import {
   gamerng,
   randomChoice,
@@ -37,6 +38,7 @@ function fillEmptySpaceWithEmptyNodes(
         claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
+        guardians: [],
       };
     }
   }
@@ -90,6 +92,12 @@ function determineSpritesForWorld(
   });
 }
 
+function fillSpacesWithGuardians(nodes: Record<string, WorldLocation>): void {
+  Object.values(nodes).forEach((node) => {
+    populateLocationWithGuardians(node);
+  });
+}
+
 export function generateWorld(config: WorldConfig): GameStateWorld {
   const rng = gamerng();
 
@@ -134,6 +142,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     claimCount: 0,
     currentlyClaimed: true,
     encounterLevel: 0,
+    guardians: [],
   };
 
   addNode(firstTown);
@@ -156,6 +165,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
+        guardians: [],
       };
 
       addNode(node);
@@ -165,6 +175,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   fillEmptySpaceWithEmptyNodes(config, nodes);
   setEncounterLevels(config, nodes, firstTown);
   addElementsToWorld(nodes);
+  fillSpacesWithGuardians(nodes);
   determineSpritesForWorld(nodes, rng);
 
   return {
