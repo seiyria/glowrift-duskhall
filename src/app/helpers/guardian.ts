@@ -14,7 +14,7 @@ export function populateLocationWithGuardians(location: WorldLocation): void {
     `$${gamestate().gameId}-${location.id}-${location.claimCount}`,
   );
   const numGuardians = numGuardiansForLocation(location);
-  location.guardians = Array.from({ length: numGuardians }, () => {
+  location.guardians = Array.from({ length: numGuardians }, (_, index) => {
     const randomGuardianDataId = randomIdentifiableChoice<GuardianData>(
       getEntriesByType<GuardianData>('guardian'),
       rng,
@@ -22,7 +22,10 @@ export function populateLocationWithGuardians(location: WorldLocation): void {
     const randomGuardianData = getEntry<GuardianData>(randomGuardianDataId);
     if (!randomGuardianData) return undefined;
 
-    return createGuardianForLocation(location, randomGuardianData);
+    return {
+      ...createGuardianForLocation(location, randomGuardianData),
+      id: `guardian-${location.id}-${index}-${randomGuardianData.id}` as GuardianId,
+    };
   }).filter(Boolean) as Guardian[];
 }
 
@@ -56,7 +59,6 @@ export function createGuardianForLocation(
 
   return {
     ...guardianData,
-    id: `guardian-${location.id}--${guardianData.id}` as GuardianId,
     hp: stats.health,
     stats,
   };
