@@ -1,4 +1,3 @@
-import { signal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { localStorageSignal } from './signal';
 
