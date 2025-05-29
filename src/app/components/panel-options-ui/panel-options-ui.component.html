@@ -1,4 +1,27 @@
 <div class="flex flex-row gap-2">
+
+  <div class="flex-1">
+  
+    <div class="card bg-base-100 foreground shadow-xl mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          Notifications
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="notificationsEnabled() === true"
+              class="checkbox checkbox-secondary" 
+              (click)="toggleNotifications()" />
+            <span class="label-text">Show notifications</span>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
   <div class="flex-1 flex flex-col">
 
     <div class="card bg-base-100 foreground shadow-xl mt-3">
@@ -20,11 +43,6 @@
       </div>
 
     </div>
-  </div>
-
-  <div class="flex-1"></div>
-
-  <div class="flex-1 flex flex-col">
   </div>
 
 </div>

@@ -1,7 +1,8 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptionsBaseComponent } from '../panel-options/option-base-page.component';
+import { canSendNotifications } from '../../helpers';
 
 @Component({
   selector: 'app-panel-options-ui',
@@ -83,5 +84,11 @@ export class PanelOptionsUIComponent extends OptionsBaseComponent {
 
   public changeTheme(theme: string): void {
     this.setValueForOption('uiTheme', theme);
+  }
+
+  public notificationsEnabled = computed(() => canSendNotifications());
+  
+  public toggleNotifications() {
+    canSendNotifications.set(!canSendNotifications());
   }
 }
