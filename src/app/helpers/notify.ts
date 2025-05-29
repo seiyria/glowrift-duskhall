@@ -1,7 +1,11 @@
 import { signal } from '@angular/core';
 import { Subject } from 'rxjs';
+import { localStorageSignal } from './signal';
 
-export const canSendNotifications = signal<boolean>(true);
+export const canSendNotifications = localStorageSignal<boolean>(
+  'canSendNotifications',
+  true,
+);
 
 function isPageVisible(): boolean {
   return !document.hidden;
