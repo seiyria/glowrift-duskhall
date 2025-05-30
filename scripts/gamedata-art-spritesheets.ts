@@ -4,14 +4,16 @@ const fs = require('fs-extra');
 const path = require('path');
 const spritesmith = require('spritesmith');
 
-const spritesheetsToBuild = ['hero', 'enemy', 'world-object', 'world-terrain'];
-
 const assetsToCopy: string[] = [];
 
 fs.ensureDirSync('public/art/spritesheets');
 
 const build = async () => {
-  for (const sheet of spritesheetsToBuild) {
+  const folders = fs.readdirSync('./gameassets');
+
+  for (const sheet of folders) {
+    console.log(`Generating spritesheet for ${sheet}...`);
+
     const files = await rec(`./gameassets/${sheet}`);
 
     spritesmith.run({ src: files }, (e: any, res: any) => {

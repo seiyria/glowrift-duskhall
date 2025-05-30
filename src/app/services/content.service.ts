@@ -58,8 +58,12 @@ export class ContentService {
 
   private loadArt() {
     const spritesheetsToLoad = [
-      'hero',
+      'accessory',
+      'armor',
       'enemy',
+      'hero',
+      'trinket',
+      'weapon',
       'world-object',
       'world-terrain',
     ];
