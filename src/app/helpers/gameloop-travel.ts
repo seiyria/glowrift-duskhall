@@ -32,7 +32,9 @@ export function travelGameloop(numTicks: number): void {
   const travelingToNode = getWorldNode(travel.x, travel.y);
   if (travelingToNode) {
     globalStatusText.set(
-      `Traveling to ${travelingToNode.name}... ${travel.ticksLeft} ticks left.`,
+      `Traveling to ${travelingToNode.name || 'new destination'}... ${
+        travel.ticksLeft
+      } ticks left.`,
     );
   }
 

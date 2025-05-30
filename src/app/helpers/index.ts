@@ -1,5 +1,6 @@
 export * from './analytics';
 export * from './camera';
+export * from './combat';
 export * from './content';
 export * from './discord';
 export * from './explore';

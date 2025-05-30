@@ -1,4 +1,4 @@
-export type ContentType = 'worldconfig' | 'guardian';
+export type ContentType = 'worldconfig' | 'guardian' | 'skill';
 
 export interface Identifiable {
   id: string;
@@ -6,7 +6,6 @@ export interface Identifiable {
 }
 
 export interface Content extends Identifiable {
-  defaultUnlocked?: boolean;
   __type: ContentType;
 }
 

@@ -1,3 +1,4 @@
+export * from './combat';
 export * from './content';
 export * from './discord';
 export * from './element';
@@ -5,6 +6,7 @@ export * from './guardian';
 export * from './hero';
 export * from './identifiable';
 export * from './meta';
+export * from './skill';
 export * from './stat';
 export * from './state-game';
 export * from './state-options';

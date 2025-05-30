@@ -15,6 +15,12 @@
   </div>
   }
 
+  @if(showCombat()) {
+  <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
+    <app-panel-combat class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-combat>
+  </div>
+  }
+
   @if(showLocation(); as location) {
   <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
     <app-panel-location class="absolute top-0 left-0 right-0 bottom-0 panel-layer"

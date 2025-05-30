@@ -37,12 +37,17 @@ export function blankGameState(): GameState {
       width: 0,
       height: 0,
       nodes: {},
+      homeBase: {
+        x: 0,
+        y: 0,
+      },
     },
     camera: {
       x: 0,
       y: 0,
     },
     hero: {
+      respawnTicks: 0,
       riskTolerance: 'low',
       heroes: [
         blankHero({ name: 'Ignatius', sprite: '0004' }),

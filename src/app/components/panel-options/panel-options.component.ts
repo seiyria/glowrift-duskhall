@@ -1,6 +1,6 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { options, showOptionsMenu } from '../../helpers';
+import { localStorageSignal, options, showOptionsMenu } from '../../helpers';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { ConnectButtonsComponent } from '../connect-buttons/connect-buttons.component';
 import { IconComponent } from '../icon/icon.component';
@@ -22,8 +22,8 @@ import { PanelOptionsUIComponent } from '../panel-options-ui/panel-options-ui.co
   templateUrl: './panel-options.component.html',
   styleUrl: './panel-options.component.css',
 })
-export class PanelOptionsComponent implements OnInit {
-  public activeTab = signal<string>('ui');
+export class PanelOptionsComponent {
+  public activeTab = localStorageSignal<string>('optionsTab', 'ui');
 
   public readonly tabs = [
     {
@@ -38,13 +38,6 @@ export class PanelOptionsComponent implements OnInit {
       showIf: computed(() => options().showDebug),
     },
   ];
-
-  ngOnInit() {
-    const firstVisibleTab = this.tabs.find((tab) => tab.showIf());
-    if (firstVisibleTab) {
-      this.activeTab.set(firstVisibleTab.link);
-    }
-  }
 
   closeMenu() {
     showOptionsMenu.set(false);

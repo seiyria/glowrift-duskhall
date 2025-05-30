@@ -8,6 +8,7 @@ import {
   focusCameraOnPlayer,
   globalStatusText,
   isGameloopPaused,
+  showCombatMenu,
   showHeroesMenu,
   showOptionsMenu,
 } from '../../helpers';
@@ -51,6 +52,16 @@ export class NavbarComponent {
 
     closeAllMenus();
     showHeroesMenu.set(!showHeroesMenu());
+  }
+
+  public toggleCombat() {
+    if (showCombatMenu()) {
+      showCombatMenu.set(false);
+      return;
+    }
+
+    closeAllMenus();
+    showCombatMenu.set(!showCombatMenu());
   }
 
   public focusCamera() {

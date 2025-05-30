@@ -1,3 +1,4 @@
+import { Combat } from './combat';
 import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
 import { WorldLocation, WorldPosition } from './world';
@@ -20,6 +21,7 @@ export interface GameStateWorld {
   width: number;
   height: number;
   nodes: Record<string, WorldLocation>;
+  homeBase: WorldPosition;
 }
 
 export type GameStateHeroesTraveling = WorldPosition & {
@@ -38,6 +40,8 @@ export interface GameStateHeroes {
   position: GameStateHeroesPosition;
   travel: GameStateHeroesTraveling;
   location: GameStateHeroesLocation;
+  respawnTicks: number;
+  combat?: Combat;
 }
 
 export interface GameState {

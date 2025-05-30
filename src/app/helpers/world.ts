@@ -182,6 +182,10 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     width: config.width,
     height: config.height,
     nodes,
+    homeBase: {
+      x: firstTown.x,
+      y: firstTown.y,
+    },
   };
 }
 
@@ -226,8 +230,8 @@ export function getNodesWithinRiskTolerance(
   const riskTolerance = gamestate().hero.riskTolerance;
   const heroLevel = gamestate().hero.heroes[0].level;
 
-  let levelThreshold = 5;
-  if (riskTolerance === 'medium') levelThreshold = 10;
+  let levelThreshold = 3;
+  if (riskTolerance === 'medium') levelThreshold = 7;
   else if (riskTolerance === 'high') levelThreshold = 100;
   return nodes.filter((n) => n.encounterLevel <= heroLevel + levelThreshold);
 }

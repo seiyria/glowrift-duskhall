@@ -1,11 +1,9 @@
 @let currentTab = activeTab();
 
 <app-card-page>
-  <span header>Options</span>
+  <span header>Combat</span>
 
   <div pageactions>
-    <app-connect-buttons></app-connect-buttons>
-
     <button class="ml-8 btn btn-clear" (click)="closeMenu()">
       <app-icon name="tablerX"></app-icon>
     </button>
@@ -14,8 +12,7 @@
   <div role="tablist" class="tabs tabs-boxed">
     @for(tab of tabs; track $index) {
     <button role="tab" class="tab" [class.tab-active]="currentTab === tab.link" (click)="activeTab.set(tab.link)"
-      (keydown)="activeTab.set(tab.link)" [appAnalyticsClick]="'Options:Navigate:' + tab.name"
-      [class.hidden]="!tab.showIf()">
+      (keydown)="activeTab.set(tab.link)">
       {{ tab.name }}
     </button>
     }
@@ -23,16 +20,12 @@
 
   <div class="p-3 max-h-[500px] overflow-y-auto">
     @switch(currentTab) {
-    @case('ui') {
-    <app-panel-options-ui></app-panel-options-ui>
+    @case('preferences') {
+    <app-panel-combat-preferences></app-panel-combat-preferences>
     }
 
-    @case('debug') {
-    <app-panel-options-debug></app-panel-options-debug>
-    }
-
-    @case('savefile') {
-    <app-panel-options-savefile></app-panel-options-savefile>
+    @case('combatlog') {
+    <app-panel-combat-combatlog></app-panel-combat-combatlog>
     }
     }
   </div>
