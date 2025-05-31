@@ -1,9 +1,20 @@
-<div class="map w-full h-full">
+<div
+  class="map w-full h-full"
+  [class.cursor-grabbing]="isDragging()"
+  (mousedown)="panStart($event)"
+  (mousemove)="panMove($event)"
+  (mouseup)="panEnd()"
+  (mouseleave)="panLeave()"
+>
   @for(row of map(); track $index) {
   <div class="map-row">
     @for(col of row; track col.nodeData.id) {
     <div class="map-col relative">
-      <app-game-map-node [node]="col.nodeData" [x]="col.x" [y]="col.y"></app-game-map-node>
+      <app-game-map-node
+        [node]="col.nodeData"
+        [x]="col.x"
+        [y]="col.y"
+      ></app-game-map-node>
     </div>
     }
   </div>

@@ -1,11 +1,4 @@
-<div
-  class="w-full h-full relative bg-slate-800/50"
-  [class.cursor-grabbing]="isDragging()"
-  (mousedown)="panStart($event)"
-  (mousemove)="panMove($event)"
-  (mouseup)="panEnd()"
-  (mouseleave)="panLeave()"
->
+<div class="w-full h-full relative">
   <!-- top -->
   <div
     class="camera-controller absolute top-0 left-0 right-0 w-full h-4"
