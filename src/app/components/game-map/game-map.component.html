@@ -3,7 +3,11 @@
   <div class="map-row">
     @for(col of row; track col.nodeData.id) {
     <div class="map-col relative">
-      <app-game-map-node [node]="col.nodeData" [x]="col.x" [y]="col.y"></app-game-map-node>
+      <app-game-map-node
+        [node]="col.nodeData"
+        [x]="col.x"
+        [y]="col.y"
+      ></app-game-map-node>
     </div>
     }
   </div>
