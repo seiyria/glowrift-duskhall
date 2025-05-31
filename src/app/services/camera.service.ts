@@ -29,19 +29,19 @@ export class CameraService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('mousedown', this.#boundOnMouseDown);
-      window.removeEventListener('mousemove', this.#boundOnMouseMove);
-      window.removeEventListener('mouseup', this.#boundOnMouseUp);
-    }
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('mousedown', this.#boundOnMouseDown);
+    window.removeEventListener('mousemove', this.#boundOnMouseMove);
+    window.removeEventListener('mouseup', this.#boundOnMouseUp);
   }
 
   private setupMouseListeners(): void {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousedown', this.#boundOnMouseDown);
-      window.addEventListener('mousemove', this.#boundOnMouseMove);
-      window.addEventListener('mouseup', this.#boundOnMouseUp);
-    }
+    if (typeof window === 'undefined') return;
+
+    window.addEventListener('mousedown', this.#boundOnMouseDown);
+    window.addEventListener('mousemove', this.#boundOnMouseMove);
+    window.addEventListener('mouseup', this.#boundOnMouseUp);
   }
 
   private onMouseDown(event: MouseEvent): void {
