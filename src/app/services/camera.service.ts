@@ -74,7 +74,7 @@ export class CameraService implements OnDestroy {
   }
 
   private onMouseUp(): void {
-    if (!this.isDragging) return;
+    if (!this.isDragging()) return;
 
     this.isDragging.set(false);
     this.lastPanPosition.set(null);
