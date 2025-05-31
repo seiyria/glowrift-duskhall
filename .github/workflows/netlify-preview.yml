@@ -1,7 +1,12 @@
 name: Netlify PR Preview
 
 on:
-  pull_request:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - synchronize
+      - opened
 
 jobs:
   build:
