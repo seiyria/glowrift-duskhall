@@ -28,6 +28,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { routes } from './app.routes';
 import { AnalyticsService } from './services/analytics.service';
 import { APIService } from './services/api.service';
+import { CameraService } from './services/camera.service';
 import { ContentService } from './services/content.service';
 import { GamestateService } from './services/gamestate.service';
 import { LoggerService, RollbarErrorHandler } from './services/logger.service';
@@ -118,6 +119,11 @@ export const appConfig: ApplicationConfig = {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
       useValue: () => inject(ThemeService).init(),
+    },
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => inject(CameraService).init(),
     },
   ],
 };
