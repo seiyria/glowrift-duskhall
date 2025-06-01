@@ -1,0 +1,21 @@
+- id: c6602e03-6e4e-407e-933d-9520047ce41a
+  name: Spellbook of Weak Force
+  sprite: '0000'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    force: 1
+
+- id: c6602e03-6e4e-407e-933d-9520047ce41a
+  name: Spellbook of Weak Aura
+  sprite: '0000'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    aura: 1

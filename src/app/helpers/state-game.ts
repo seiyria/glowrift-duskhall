@@ -18,6 +18,19 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
       speed: 1,
       aura: 1,
     },
+    totalStats: {
+      force: 5,
+      health: 10,
+      speed: 1,
+      aura: 1,
+    },
+
+    equipment: {
+      accessory: undefined,
+      armor: undefined,
+      trinket: undefined,
+      weapon: undefined,
+    },
 
     ...props,
   };

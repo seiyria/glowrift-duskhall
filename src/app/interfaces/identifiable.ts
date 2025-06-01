@@ -1,4 +1,11 @@
-export type ContentType = 'worldconfig' | 'guardian' | 'skill';
+export type ContentType =
+  | 'worldconfig'
+  | 'guardian'
+  | 'skill'
+  | 'weapon'
+  | 'accessory'
+  | 'trinket'
+  | 'armor';
 
 export interface Identifiable {
   id: string;

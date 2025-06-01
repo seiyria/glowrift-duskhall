@@ -3,6 +3,7 @@ export * from './camera';
 export * from './combat';
 export * from './content';
 export * from './discord';
+export * from './equipment';
 export * from './explore';
 export * from './game-init';
 export * from './gameloop';

@@ -1,0 +1,32 @@
+- id: 4d8fa8b9-6069-42d3-bb11-b0e527464138
+  name: Ring
+  sprite: '0012'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    health: 5
+
+- id: 9c24d13f-27e9-413b-80fd-aaee36c4e412
+  name: Amulet
+  sprite: '0000'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    health: 5
+    aura: 2
+
+- id: 21ef1e01-3514-4c36-8ea7-8efd52fcaaf3
+  name: Amulet of Weak Speed
+  sprite: '0003'
+
+  rarity: uncommon
+  dropLevel: 3
+
+  baseStats:
+    speed: 1

@@ -1,0 +1,21 @@
+- id: c7db6a31-e9e1-4f68-9644-7b1438e61d24
+  name: Leather Cloak
+  sprite: '0056'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    aura: 1
+
+- id: 10c7e2e8-d455-49b9-9977-c0d0c428877d
+  name: Leather Plate
+  sprite: '0041'
+
+  canBeModified: true
+  rarity: common
+  dropLevel: 1
+
+  baseStats:
+    aura: 2

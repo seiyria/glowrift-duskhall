@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
-import { heroStats, heroXpRequiredForLevelUp } from '../../helpers';
+import { heroXpRequiredForLevelUp } from '../../helpers';
 import { Hero } from '../../interfaces';
 import { MarkerStatComponent } from '../marker-stat/marker-stat.component';
 
@@ -13,6 +13,6 @@ import { MarkerStatComponent } from '../marker-stat/marker-stat.component';
 export class PanelHeroesStatsComponent {
   public hero = input.required<Hero>();
 
-  public heroStats = computed(() => heroStats(this.hero()));
+  public heroStats = computed(() => this.hero().totalStats);
   public maxXp = computed(() => heroXpRequiredForLevelUp(this.hero().level));
 }

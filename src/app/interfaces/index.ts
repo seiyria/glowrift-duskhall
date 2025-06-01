@@ -2,6 +2,7 @@ export * from './combat';
 export * from './content';
 export * from './discord';
 export * from './element';
+export * from './equipment';
 export * from './guardian';
 export * from './hero';
 export * from './identifiable';

@@ -108,7 +108,15 @@ export class ContentService {
   private loadJSON() {
     const contentTypeObject: {
       [key in ContentType]: undefined;
-    } = { worldconfig: undefined, guardian: undefined, skill: undefined };
+    } = {
+      worldconfig: undefined,
+      guardian: undefined,
+      skill: undefined,
+      accessory: undefined,
+      armor: undefined,
+      trinket: undefined,
+      weapon: undefined,
+    };
     const allJsons = Object.keys(contentTypeObject);
 
     const jsonMaps = allJsons.reduce((prev, cur) => {

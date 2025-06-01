@@ -1,11 +1,10 @@
+import { EquipmentBlock } from './equipment';
 import { Branded, Identifiable } from './identifiable';
-import { GameStat } from './stat';
+import { StatBlock } from './stat';
 
 export type HeroId = Branded<string, 'HeroId'>;
 
 export type HeroRiskTolerance = 'low' | 'medium' | 'high';
-
-export type HeroStats = Record<GameStat, number>;
 
 export interface Hero extends Identifiable {
   id: HeroId;
@@ -15,5 +14,8 @@ export interface Hero extends Identifiable {
   xp: number;
   hp: number;
 
-  baseStats: HeroStats;
+  baseStats: StatBlock;
+  totalStats: StatBlock;
+
+  equipment: EquipmentBlock;
 }

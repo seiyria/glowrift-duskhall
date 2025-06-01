@@ -215,7 +215,7 @@ export function handleCombatVictory(combat: Combat): void {
 
   const currentNode = getCurrentWorldNode();
   if (claimedNode && currentNode) {
-    notify(`You have claimed **${currentNode.name}**!`, 'LocationClaim');
+    notify(`You have claimed*${currentNode.name}!`, 'LocationClaim');
 
     logCombatMessage(combat, `Heroes claimed **${currentNode.name}**!`);
     updateExploringAndGlobalStatusText('');

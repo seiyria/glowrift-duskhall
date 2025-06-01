@@ -4,7 +4,7 @@ import {
   Hero,
   HeroId,
   HeroRiskTolerance,
-  HeroStats,
+  StatBlock,
   WorldPosition,
 } from '../interfaces';
 import { randomNumber, seededrng } from './rng';
@@ -55,7 +55,7 @@ export function heroLevelUp(hero: Hero): void {
   const levelUpSeed = `${hero.id}-${hero.level}`;
   const rng = seededrng(levelUpSeed);
 
-  const newStats = {
+  const newStats: StatBlock = {
     force: hero.baseStats.force + randomNumber(3, rng),
     health: hero.baseStats.health + randomNumber(10, rng),
     speed: hero.baseStats.speed + randomNumber(1, rng),
@@ -68,6 +68,8 @@ export function heroLevelUp(hero: Hero): void {
     baseStats: newStats,
     hp: newStats.health,
   });
+
+  recalculateStats(hero);
 }
 
 export function heroGainXp(hero: Hero, xp: number): void {
@@ -80,7 +82,7 @@ export function heroGainXp(hero: Hero, xp: number): void {
   }
 }
 
-export function heroStats(hero: Hero): HeroStats {
+export function heroStats(hero: Hero): StatBlock {
   return {
     force: heroTotalStat(hero, 'force'),
     health: heroTotalStat(hero, 'health'),
@@ -112,5 +114,14 @@ export function setHeroRiskTolerance(riskTolerance: HeroRiskTolerance): void {
   updateGamestate((state) => {
     state.hero.riskTolerance = riskTolerance;
     return state;
+  });
+}
+
+export function recalculateStats(hero: Hero): void {
+  const newStats = heroStats(hero);
+
+  updateHeroData(hero.id, {
+    totalStats: newStats,
+    hp: newStats.health,
   });
 }

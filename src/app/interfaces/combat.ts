@@ -1,5 +1,5 @@
-import { HeroStats } from './hero';
 import { Branded } from './identifiable';
+import { StatBlock } from './stat';
 
 export type CombatId = Branded<string, 'CombatId'>;
 
@@ -19,8 +19,8 @@ export interface Combatant {
   level: number;
   hp: number;
 
-  baseStats: HeroStats;
-  stats: HeroStats;
+  baseStats: StatBlock;
+  stats: StatBlock;
 }
 
 export interface Combat {
