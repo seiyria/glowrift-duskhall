@@ -1,7 +1,7 @@
 @let guardianData = guardian();
 
 <div [tp]="guardianInfo">
-  <app-atlas-animation [assetName]="guardianData.sprite" [spritesheet]="'enemy'"></app-atlas-animation>
+  <app-icon-guardian [guardian]="guardianData"></app-icon-guardian>
 </div>
 
 <ng-template #guardianInfo let-hide>

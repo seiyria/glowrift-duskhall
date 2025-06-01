@@ -1,4 +1,5 @@
 import { GameElement } from './element';
+import { EquipmentItemDefinition } from './equipment';
 import { Guardian } from './guardian';
 import { Identifiable } from './identifiable';
 import { LocationType } from './worldconfig';
@@ -24,4 +25,5 @@ export type WorldLocation = WorldPosition &
     claimCount: number;
     encounterLevel: number;
     guardians: Guardian[];
+    claimLoot: EquipmentItemDefinition[];
   };

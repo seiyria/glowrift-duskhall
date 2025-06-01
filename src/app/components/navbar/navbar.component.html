@@ -25,6 +25,12 @@
       </li>
 
       <li class="action-button" appRequireSetup>
+        <button class="btn btn-xs btn-accent" [tp]="'Inventory'" (click)="toggleInventory()">
+          <app-icon name="gameSwapBag" size="2em" color="#000"></app-icon>
+        </button>
+      </li>
+
+      <li class="action-button" appRequireSetup>
         <button class="btn btn-xs btn-accent" [tp]="'Heroes'" (click)="toggleHeroes()">
           <app-icon name="gameAges" size="2em" color="#000"></app-icon>
         </button>

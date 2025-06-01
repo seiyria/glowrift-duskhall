@@ -6,7 +6,6 @@ import {
   WorldConfig,
   WorldLocation,
 } from '../interfaces';
-import { populateLocationWithGuardians } from './guardian';
 import {
   gamerng,
   randomChoice,
@@ -17,6 +16,10 @@ import {
 import { indexToSprite } from './sprite';
 import { gamestate, updateGamestate } from './state-game';
 import { distanceBetweenNodes } from './travel';
+import {
+  populateLocationWithGuardians,
+  populateLocationWithLoot,
+} from './worldgen';
 
 function fillEmptySpaceWithEmptyNodes(
   config: WorldConfig,
@@ -39,6 +42,7 @@ function fillEmptySpaceWithEmptyNodes(
         currentlyClaimed: false,
         encounterLevel: 0,
         guardians: [],
+        claimLoot: [],
       };
     }
   }
@@ -98,6 +102,12 @@ function fillSpacesWithGuardians(nodes: Record<string, WorldLocation>): void {
   });
 }
 
+function fillSpacesWithLoot(nodes: Record<string, WorldLocation>): void {
+  Object.values(nodes).forEach((node) => {
+    populateLocationWithLoot(node);
+  });
+}
+
 export function generateWorld(config: WorldConfig): GameStateWorld {
   const rng = gamerng();
 
@@ -143,6 +153,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     currentlyClaimed: true,
     encounterLevel: 0,
     guardians: [],
+    claimLoot: [],
   };
 
   addNode(firstTown);
@@ -166,6 +177,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         currentlyClaimed: false,
         encounterLevel: 0,
         guardians: [],
+        claimLoot: [],
       };
 
       addNode(node);
@@ -176,6 +188,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   setEncounterLevels(config, nodes, firstTown);
   addElementsToWorld(nodes);
   fillSpacesWithGuardians(nodes);
+  fillSpacesWithLoot(nodes);
   determineSpritesForWorld(nodes, rng);
 
   return {
@@ -196,8 +209,12 @@ export function setWorld(world: GameStateWorld): void {
   });
 }
 
-export function getWorldNode(x: number, y: number): WorldLocation | undefined {
-  return gamestate().world.nodes[`${x},${y}`];
+export function getWorldNode(
+  x: number,
+  y: number,
+  state = gamestate(),
+): WorldLocation | undefined {
+  return state.world.nodes[`${x},${y}`];
 }
 
 export function getCurrentWorldNode(

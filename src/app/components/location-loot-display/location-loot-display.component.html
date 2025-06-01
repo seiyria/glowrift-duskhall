@@ -1,0 +1,9 @@
+@let lootData = loot();
+
+<div [tp]="lootInfo">
+  <app-icon-item [item]="lootData"></app-icon-item>
+</div>
+
+<ng-template #lootInfo let-hide>
+  <h3 class="text-lg">{{ lootData.name }}</h3>
+</ng-template>

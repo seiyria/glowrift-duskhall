@@ -1,12 +1,12 @@
 import { Component, input } from '@angular/core';
 import { TippyDirective } from '@ngneat/helipopper';
 import { Guardian } from '../../interfaces';
-import { AtlasAnimationComponent } from '../atlas-animation/atlas-animation.component';
+import { IconGuardianComponent } from '../icon-guardian/icon-guardian.component';
 import { MarkerStatComponent } from '../marker-stat/marker-stat.component';
 
 @Component({
   selector: 'app-location-guardian-display',
-  imports: [AtlasAnimationComponent, TippyDirective, MarkerStatComponent],
+  imports: [TippyDirective, MarkerStatComponent, IconGuardianComponent],
   templateUrl: './location-guardian-display.component.html',
   styleUrl: './location-guardian-display.component.scss',
 })

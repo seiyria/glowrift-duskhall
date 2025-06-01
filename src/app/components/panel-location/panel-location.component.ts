@@ -14,6 +14,7 @@ import { CountdownComponent } from '../countdown/countdown.component';
 import { IconComponent } from '../icon/icon.component';
 import { LocationClaimProgressTextComponent } from '../location-claim-progress-text/location-claim-progress-text.component';
 import { LocationGuardianDisplayComponent } from '../location-guardian-display/location-guardian-display.component';
+import { LocationLootDisplayComponent } from '../location-loot-display/location-loot-display.component';
 import { MarkerElementComponent } from '../marker-element/marker-element.component';
 import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-location-claim.component';
 
@@ -28,6 +29,7 @@ import { MarkerLocationClaimComponent } from '../marker-location-claim/marker-lo
     CountdownComponent,
     LocationClaimProgressTextComponent,
     LocationGuardianDisplayComponent,
+    LocationLootDisplayComponent,
   ],
   templateUrl: './panel-location.component.html',
   styleUrl: './panel-location.component.css',

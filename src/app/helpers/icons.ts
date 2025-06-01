@@ -13,6 +13,7 @@ import {
   gameSmallFire,
   gameStonePile,
   gameSwanBreeze,
+  gameSwapBag,
   gameSwordBrandish,
   gameVibratingShield,
 } from '@ng-icons/game-icons';
@@ -40,6 +41,7 @@ export const ALL_ICONS = {
   gamePlainCircle,
   gameSevenPointedStar,
   gameSwordBrandish,
+  gameSwapBag,
   tablerPlus,
   tablerSettings,
   tablerX,

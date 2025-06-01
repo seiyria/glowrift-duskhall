@@ -3,6 +3,7 @@ import {
   currentCombatHasGuardiansAlive,
   doCombatIteration,
   generateCombatForLocation,
+  resetCombat,
 } from './combat';
 import { updateExploringAndGlobalStatusText } from './explore';
 import { updateGamestate } from './state-game';
@@ -15,6 +16,10 @@ export function exploreGameloop(numTicks: number): void {
   const node = getCurrentWorldNode();
   if (!node) return;
   if (node.currentlyClaimed) return;
+
+  if (currentCombat()?.locationName !== node.name) {
+    resetCombat();
+  }
 
   // generate a combat, move to next tick
   if (!currentCombat()) {

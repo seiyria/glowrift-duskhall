@@ -1,4 +1,5 @@
 import { Combat } from './combat';
+import { EquipmentItem } from './equipment';
 import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
 import { WorldLocation, WorldPosition } from './world';
@@ -44,10 +45,15 @@ export interface GameStateHeroes {
   combat?: Combat;
 }
 
+export interface GameStateInventory {
+  items: EquipmentItem[];
+}
+
 export interface GameState {
   meta: GameStateMeta;
   gameId: GameId;
   world: GameStateWorld;
   camera: GameStateCamera;
   hero: GameStateHeroes;
+  inventory: GameStateInventory;
 }

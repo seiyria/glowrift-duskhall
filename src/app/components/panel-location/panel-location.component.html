@@ -32,13 +32,13 @@
           Guardians
         </div>
 
-        <div class="w-full grid grid-cols-2">
+        <div class="w-full grid grid-cols-3 gap-2">
           @for(guardian of locationData.guardians; track guardian.id) {
           <div>
             <app-location-guardian-display [guardian]="guardian"></app-location-guardian-display>
           </div>
           } @empty {
-          <div>Guardians cleared!</div>
+          <div class="col-span-3">Guardians cleared!</div>
           }
         </div>
       </div>
@@ -60,15 +60,29 @@
     </div>
 
     <div class="h-full flex flex-1 flex-col gap-2">
+      <div>
+        <div class="mt-1 text-lg">
+          Loot
+        </div>
+
+        <div class="w-full grid grid-cols-3 gap-2">
+          @for(item of locationData.claimLoot; track $index) {
+          <div>
+            <app-location-loot-display [loot]="item"></app-location-loot-display>
+          </div>
+          } @empty {
+          <div class="col-span-3">No loot!</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="h-full flex flex-1 flex-col gap-2">
       <div class="text-lg">Location Elements</div>
 
       @for(el of locationData.elements; track $index) {
       <app-marker-element [element]="el.element" [value]="`${el.intensity}%`"></app-marker-element>
       }
-    </div>
-
-    <div class="h-full flex flex-1 flex-col gap-2">
-      <div></div>
     </div>
 
     <div class="h-full flex flex-1 flex-col gap-2">

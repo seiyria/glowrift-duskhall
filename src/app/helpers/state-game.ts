@@ -84,6 +84,9 @@ export function blankGameState(): GameState {
         ticksTotal: 0,
       },
     },
+    inventory: {
+      items: [],
+    },
   };
 }
 

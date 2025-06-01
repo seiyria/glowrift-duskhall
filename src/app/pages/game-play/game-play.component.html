@@ -1,41 +1,36 @@
 <div class="game-container relative">
-  <app-game-map
-    class="absolute top-0 left-0 right-0 bottom-0 map-layer"
-  ></app-game-map>
+  <app-game-map class="absolute top-0 left-0 right-0 bottom-0 map-layer"></app-game-map>
   <app-game-camera-controller
-    class="absolute top-0 left-0 right-0 bottom-0 camera-layer pointer-events-none"
-  ></app-game-camera-controller>
+    class="absolute top-0 left-0 right-0 bottom-0 camera-layer pointer-events-none"></app-game-camera-controller>
 
   @if(showOptions()) {
   <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
-    <app-panel-options
-      class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
-    ></app-panel-options>
+    <app-panel-options class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-options>
   </div>
-  } 
-  
+  }
+
   @if(showHeroes()) {
   <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
-    <app-panel-heroes
-      class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
-    ></app-panel-heroes>
+    <app-panel-heroes class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-heroes>
   </div>
-  } 
-  
+  }
+
+  @if(showInventory()) {
+  <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
+    <app-panel-inventory class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-inventory>
+  </div>
+  }
+
   @if(showCombat()) {
   <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
-    <app-panel-combat
-      class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
-    ></app-panel-combat>
+    <app-panel-combat class="absolute top-0 left-0 right-0 bottom-0 panel-layer"></app-panel-combat>
   </div>
-  } 
-  
+  }
+
   @if(showLocation(); as location) {
   <div class="absolute top-0 left-0 right-0 bottom-0 p-8">
-    <app-panel-location
-      class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
-      [location]="location"
-    ></app-panel-location>
+    <app-panel-location class="absolute top-0 left-0 right-0 bottom-0 panel-layer"
+      [location]="location"></app-panel-location>
   </div>
   }
 </div>

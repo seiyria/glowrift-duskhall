@@ -8,6 +8,7 @@ import {
   WorldLocation,
 } from '../interfaces';
 import { getEntry } from './content';
+import { addItemToInventory, createItem } from './equipment';
 import {
   exploreProgressPercent,
   travelHome,
@@ -18,7 +19,7 @@ import { notify } from './notify';
 import { uuid } from './rng';
 import { localStorageSignal } from './signal';
 import { gamestate, updateGamestate } from './state-game';
-import { getCurrentWorldNode } from './world';
+import { getWorldNode } from './world';
 
 export const combatLog = localStorageSignal<CombatLog[]>('combatLog', []);
 
@@ -70,6 +71,10 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
   return {
     id: uuid() as CombatId,
     locationName: location.name,
+    locationPosition: {
+      x: location.x,
+      y: location.y,
+    },
     rounds: 0,
     heroes,
     guardians,
@@ -193,29 +198,15 @@ export function didHeroesWin(combat: Combat): boolean {
 export function handleCombatVictory(combat: Combat): void {
   logCombatMessage(combat, 'Heroes have won the combat!');
 
-  let xpGainedForClaim = 0;
-  let claimedNode = false;
+  const currentNode = getWorldNode(
+    combat.locationPosition.x,
+    combat.locationPosition.y,
+  );
 
-  updateGamestate((state) => {
-    const updateNodeData = getCurrentWorldNode(state);
-    if (updateNodeData) {
-      xpGainedForClaim =
-        updateNodeData.encounterLevel * updateNodeData.guardians.length;
-      updateNodeData.claimCount++;
-      updateNodeData.currentlyClaimed = true;
-      updateNodeData.guardians = [];
-    }
-
-    claimedNode = true;
-
-    state.hero.combat = undefined;
-
-    return state;
-  });
-
-  const currentNode = getCurrentWorldNode();
-  if (claimedNode && currentNode) {
-    notify(`You have claimed*${currentNode.name}!`, 'LocationClaim');
+  if (currentNode) {
+    const xpGainedForClaim =
+      currentNode.encounterLevel * currentNode.guardians.length;
+    notify(`You have claimed ${currentNode.name}!`, 'LocationClaim');
 
     logCombatMessage(combat, `Heroes claimed **${currentNode.name}**!`);
     updateExploringAndGlobalStatusText('');
@@ -228,7 +219,34 @@ export function handleCombatVictory(combat: Combat): void {
       );
       heroGainXp(hero, xpGainedForClaim);
     });
+
+    currentNode.claimLoot.forEach((lootDef) => {
+      const item = createItem(lootDef);
+
+      addItemToInventory(item);
+
+      logCombatMessage(combat, `Heroes found **${item.name}**!`);
+    });
   }
+
+  updateGamestate((state) => {
+    const updateNodeData = getWorldNode(
+      combat.locationPosition.x,
+      combat.locationPosition.y,
+      state,
+    );
+
+    if (updateNodeData) {
+      updateNodeData.claimCount++;
+      updateNodeData.currentlyClaimed = true;
+      updateNodeData.guardians = [];
+      updateNodeData.claimLoot = [];
+    }
+
+    state.hero.combat = undefined;
+
+    return state;
+  });
 }
 
 export function handleCombatDefeat(combat: Combat): void {

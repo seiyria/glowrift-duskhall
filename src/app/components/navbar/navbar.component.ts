@@ -10,6 +10,7 @@ import {
   isGameloopPaused,
   showCombatMenu,
   showHeroesMenu,
+  showInventoryMenu,
   showOptionsMenu,
 } from '../../helpers';
 import { MetaService } from '../../services/meta.service';
@@ -62,6 +63,16 @@ export class NavbarComponent {
 
     closeAllMenus();
     showCombatMenu.set(!showCombatMenu());
+  }
+
+  public toggleInventory() {
+    if (showInventoryMenu()) {
+      showInventoryMenu.set(false);
+      return;
+    }
+
+    closeAllMenus();
+    showInventoryMenu.set(!showInventoryMenu());
   }
 
   public focusCamera() {

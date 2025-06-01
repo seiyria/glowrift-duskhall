@@ -13,13 +13,26 @@ export type EquipmentRarity =
 
 export type EquipmentItemId = Branded<string, 'EquipmentItemId'>;
 
-export type EquipmentBlock = Record<EquipmentSlot, EquipmentItem | undefined>;
+export type EquipmentBlock = Record<
+  EquipmentSlot,
+  EquipmentItemDefinition | undefined
+>;
 
-export interface EquipmentItem extends Content {
-  id: EquipmentItemId;
-
-  canBeModified: boolean;
-  rarity: EquipmentRarity;
-  dropLevel: number;
+export type EquipmentModifiable = {
   baseStats: StatBlock;
-}
+};
+
+export type EquipmentItemDefinition = Content &
+  EquipmentModifiable & {
+    __type: EquipmentSlot;
+    id: EquipmentItemId;
+    sprite: string;
+
+    canBeModified?: boolean;
+    rarity: EquipmentRarity;
+    dropLevel: number;
+  };
+
+export type EquipmentItem = EquipmentItemDefinition & {
+  mods: Partial<EquipmentModifiable>;
+};
