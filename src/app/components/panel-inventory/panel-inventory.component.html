@@ -2,12 +2,20 @@
   <span header>Inventory</span>
 
   <div pageactions>
+    <div class="join mt-2">
+      @for(type of allItemTypes; track type.type) {
+      <button class="btn btn-info join-item" [class.btn-outline]="currentItemType() !== type.type"
+        (click)="changeItemType(type.type)">{{ type.name }}</button>
+      }
+    </div>
+
     <button class="ml-8 btn btn-clear" (click)="closeMenu()">
       <app-icon name="tablerX"></app-icon>
     </button>
   </div>
 
-  <div class="flex flex-row">
+  <div class="flex flex-row inventory-scroller overflow-y-auto p-2">
+    <app-item-grid [items]="items()"></app-item-grid>
   </div>
 
 </app-card-page>

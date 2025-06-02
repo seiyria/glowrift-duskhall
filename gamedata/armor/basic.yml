@@ -15,7 +15,7 @@
 
   canBeModified: true
   rarity: common
-  dropLevel: 1
+  dropLevel: 2
 
   baseStats:
     aura: 2
