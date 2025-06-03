@@ -14,7 +14,7 @@
       @let isActive = hero === activeHero();
       <div class="flex flex-col items-center gap-2 p-4 cursor-pointer" [class.border-r]="!isActive"
         [class.border-l]="isActive" [class.border-t]="isActive" [class.border-b]="isActive"
-        (click)="activeHeroIndex.set($index)">
+        (click)="setHeroIndex($index)">
         <app-icon-hero [hero]="hero"></app-icon-hero>
 
         <div>{{ hero.name }}</div>
@@ -22,9 +22,29 @@
       }
     </div>
 
-    <div class="flex-1 border-t border-r border-b">
+    <div class="flex-1 flex flex-col justify-between border-t border-r border-b p-4">
       <app-panel-heroes-stats [hero]="activeHero()"></app-panel-heroes-stats>
+
+      <app-panel-hero-equipment [hero]="activeHero()" (slotClick)="setEquipType($event)"
+        (slotRightClick)="unequipItem($event)"></app-panel-hero-equipment>
     </div>
   </div>
 
 </app-card-page>
+
+@if(equipItemType(); as equipType) {
+<app-card-page height="270px">
+  <span header>Choose {{ equipType | titlecase }}</span>
+
+  <div pageactions>
+    <button class="ml-8 btn btn-clear" (click)="closeEquipment()">
+      <app-icon name="tablerX"></app-icon>
+    </button>
+  </div>
+
+  <div class="flex flex-row max-h-[156px] overflow-y-auto p-2">
+    <app-item-grid [items]="visibleItemsToEquip()" (itemClicked)="equipItem($event)"
+      [clickableItems]="true"></app-item-grid>
+  </div>
+</app-card-page>
+}

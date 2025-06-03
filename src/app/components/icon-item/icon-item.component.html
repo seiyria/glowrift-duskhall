@@ -6,8 +6,35 @@
   [class.outline-yellow-400]="itemData.rarity === 'legendary'" [class.outline-rose-400]="itemData.rarity === 'unique'">
 </div>
 
-<app-atlas-image class="z-10 absolute" [assetName]="itemData.sprite" [spritesheet]="itemData.__type"></app-atlas-image>
+<app-atlas-image class="z-10 absolute" [assetName]="itemData.sprite" [spritesheet]="itemData.__type"
+  [tp]="itemInfo"></app-atlas-image>
 
 <div class="z-20 absolute bottom-0 left-[2px] text-xs font-bold italic text-black text-shadow-white">
   Lv. {{ itemData.dropLevel }}
 </div>
+
+<ng-template #itemInfo let-hide>
+  <h3 class="text-lg">{{ itemData.name }}</h3>
+
+  <div class="mt-3">
+    <div>
+      Level {{ itemData.dropLevel }} {{ itemData.rarity }} {{ itemData.__type }}
+    </div>
+
+    @if(itemData.baseStats.health) {
+    <app-marker-stat stat="health" [value]="itemData.baseStats.health"></app-marker-stat>
+    }
+
+    @if(itemData.baseStats.force) {
+    <app-marker-stat stat="force" [value]="itemData.baseStats.force"></app-marker-stat>
+    }
+
+    @if(itemData.baseStats.aura) {
+    <app-marker-stat stat="aura" [value]="itemData.baseStats.aura"></app-marker-stat>
+    }
+
+    @if(itemData.baseStats.speed) {
+    <app-marker-stat stat="speed" [value]="itemData.baseStats.speed"></app-marker-stat>
+    }
+  </div>
+</ng-template>

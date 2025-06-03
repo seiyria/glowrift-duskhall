@@ -1,4 +1,4 @@
-import { clamp } from 'lodash';
+import { clamp, sum } from 'lodash';
 import {
   GameStat,
   Hero,
@@ -44,7 +44,11 @@ export function pickSpriteForHeroName(heroName: string): string {
 
 export function heroTotalStat(hero: Hero, stat: GameStat): number {
   const baseStat = hero.baseStats[stat];
-  return baseStat;
+  const equipmentSum = sum(
+    Object.values(hero.equipment ?? {}).map((i) => i?.baseStats?.[stat] ?? 0),
+  );
+
+  return baseStat + equipmentSum;
 }
 
 export function heroXpRequiredForLevelUp(level: number): number {

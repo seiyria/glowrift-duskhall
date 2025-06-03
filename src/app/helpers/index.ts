@@ -14,6 +14,7 @@ export * from './gameloop-travel';
 export * from './guardian';
 export * from './hero';
 export * from './icons';
+export * from './item';
 export * from './migrate';
 export * from './notify';
 export * from './rng';

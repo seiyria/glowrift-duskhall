@@ -1,9 +1,9 @@
 import { Component, computed } from '@angular/core';
-import { sortBy } from 'lodash';
 import {
   gamestate,
   localStorageSignal,
   showInventoryMenu,
+  sortedItemList,
 } from '../../helpers';
 import { EquipmentSlot } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
@@ -30,31 +30,10 @@ export class PanelInventoryComponent {
   ];
 
   public items = computed(() =>
-    sortBy(
+    sortedItemList(
       gamestate().inventory.items.filter(
         (i) => i.__type === this.currentItemType(),
       ),
-      [
-        (i) => {
-          switch (i.rarity) {
-            case 'common':
-              return 0;
-            case 'uncommon':
-              return -1;
-            case 'rare':
-              return -2;
-            case 'mystical':
-              return -3;
-            case 'legendary':
-              return -4;
-            case 'unique':
-              return -5;
-            default:
-              return 0;
-          }
-        },
-        (i) => -i.dropLevel,
-      ],
     ),
   );
 

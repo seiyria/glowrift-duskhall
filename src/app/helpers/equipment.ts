@@ -3,10 +3,11 @@ import {
   EquipmentItem,
   EquipmentItemDefinition,
   EquipmentItemId,
+  EquipmentSlot,
   Hero,
 } from '../interfaces';
 import { getEntriesByType, getEntry } from './content';
-import { recalculateStats } from './hero';
+import { recalculateStats, updateHeroData } from './hero';
 import { randomIdentifiableChoice, seededrng, uuid } from './rng';
 import { updateGamestate } from './state-game';
 
@@ -43,6 +44,10 @@ export function createItem(def: EquipmentItemDefinition): EquipmentItem {
   };
 }
 
+export function getItemSlot(item: EquipmentItem): EquipmentSlot {
+  return item.__type;
+}
+
 export function addItemToInventory(item: EquipmentItem): void {
   updateGamestate((state) => {
     state.inventory.items = [...state.inventory.items, item];
@@ -50,10 +55,42 @@ export function addItemToInventory(item: EquipmentItem): void {
   });
 }
 
+export function removeItemFromInventory(item: EquipmentItem): void {
+  updateGamestate((state) => {
+    state.inventory.items = state.inventory.items.filter(
+      (i) => i.id !== item.id,
+    );
+    return state;
+  });
+}
+
 export function equipItem(hero: Hero, item: EquipmentItem): void {
+  const existingItem = hero.equipment[getItemSlot(item)];
+  if (existingItem) {
+    unequipItem(hero, existingItem);
+  }
+
+  updateHeroData(hero.id, {
+    equipment: {
+      ...hero.equipment,
+      [getItemSlot(item)]: item,
+    },
+  });
+
+  removeItemFromInventory(item);
+
   recalculateStats(hero);
 }
 
 export function unequipItem(hero: Hero, item: EquipmentItem): void {
+  updateHeroData(hero.id, {
+    equipment: {
+      ...hero.equipment,
+      [getItemSlot(item)]: undefined,
+    },
+  });
+
+  addItemToInventory(item);
+
   recalculateStats(hero);
 }

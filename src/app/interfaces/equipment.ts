@@ -13,10 +13,7 @@ export type EquipmentRarity =
 
 export type EquipmentItemId = Branded<string, 'EquipmentItemId'>;
 
-export type EquipmentBlock = Record<
-  EquipmentSlot,
-  EquipmentItemDefinition | undefined
->;
+export type EquipmentBlock = Record<EquipmentSlot, EquipmentItem | undefined>;
 
 export type EquipmentModifiable = {
   baseStats: StatBlock;
