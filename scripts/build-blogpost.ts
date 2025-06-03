@@ -27,7 +27,7 @@ const content = `${header}
 
 ${changelog}
 
-> Play the latest update [online](https://subdomain.placeholderdomain.com).
+> Play the latest update [online](https://glowriftduskhall.felfhenor.com).
 {: .prompt-info }
 `;
 

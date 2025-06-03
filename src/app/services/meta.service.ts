@@ -78,7 +78,7 @@ export class MetaService {
   private async checkVersionAgainstLiveVersion() {
     try {
       const liveVersionFile = await fetch(
-        'https://subdomain.placeholderdomain.com/version.json',
+        'https://glowriftduskhall.felfhenor.com/version.json',
       );
       const liveVersionData = await liveVersionFile.json();
       liveVersion.set(liveVersionData);
