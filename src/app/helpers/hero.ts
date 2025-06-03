@@ -42,13 +42,18 @@ export function pickSpriteForHeroName(heroName: string): string {
   return indexToSprite(spriteIndex);
 }
 
-export function heroTotalStat(hero: Hero, stat: GameStat): number {
-  const baseStat = hero.baseStats[stat];
-  const equipmentSum = sum(
+export function heroBaseStat(hero: Hero, stat: GameStat): number {
+  return hero.baseStats[stat];
+}
+
+export function heroEquipmentStat(hero: Hero, stat: GameStat): number {
+  return sum(
     Object.values(hero.equipment ?? {}).map((i) => i?.baseStats?.[stat] ?? 0),
   );
+}
 
-  return baseStat + equipmentSum;
+export function heroTotalStat(hero: Hero, stat: GameStat): number {
+  return heroBaseStat(hero, stat) + heroEquipmentStat(hero, stat);
 }
 
 export function heroXpRequiredForLevelUp(level: number): number {
