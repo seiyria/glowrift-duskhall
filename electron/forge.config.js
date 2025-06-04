@@ -4,8 +4,8 @@ const fs = require('fs');
 module.exports = {
   packagerConfig: {
     executableName: 'glowrift-duskhall',
-    appBundleId: 'com.lightless.glowrift-duskhall',
-    appCopyright: 'glowrift-duskhall Team',
+    appBundleId: 'com.lightless.felfhenor-duskhall',
+    appCopyright: 'Glowrift Duskhall Team',
     appCategoryType: 'public.app-category.games',
     icon: './icons/icon',
   },
