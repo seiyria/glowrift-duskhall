@@ -78,10 +78,27 @@
     </div>
 
     <div class="h-full flex flex-1 flex-col gap-2">
-      <div class="text-lg">Location Elements</div>
+      <div class="text-lg">Elements Present</div>
 
-      @for(el of locationData.elements; track $index) {
-      <app-marker-element [element]="el.element" [value]="`${el.intensity}%`"></app-marker-element>
+      @for(el of elements(); track $index) {
+      <div class="flex flex-row gap-2 items-center min-w-[250px] max-h-[21px]">
+        <app-icon-element [element]="el.element"></app-icon-element>
+        <div class="min-w-[128px] flex-1">{{ el.element| titlecase }}</div>
+        <div class="min-w-[56px]">{{ el.intensity }}%</div>
+      </div>
+
+      } @empty {
+      None
+      }
+
+      <div class="text-lg">Resources Generated Per Tick</div>
+
+      @for(res of resourcesGenerated(); track $index) {
+      <div class="flex flex-row gap-2 items-center min-w-[250px] max-h-[21px]">
+        <app-icon-currency [currency]="res.resource"></app-icon-currency>
+        <div class="min-w-[128px] flex-1">{{ res.resource }}</div>
+        <div class="min-w-[56px]">+{{ res.amount }}</div>
+      </div>
       } @empty {
       None
       }

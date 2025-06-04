@@ -1,5 +1,5 @@
 <div class="flex flex-row gap-2 items-center min-w-[250px]">
-  <app-icon size="1.5em" [name]="icon()" [ngClass]="[color()]"></app-icon>
+  <app-icon-currency [currency]="currency()"></app-icon-currency>
   <div class="min-w-[128px] flex-1">{{ currency() | titlecase }}</div>
   <div class="min-w-[56px]">{{ value() | gameCurrency }}</div>
 </div>
