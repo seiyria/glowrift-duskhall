@@ -9,8 +9,27 @@
     </ul>
   </div>
 
+  <div class="navbar-center">
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <details>
+          <summary class="!pl-2">
+            <app-marker-currency-current currency="Mana"></app-marker-currency-current>
+          </summary>
+
+          <ul class="bg-base-100 rounded-t-none p-2 z-50 !mt-0 !pe-8">
+            @for(currency of displayedCurrencies(); track $index) {
+            <app-marker-currency-current [currency]="currency"></app-marker-currency-current>
+            }
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+
   <div class="navbar-end">
     <ul class="menu menu-horizontal px-1 flex gap-2">
+
 
       <li class="action-button" appRequireSetup>
         <button class="btn btn-xs btn-info" [tp]="isPaused() ? 'Resume Game' : 'Pause Game'" (click)="togglePause()">

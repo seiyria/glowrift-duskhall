@@ -6,6 +6,7 @@ import { RequireSetupDirective } from '../../directives/require-setup.directive'
 import {
   closeAllMenus,
   focusCameraOnPlayer,
+  gamestate,
   globalStatusText,
   isGameloopPaused,
   showCombatMenu,
@@ -13,8 +14,10 @@ import {
   showInventoryMenu,
   showOptionsMenu,
 } from '../../helpers';
+import { GameCurrency } from '../../interfaces';
 import { MetaService } from '../../services/meta.service';
 import { IconComponent } from '../icon/icon.component';
+import { MarkerCurrencyCurrentComponent } from '../marker-currency-current/marker-currency-current.component';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +26,7 @@ import { IconComponent } from '../icon/icon.component';
     RequireSetupDirective,
     IconComponent,
     SweetAlert2Module,
+    MarkerCurrencyCurrentComponent,
   ],
   providers: [],
   templateUrl: './navbar.component.html',
@@ -34,6 +38,13 @@ export class NavbarComponent {
 
   public isPaused = computed(() => isGameloopPaused());
   public currentStatus = computed(() => globalStatusText());
+
+  public displayedCurrencies = computed(() => {
+    const currentCurrencies = gamestate().currency.currencies;
+    return Object.keys(currentCurrencies).filter(
+      (c) => c !== 'Mana' && currentCurrencies[c as GameCurrency] > 0,
+    ) as GameCurrency[];
+  });
 
   public toggleOptions() {
     if (showOptionsMenu()) {
