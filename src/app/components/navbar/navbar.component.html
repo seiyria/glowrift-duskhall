@@ -12,7 +12,7 @@
   <div class="navbar-center">
     <ul class="menu menu-horizontal px-1">
       <li>
-        <details>
+        <details [open]="shouldShowCurrencyList()" (click)="toggleCurrencyList()">
           <summary class="!pl-2">
             <app-marker-currency-current currency="Mana"></app-marker-currency-current>
           </summary>

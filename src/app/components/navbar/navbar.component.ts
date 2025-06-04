@@ -10,6 +10,7 @@ import {
   globalStatusText,
   isGameloopPaused,
   showCombatMenu,
+  showCurrencyList,
   showHeroesMenu,
   showInventoryMenu,
   showOptionsMenu,
@@ -39,12 +40,18 @@ export class NavbarComponent {
   public isPaused = computed(() => isGameloopPaused());
   public currentStatus = computed(() => globalStatusText());
 
+  public shouldShowCurrencyList = computed(() => showCurrencyList());
+
   public displayedCurrencies = computed(() => {
     const currentCurrencies = gamestate().currency.currencies;
     return Object.keys(currentCurrencies).filter(
       (c) => c !== 'Mana' && currentCurrencies[c as GameCurrency] > 0,
     ) as GameCurrency[];
   });
+
+  public toggleCurrencyList() {
+    showCurrencyList.set(!showCurrencyList());
+  }
 
   public toggleOptions() {
     if (showOptionsMenu()) {

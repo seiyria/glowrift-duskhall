@@ -11,6 +11,7 @@ export const windowHeightTiles = computed(() =>
 
 export const globalStatusText = signal<string>('');
 
+export const showCurrencyList = signal<boolean>(false);
 export const showLocationMenu = signal<WorldLocation | undefined>(undefined);
 export const showOptionsMenu = signal<boolean>(false);
 export const showInventoryMenu = signal<boolean>(false);
@@ -18,6 +19,7 @@ export const showHeroesMenu = signal<boolean>(false);
 export const showCombatMenu = signal<boolean>(false);
 
 export function closeAllMenus() {
+  showCurrencyList.set(false);
   showHeroesMenu.set(false);
   showCombatMenu.set(false);
   showOptionsMenu.set(false);
