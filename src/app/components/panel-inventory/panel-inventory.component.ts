@@ -39,8 +39,8 @@ export class PanelInventoryComponent {
     };
 
     items.forEach((item: EquipmentItem) => {
-      const itemType = item.__type as EquipmentSlot;
-      if (counts[itemType] !== undefined) {
+      const itemType = item.__type;
+      if (itemType in counts) {
         counts[itemType]++;
       }
     });
