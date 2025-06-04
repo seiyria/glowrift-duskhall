@@ -1,206 +1,9 @@
 import { sortBy } from 'lodash';
-import { PRNG } from 'seedrandom';
-import {
-  GameStateWorld,
-  LocationType,
-  WorldConfig,
-  WorldLocation,
-} from '../interfaces';
-import {
-  gamerng,
-  randomChoice,
-  randomNumber,
-  randomNumberRange,
-  uuid,
-} from './rng';
-import { indexToSprite } from './sprite';
+import { GameCurrency, GameStateWorld, WorldLocation } from '../interfaces';
+import { getCurrencyClaimsForNode, mergeCurrencyClaims } from './currency';
 import { gamestate, updateGamestate } from './state-game';
 import { distanceBetweenNodes } from './travel';
-import {
-  populateLocationWithGuardians,
-  populateLocationWithLoot,
-} from './worldgen';
-
-function fillEmptySpaceWithEmptyNodes(
-  config: WorldConfig,
-  nodes: Record<string, WorldLocation>,
-): void {
-  for (let x = 0; x < config.width; x++) {
-    for (let y = 0; y < config.height; y++) {
-      if (nodes[`${x},${y}`]) continue;
-
-      nodes[`${x},${y}`] = {
-        id: uuid(),
-        elements: [],
-        name: '',
-        nodeType: undefined,
-        sprite: '',
-        objectSprite: '',
-        x,
-        y,
-        claimCount: 0,
-        currentlyClaimed: false,
-        encounterLevel: 0,
-        guardians: [],
-        claimLoot: [],
-      };
-    }
-  }
-}
-
-function addElementsToWorld(nodes: Record<string, WorldLocation>): void {
-  Object.values(nodes).forEach((node) => {
-    node.elements = [{ element: 'Fire', intensity: 0 }];
-  });
-}
-
-function getSpriteFromNodeType(nodeType: LocationType | undefined): string {
-  switch (nodeType) {
-    case 'town':
-      return '0021';
-    case 'castle':
-      return '0000';
-    case 'cave':
-      return '0020';
-    case 'dungeon':
-      return '0023';
-    case 'village':
-      return '0022';
-    default:
-      return '';
-  }
-}
-
-function setEncounterLevels(
-  config: WorldConfig,
-  nodes: Record<string, WorldLocation>,
-  middleNode: WorldLocation,
-): void {
-  const { maxLevel } = config;
-  const maxDistance = distanceBetweenNodes(nodes[`0,0`], middleNode);
-
-  Object.values(nodes).forEach((node) => {
-    const dist = distanceBetweenNodes(node, middleNode);
-    node.encounterLevel = Math.floor((dist / maxDistance) * maxLevel);
-  });
-}
-
-function determineSpritesForWorld(
-  nodes: Record<string, WorldLocation>,
-  rng: PRNG,
-): void {
-  Object.values(nodes).forEach((node) => {
-    node.sprite = indexToSprite(16 + randomNumber(4, rng));
-
-    node.objectSprite = getSpriteFromNodeType(node.nodeType);
-  });
-}
-
-function fillSpacesWithGuardians(nodes: Record<string, WorldLocation>): void {
-  Object.values(nodes).forEach((node) => {
-    populateLocationWithGuardians(node);
-  });
-}
-
-function fillSpacesWithLoot(nodes: Record<string, WorldLocation>): void {
-  Object.values(nodes).forEach((node) => {
-    populateLocationWithLoot(node);
-  });
-}
-
-export function generateWorld(config: WorldConfig): GameStateWorld {
-  const rng = gamerng();
-
-  const nodes: Record<string, WorldLocation> = {};
-  const nodeList: WorldLocation[] = [];
-  const nodePositionsAvailable: Record<
-    string,
-    { x: number; y: number; taken: boolean }
-  > = {};
-
-  for (let x = 0; x < config.width; x++) {
-    for (let y = 0; y < config.height; y++) {
-      nodePositionsAvailable[`${x},${y}`] = { x, y, taken: false };
-    }
-  }
-
-  const findUnusedPosition: () => { x: number; y: number } = () => {
-    const freeNodes = Object.values(nodePositionsAvailable).filter(
-      (n) => !n.taken,
-    );
-    if (freeNodes.length === 0) return { x: -1, y: -1 };
-
-    const chosenNode = randomChoice<{ x: number; y: number }>(freeNodes, rng);
-    return { x: chosenNode.x, y: chosenNode.y };
-  };
-
-  const addNode = (node: WorldLocation): void => {
-    nodeList.push(node);
-    nodes[`${node.x},${node.y}`] = node;
-    nodePositionsAvailable[`${node.x},${node.y}`].taken = true;
-  };
-
-  const firstTown: WorldLocation = {
-    id: uuid(),
-    x: Math.floor(config.width / 2),
-    y: Math.floor(config.height / 2),
-    nodeType: 'town',
-    name: 'LaFlotte',
-    elements: [{ element: 'Neutral', intensity: 0 }],
-    sprite: '',
-    objectSprite: '',
-    claimCount: 0,
-    currentlyClaimed: true,
-    encounterLevel: 0,
-    guardians: [],
-    claimLoot: [],
-  };
-
-  addNode(firstTown);
-
-  Object.keys(config.nodeCount).forEach((key) => {
-    const count = config.nodeCount[key as LocationType];
-    const nodeCount = randomNumberRange(count.min, count.max, rng);
-
-    for (let i = 0; i < nodeCount; i++) {
-      const { x, y } = findUnusedPosition();
-      const node: WorldLocation = {
-        id: uuid(),
-        x,
-        y,
-        nodeType: key as LocationType,
-        name: `${key} ${i + 1}`,
-        elements: [],
-        sprite: '',
-        objectSprite: '',
-        claimCount: 0,
-        currentlyClaimed: false,
-        encounterLevel: 0,
-        guardians: [],
-        claimLoot: [],
-      };
-
-      addNode(node);
-    }
-  });
-
-  fillEmptySpaceWithEmptyNodes(config, nodes);
-  setEncounterLevels(config, nodes, firstTown);
-  addElementsToWorld(nodes);
-  fillSpacesWithGuardians(nodes);
-  fillSpacesWithLoot(nodes);
-  determineSpritesForWorld(nodes, rng);
-
-  return {
-    width: config.width,
-    height: config.height,
-    nodes,
-    homeBase: {
-      x: firstTown.x,
-      y: firstTown.y,
-    },
-  };
-}
+import { getGuardiansForLocation, getLootForLocation } from './worldgen';
 
 export function setWorld(world: GameStateWorld): void {
   updateGamestate((state) => {
@@ -224,10 +27,14 @@ export function getCurrentWorldNode(
   return getWorldNode(currentPosition.x, currentPosition.y);
 }
 
+export function getAllNodes(): WorldLocation[] {
+  return Object.values(gamestate().world.nodes);
+}
+
 export function getAllNodesInOrderOfCloseness(
   node: WorldLocation,
 ): WorldLocation[] {
-  const nodes = Object.values(gamestate().world.nodes);
+  const nodes = getAllNodes();
   return sortBy(nodes, (n) => distanceBetweenNodes(node, n)).filter(
     (n) => n.nodeType && n.id !== node.id,
   );
@@ -251,4 +58,47 @@ export function getNodesWithinRiskTolerance(
   if (riskTolerance === 'medium') levelThreshold = 7;
   else if (riskTolerance === 'high') levelThreshold = 100;
   return nodes.filter((n) => n.encounterLevel <= heroLevel + levelThreshold);
+}
+
+export function getClaimedNodes(): WorldLocation[] {
+  return getAllNodes().filter((n) => n.currentlyClaimed);
+}
+
+export function claimNode(node: WorldLocation): void {
+  const claims = getCurrencyClaimsForNode(node);
+  mergeCurrencyClaims(claims);
+
+  updateGamestate((state) => {
+    const updateNodeData = getWorldNode(node.x, node.y, state);
+    if (updateNodeData) {
+      updateNodeData.claimCount++;
+      updateNodeData.currentlyClaimed = true;
+      updateNodeData.guardians = [];
+      updateNodeData.claimLoot = [];
+    }
+
+    return state;
+  });
+}
+
+export function unclaimNode(node: WorldLocation): void {
+  const claims = getCurrencyClaimsForNode(node);
+  Object.keys(claims).forEach(
+    (currencyKey) =>
+      (claims[currencyKey as GameCurrency] =
+        -claims[currencyKey as GameCurrency]),
+  );
+
+  mergeCurrencyClaims(claims);
+
+  updateGamestate((state) => {
+    const updateNodeData = getWorldNode(node.x, node.y, state);
+    if (updateNodeData) {
+      updateNodeData.currentlyClaimed = false;
+      updateNodeData.guardians = getGuardiansForLocation(updateNodeData);
+      updateNodeData.claimLoot = getLootForLocation(updateNodeData);
+    }
+
+    return state;
+  });
 }

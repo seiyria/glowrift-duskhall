@@ -38,7 +38,7 @@
             <app-location-guardian-display [guardian]="guardian"></app-location-guardian-display>
           </div>
           } @empty {
-          <div class="col-span-3">Guardians cleared!</div>
+          <div class="col-span-3">None</div>
           }
         </div>
       </div>
@@ -71,7 +71,7 @@
             <app-location-loot-display [loot]="item"></app-location-loot-display>
           </div>
           } @empty {
-          <div class="col-span-3">No loot!</div>
+          <div class="col-span-3">None</div>
           }
         </div>
       </div>
@@ -82,6 +82,8 @@
 
       @for(el of locationData.elements; track $index) {
       <app-marker-element [element]="el.element" [value]="`${el.intensity}%`"></app-marker-element>
+      } @empty {
+      None
       }
     </div>
 

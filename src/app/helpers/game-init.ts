@@ -2,7 +2,8 @@ import { WorldConfig } from '../interfaces';
 import { setCameraPosition } from './camera';
 import { setHeroPosition } from './hero';
 import { finishSetup } from './setup';
-import { generateWorld, setWorld } from './world';
+import { setWorld } from './world';
+import { generateWorld } from './worldgen';
 
 export function startGame(config: WorldConfig): void {
   const world = generateWorld(config);

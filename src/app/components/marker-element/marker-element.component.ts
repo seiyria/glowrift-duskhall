@@ -9,7 +9,6 @@ const icons: Record<GameElement, keyof typeof ALL_ICONS> = {
   Ice: 'gameIceCube',
   Air: 'gameIceCube',
   Earth: 'gameStonePile',
-  Neutral: 'gameStonePile',
 };
 
 @Component({

@@ -1,4 +1,5 @@
 import { Combat } from './combat';
+import { CurrencyBlock } from './currency';
 import { EquipmentItem } from './equipment';
 import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
@@ -49,6 +50,11 @@ export interface GameStateInventory {
   items: EquipmentItem[];
 }
 
+export interface GameStateCurrency {
+  currencyPerTickEarnings: CurrencyBlock;
+  currencies: CurrencyBlock;
+}
+
 export interface GameState {
   meta: GameStateMeta;
   gameId: GameId;
@@ -56,4 +62,5 @@ export interface GameState {
   camera: GameStateCamera;
   hero: GameStateHeroes;
   inventory: GameStateInventory;
+  currency: GameStateCurrency;
 }

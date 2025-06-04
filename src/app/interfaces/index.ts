@@ -1,5 +1,6 @@
 export * from './combat';
 export * from './content';
+export * from './currency';
 export * from './discord';
 export * from './element';
 export * from './equipment';

@@ -8,6 +8,7 @@ import {
   WorldLocation,
 } from '../interfaces';
 import { getEntry } from './content';
+import { gainCurrency, updateCurrencyClaims } from './currency';
 import { addItemToInventory, createItem } from './equipment';
 import {
   exploreProgressPercent,
@@ -19,7 +20,7 @@ import { notify } from './notify';
 import { uuid } from './rng';
 import { localStorageSignal } from './signal';
 import { gamestate, updateGamestate } from './state-game';
-import { getWorldNode } from './world';
+import { claimNode, getWorldNode } from './world';
 
 export const combatLog = localStorageSignal<CombatLog[]>('combatLog', []);
 
@@ -220,6 +221,9 @@ export function handleCombatVictory(combat: Combat): void {
       heroGainXp(hero, xpGainedForClaim);
     });
 
+    gainCurrency('Soul Essence', xpGainedForClaim);
+    logCombatMessage(combat, `You gained ${xpGainedForClaim} Soul Essence!`);
+
     currentNode.claimLoot.forEach((lootDef) => {
       const item = createItem(lootDef);
 
@@ -227,26 +231,12 @@ export function handleCombatVictory(combat: Combat): void {
 
       logCombatMessage(combat, `Heroes found **${item.name}**!`);
     });
+
+    claimNode(currentNode);
   }
 
-  updateGamestate((state) => {
-    const updateNodeData = getWorldNode(
-      combat.locationPosition.x,
-      combat.locationPosition.y,
-      state,
-    );
-
-    if (updateNodeData) {
-      updateNodeData.claimCount++;
-      updateNodeData.currentlyClaimed = true;
-      updateNodeData.guardians = [];
-      updateNodeData.claimLoot = [];
-    }
-
-    state.hero.combat = undefined;
-
-    return state;
-  });
+  resetCombat();
+  updateCurrencyClaims();
 }
 
 export function handleCombatDefeat(combat: Combat): void {

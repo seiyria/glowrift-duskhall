@@ -1,6 +1,13 @@
 import { Signal, signal } from '@angular/core';
 import { cloneDeep } from 'lodash';
-import { GameId, GameState, Hero, HeroId } from '../interfaces';
+import {
+  CurrencyBlock,
+  GameId,
+  GameState,
+  Hero,
+  HeroId,
+  WorldPosition,
+} from '../interfaces';
 import { uuid } from './rng';
 import { localStorageSignal } from './signal';
 
@@ -36,6 +43,33 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
   };
 }
 
+export function blankPosition(): WorldPosition {
+  return { x: 0, y: 0 };
+}
+
+export function blankCurrencyBlock(): CurrencyBlock {
+  return {
+    'Fire Sliver': 0,
+    'Fire Shard': 0,
+    'Fire Crystal': 0,
+    'Fire Core': 0,
+    'Ice Sliver': 0,
+    'Ice Shard': 0,
+    'Ice Crystal': 0,
+    'Ice Core': 0,
+    'Air Sliver': 0,
+    'Air Shard': 0,
+    'Air Crystal': 0,
+    'Air Core': 0,
+    'Earth Sliver': 0,
+    'Earth Shard': 0,
+    'Earth Crystal': 0,
+    'Earth Core': 0,
+    'Soul Essence': 0,
+    Mana: 0,
+  };
+}
+
 export function blankGameState(): GameState {
   return {
     meta: {
@@ -50,15 +84,9 @@ export function blankGameState(): GameState {
       width: 0,
       height: 0,
       nodes: {},
-      homeBase: {
-        x: 0,
-        y: 0,
-      },
+      homeBase: blankPosition(),
     },
-    camera: {
-      x: 0,
-      y: 0,
-    },
+    camera: blankPosition(),
     hero: {
       respawnTicks: 0,
       riskTolerance: 'low',
@@ -70,13 +98,11 @@ export function blankGameState(): GameState {
       ],
       position: {
         nodeId: '',
-        x: 0,
-        y: 0,
+        ...blankPosition(),
       },
       travel: {
         nodeId: '',
-        x: 0,
-        y: 0,
+        ...blankPosition(),
         ticksLeft: 0,
       },
       location: {
@@ -86,6 +112,10 @@ export function blankGameState(): GameState {
     },
     inventory: {
       items: [],
+    },
+    currency: {
+      currencyPerTickEarnings: blankCurrencyBlock(),
+      currencies: blankCurrencyBlock(),
     },
   };
 }

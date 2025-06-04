@@ -1,4 +1,5 @@
 import { autoTravelGameloop } from './gameloop-autotravel';
+import { currencyGameloop } from './gameloop-currency';
 import { exploreGameloop } from './gameloop-explore';
 import { townGameloop } from './gameloop-town';
 import { travelGameloop } from './gameloop-travel';
@@ -14,6 +15,7 @@ export function doGameloop(numTicks: number): void {
   if (isGameloopPaused()) return;
 
   autoTravelGameloop();
+  currencyGameloop(numTicks);
   townGameloop(numTicks);
   travelGameloop(numTicks);
   exploreGameloop(numTicks);
