@@ -4,8 +4,9 @@ import { getClaimedNodes } from './world';
 
 export function gainCurrency(currency: GameCurrency, amount = 1): void {
   updateGamestate((state) => {
-    state.currency.currencies[currency] = Math.floor(
-      Math.max(0, state.currency.currencies[currency] + amount),
+    state.currency.currencies[currency] = Math.max(
+      0,
+      state.currency.currencies[currency] + amount,
     );
     return state;
   });
@@ -15,7 +16,16 @@ export function loseCurrency(currency: GameCurrency, amount = 1): void {
   gainCurrency(currency, -amount);
 }
 
-export function gainCurrentCurrencyClaims(): void {}
+export function gainCurrentCurrencyClaims(): void {
+  const currencyGains = gamestate().currency.currencyPerTickEarnings;
+
+  Object.keys(currencyGains).forEach((currency) => {
+    gainCurrency(
+      currency as GameCurrency,
+      currencyGains[currency as GameCurrency],
+    );
+  });
+}
 
 export function getCurrencyClaimsForNode(node: WorldLocation): CurrencyBlock {
   const base = blankCurrencyBlock();
