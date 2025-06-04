@@ -5,7 +5,7 @@ import {
   showInventoryMenu,
   sortedItemList,
 } from '../../helpers';
-import { EquipmentSlot } from '../../interfaces';
+import { EquipmentSlot, EquipmentItem } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { IconComponent } from '../icon/icon.component';
 import { ItemGridComponent } from '../item-grid/item-grid.component';
@@ -29,10 +29,33 @@ export class PanelInventoryComponent {
     { name: 'Weapons', type: 'weapon' },
   ];
 
+  public itemCounts = computed(() => {
+    const items = gamestate().inventory.items;
+    const counts: Record<EquipmentSlot, number> = {
+      accessory: 0,
+      armor: 0,
+      trinket: 0,
+      weapon: 0,
+    };
+
+    items.forEach((item: EquipmentItem) => {
+      const itemType = item.__type as EquipmentSlot;
+      if (counts[itemType] !== undefined) {
+        counts[itemType]++;
+      }
+    });
+
+    return counts;
+  });
+
+  public getItemCountForType(type: EquipmentSlot): number {
+    return this.itemCounts()[type];
+  }
+
   public items = computed(() =>
     sortedItemList(
       gamestate().inventory.items.filter(
-        (i) => i.__type === this.currentItemType(),
+        (i: EquipmentItem) => i.__type === this.currentItemType(),
       ),
     ),
   );
