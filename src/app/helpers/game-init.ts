@@ -1,5 +1,5 @@
 import { WorldConfig } from '../interfaces';
-import { setCameraPosition } from './camera';
+import { focusCameraOnPlayer } from './camera';
 import { setHeroPosition } from './hero';
 import { finishSetup } from './setup';
 import { setWorld } from './world';
@@ -9,7 +9,7 @@ export function startGame(config: WorldConfig): void {
   const world = generateWorld(config);
 
   setWorld(world);
-  setCameraPosition(config.width / 2, config.height / 2);
   setHeroPosition(config.width / 2, config.height / 2);
+  focusCameraOnPlayer();
   finishSetup();
 }
