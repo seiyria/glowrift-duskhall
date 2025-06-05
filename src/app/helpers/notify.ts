@@ -25,11 +25,11 @@ export function notify(message: string, category: NotificationCategory): void {
 }
 
 export function notifyError(message: string): void {
-  if (!isPageVisible() || !canSendNotifications()) return;
+  if (!isPageVisible()) return;
   notification.next({ message, type: 'error', category: 'Error' });
 }
 
 export function notifySuccess(message: string): void {
-  if (!isPageVisible() || !canSendNotifications()) return;
+  if (!isPageVisible()) return;
   notification.next({ message, type: 'success', category: 'Success' });
 }
