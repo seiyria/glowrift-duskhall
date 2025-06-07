@@ -17,7 +17,8 @@
 
   <div class="flex flex-col gap-4">
     <div>
-      <app-marker-stat stat="health" [value]="heroStatTotals.health"></app-marker-stat>
+      <app-marker-stat stat="health" [value]="heroStatTotals.health" [delta]="heroStatTotals.health - hero().baseStats.health">
+      </app-marker-stat>
     </div>
 
     <div>
