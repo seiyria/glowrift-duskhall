@@ -75,7 +75,10 @@ export const appConfig: ApplicationConfig = {
       variations: {
         tooltip: tooltipVariation,
         popper: popperVariation,
-        contextMenu: withContextMenuVariation(popperVariation),
+        contextMenu: {
+          ...withContextMenuVariation(popperVariation),
+          theme: 'translucent',
+        },
       },
     }),
     {

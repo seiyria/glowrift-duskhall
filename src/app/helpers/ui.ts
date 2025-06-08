@@ -18,6 +18,10 @@ export const showInventoryMenu = signal<boolean>(false);
 export const showHeroesMenu = signal<boolean>(false);
 export const showCombatMenu = signal<boolean>(false);
 
+export const contextMenuCoordinates = signal<
+  { x: number; y: number } | undefined
+>(undefined);
+
 export function closeAllMenus() {
   showCurrencyList.set(false);
   showHeroesMenu.set(false);

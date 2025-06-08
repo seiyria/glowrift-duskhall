@@ -7,7 +7,9 @@ import {
   Hero,
 } from '../interfaces';
 import { getEntriesByType, getEntry } from './content';
+import { gainCurrency } from './currency';
 import { recalculateStats, updateHeroData } from './hero';
+import { notifySuccess } from './notify';
 import { randomIdentifiableChoice, seededrng, uuid } from './rng';
 import { updateGamestate } from './state-game';
 
@@ -93,4 +95,22 @@ export function unequipItem(hero: Hero, item: EquipmentItem): void {
   addItemToInventory(item);
 
   recalculateStats(hero);
+}
+
+export function itemSalvageValue(item: EquipmentItem): number {
+  return (
+    (item.baseStats.aura ?? 0) * 4 +
+    (item.baseStats.force ?? 0) * 6 +
+    (item.baseStats.health ?? 0) * 2 +
+    (item.baseStats.speed ?? 0) * 10
+  );
+}
+
+export function itemSalvage(item: EquipmentItem): void {
+  const manaGained = itemSalvageValue(item);
+
+  removeItemFromInventory(item);
+  gainCurrency('Mana', manaGained);
+
+  notifySuccess(`Salvaged ${item.name} for ${manaGained} mana!`);
 }

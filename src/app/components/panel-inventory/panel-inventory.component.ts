@@ -5,7 +5,7 @@ import {
   showInventoryMenu,
   sortedItemList,
 } from '../../helpers';
-import { EquipmentSlot, EquipmentItem } from '../../interfaces';
+import { EquipmentItem, EquipmentSlot } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { IconComponent } from '../icon/icon.component';
 import { ItemGridComponent } from '../item-grid/item-grid.component';
