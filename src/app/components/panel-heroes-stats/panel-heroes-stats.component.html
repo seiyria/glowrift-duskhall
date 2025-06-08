@@ -22,15 +22,15 @@
     </div>
 
     <div>
-      <app-marker-stat stat="force" [value]="heroStatTotals.force"></app-marker-stat>
+      <app-marker-stat stat="force" [value]="heroStatTotals.force" [delta]="heroStatTotals.force - hero().baseStats.force"></app-marker-stat>
     </div>
 
     <div>
-      <app-marker-stat stat="aura" [value]="heroStatTotals.aura"></app-marker-stat>
+      <app-marker-stat stat="aura" [value]="heroStatTotals.aura" [delta] = "heroStatTotals.aura - hero().baseStats.aura"></app-marker-stat>
     </div>
 
     <div>
-      <app-marker-stat stat="speed" [value]="heroStatTotals.speed"></app-marker-stat>
+      <app-marker-stat stat="speed" [value]="heroStatTotals.speed" [delta]="heroStatTotals.speed - hero().baseStats.speed"></app-marker-stat>
     </div>
   </div>
 </div>
