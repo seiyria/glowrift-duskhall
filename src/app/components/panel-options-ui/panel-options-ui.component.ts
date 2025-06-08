@@ -2,7 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptionsBaseComponent } from '../panel-options/option-base-page.component';
-import { canSendNotifications } from '../../helpers';
+import { canSendNotifications, ToggleableCategory, enabledCategories } from '../../helpers';
 
 @Component({
   selector: 'app-panel-options-ui',
@@ -87,8 +87,20 @@ export class PanelOptionsUIComponent extends OptionsBaseComponent {
   }
 
   public notificationsEnabled = computed(() => canSendNotifications());
+
   
   public toggleNotifications() {
     canSendNotifications.set(!canSendNotifications());
   }
+
+  public notificationCategoriesEnabled = computed(() => enabledCategories());
+
+  public toggleNotificationCategories(category: ToggleableCategory) {
+    if (enabledCategories().includes(category)) {
+      enabledCategories.set(enabledCategories().filter(cat => cat !== category));
+      return;
+    }
+    enabledCategories.set([...enabledCategories(), category]);
+  }
+
 }
