@@ -13,9 +13,29 @@
             <input type="checkbox" [checked]="notificationsEnabled() === true"
               class="checkbox checkbox-secondary" 
               (click)="toggleNotifications()" />
-            <span class="label-text">Show notifications</span>
+            <span class="label-text">Show All</span>
           </label>
         </div>
+
+          <div class="form-control">
+            <label class="label cursor-pointer label-checkbox">
+              <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('Travel')"
+                class="checkbox checkbox-secondary" 
+                (click)="toggleNotificationCategories('Travel')"
+                [disabled]="!notificationsEnabled()" />
+              <span class="label-text">Show Travel</span>
+            </label>
+          </div>
+          
+          <div class="form-control">
+            <label class="label cursor-pointer label-checkbox">
+              <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('LocationClaim')"
+                class="checkbox checkbox-secondary" 
+                (click)="toggleNotificationCategories('LocationClaim')"
+                [disabled]="!notificationsEnabled()" />
+              <span class="label-text">Show Location Claim</span>
+            </label>
+          </div>
 
       </div>
 
