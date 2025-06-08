@@ -20,6 +20,21 @@ const icons: Record<GameStat, keyof typeof ALL_ICONS> = {
 export class MarkerStatComponent {
   public stat = input.required<GameStat>();
   public value = input.required<number>();
+  public delta = input<number>(0);
 
   public icon = computed(() => icons[this.stat()]);
+
+ public displayDelta = computed(() => {
+    const deltaValue = this.delta();
+    if (deltaValue === 0) return null;
+
+    return deltaValue > 0 ? `(+${deltaValue})` : `(${deltaValue})`;
+  });
+
+  public deltaColor = computed(() =>
+    this.delta() > 0 ? 'text-green-500' : 'text-red-500'
+  );
 }
+
+
+
