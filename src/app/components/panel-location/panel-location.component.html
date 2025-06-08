@@ -53,6 +53,10 @@
         <app-location-claim-progress-text></app-location-claim-progress-text>
         }
 
+        @if(nodeLostTime() > 0) {
+        <app-countdown [secondsLeft]="nodeLostTime()" label="Node Lost In"></app-countdown>
+        }
+
         <button class="btn btn-info btn-block" [disabled]="!canTravelToThisNode()" (click)="travelToThisNode()">
           <app-countdown [secondsLeft]="travelTimeSeconds()" [parenthesize]="true" label="Travel"></app-countdown>
         </button>

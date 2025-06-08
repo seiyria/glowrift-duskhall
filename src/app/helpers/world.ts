@@ -1,7 +1,9 @@
 import { sortBy } from 'lodash';
 import { GameCurrency, GameStateWorld, WorldLocation } from '../interfaces';
 import { getCurrencyClaimsForNode, mergeCurrencyClaims } from './currency';
+import { notify } from './notify';
 import { gamestate, updateGamestate } from './state-game';
+import { addTimerAndAction, getRegisterTick } from './timer';
 import { distanceBetweenNodes } from './travel';
 import { getGuardiansForLocation, getLootForLocation } from './worldgen';
 
@@ -68,6 +70,18 @@ export function claimNode(node: WorldLocation): void {
   const claims = getCurrencyClaimsForNode(node);
   mergeCurrencyClaims(claims);
 
+  const claimDuration = (100 - node.encounterLevel) * 25;
+  addTimerAndAction(
+    {
+      location: {
+        x: node.x,
+        y: node.y,
+      },
+      type: 'UnclaimVillage',
+    },
+    claimDuration,
+  );
+
   updateGamestate((state) => {
     const updateNodeData = getWorldNode(node.x, node.y, state);
     if (updateNodeData) {
@@ -75,6 +89,7 @@ export function claimNode(node: WorldLocation): void {
       updateNodeData.currentlyClaimed = true;
       updateNodeData.guardians = [];
       updateNodeData.claimLoot = [];
+      updateNodeData.unclaimTime = getRegisterTick(claimDuration);
     }
 
     return state;
@@ -89,6 +104,8 @@ export function unclaimNode(node: WorldLocation): void {
         -claims[currencyKey as GameCurrency]),
   );
 
+  notify(`${node.name} was lost!`, 'LocationClaim');
+
   mergeCurrencyClaims(claims);
 
   updateGamestate((state) => {
@@ -97,6 +114,7 @@ export function unclaimNode(node: WorldLocation): void {
       updateNodeData.currentlyClaimed = false;
       updateNodeData.guardians = getGuardiansForLocation(updateNodeData);
       updateNodeData.claimLoot = getLootForLocation(updateNodeData);
+      updateNodeData.unclaimTime = 0;
     }
 
     return state;

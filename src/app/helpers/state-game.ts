@@ -77,7 +77,6 @@ export function blankGameState(): GameState {
       isSetup: false,
       isPaused: false,
       createdAt: Date.now(),
-      numTicks: 0,
     },
     gameId: uuid() as GameId,
     world: {
@@ -116,6 +115,10 @@ export function blankGameState(): GameState {
     currency: {
       currencyPerTickEarnings: blankCurrencyBlock(),
       currencies: blankCurrencyBlock(),
+    },
+    actionClock: {
+      numTicks: 0,
+      timers: {},
     },
   };
 }

@@ -1,6 +1,7 @@
 import { autoTravelGameloop } from './gameloop-autotravel';
 import { currencyGameloop } from './gameloop-currency';
 import { exploreGameloop } from './gameloop-explore';
+import { gameloopTimers } from './gameloop-timers';
 import { townGameloop } from './gameloop-town';
 import { travelGameloop } from './gameloop-travel';
 import { isSetup } from './setup';
@@ -19,9 +20,10 @@ export function doGameloop(numTicks: number): void {
   townGameloop(numTicks);
   travelGameloop(numTicks);
   exploreGameloop(numTicks);
+  gameloopTimers(numTicks);
 
   updateGamestate((state) => {
-    state.meta.numTicks += numTicks;
+    state.actionClock.numTicks += numTicks;
     return state;
   });
 }

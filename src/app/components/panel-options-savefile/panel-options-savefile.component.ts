@@ -3,7 +3,12 @@ import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
-import { blankGameState, gamestate, setGameState } from '../../helpers';
+import {
+  blankGameState,
+  gamestate,
+  setGameState,
+  totalTicksElapsed,
+} from '../../helpers';
 import { ButtonSavefileExportComponent } from '../button-savefile-export/button-savefile-export.component';
 import { ButtonSavefileImportComponent } from '../button-savefile-import/button-savefile-import.component';
 
@@ -24,7 +29,7 @@ export class PanelOptionsSavefileComponent {
   private router = inject(Router);
 
   public startedAt = computed(() => gamestate().meta.createdAt);
-  public numTicks = computed(() => gamestate().meta.numTicks);
+  public numTicks = computed(() => totalTicksElapsed());
 
   async deleteSavefile() {
     await this.router.navigate(['/']);

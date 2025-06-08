@@ -3,6 +3,7 @@ import { CurrencyBlock } from './currency';
 import { EquipmentItem } from './equipment';
 import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
+import { Timer } from './timer';
 import { WorldLocation, WorldPosition } from './world';
 
 export type GameId = Branded<string, 'GameId'>;
@@ -12,7 +13,6 @@ export interface GameStateMeta {
   isSetup: boolean;
   isPaused: boolean;
   createdAt: number;
-  numTicks: number;
 }
 
 export type GameStateCamera = WorldPosition;
@@ -55,6 +55,11 @@ export interface GameStateCurrency {
   currencies: CurrencyBlock;
 }
 
+export interface GameStateActionClock {
+  numTicks: number;
+  timers: Record<number, Timer[]>;
+}
+
 export interface GameState {
   meta: GameStateMeta;
   gameId: GameId;
@@ -63,4 +68,5 @@ export interface GameState {
   hero: GameStateHeroes;
   inventory: GameStateInventory;
   currency: GameStateCurrency;
+  actionClock: GameStateActionClock;
 }

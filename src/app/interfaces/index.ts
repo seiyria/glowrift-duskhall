@@ -12,5 +12,6 @@ export * from './skill';
 export * from './stat';
 export * from './state-game';
 export * from './state-options';
+export * from './timer';
 export * from './world';
 export * from './worldconfig';

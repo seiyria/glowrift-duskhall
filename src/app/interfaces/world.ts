@@ -26,4 +26,5 @@ export type WorldLocation = WorldPosition &
     encounterLevel: number;
     guardians: Guardian[];
     claimLoot: EquipmentItemDefinition[];
+    unclaimTime: number;
   };

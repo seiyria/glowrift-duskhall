@@ -52,6 +52,7 @@ function fillEmptySpaceWithEmptyNodes(
         encounterLevel: 0,
         guardians: [],
         claimLoot: [],
+        unclaimTime: 0,
       };
     }
   }
@@ -315,6 +316,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     encounterLevel: 0,
     guardians: [],
     claimLoot: [],
+    unclaimTime: 0,
   };
 
   addNode(firstTown);
@@ -339,6 +341,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         encounterLevel: 0,
         guardians: [],
         claimLoot: [],
+        unclaimTime: 0,
       };
 
       addNode(node);

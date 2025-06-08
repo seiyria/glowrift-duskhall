@@ -7,6 +7,7 @@ import {
   isAtNode,
   isTravelingToNode,
   showLocationMenu,
+  totalTicksElapsed,
   travelTimeFromCurrentLocationTo,
   travelToNode,
 } from '../../helpers';
@@ -61,6 +62,10 @@ export class PanelLocationComponent {
 
   public canTravelToThisNode = computed(
     () => !this.isAtThisNode() && !this.isTravelingToThisNode(),
+  );
+
+  public nodeLostTime = computed(
+    () => this.location().unclaimTime - totalTicksElapsed(),
   );
 
   public elements = computed(() => sortBy(this.location().elements, 'element'));
