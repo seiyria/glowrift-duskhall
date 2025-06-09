@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { formatDate } from '@angular/common';
 import { ErrorHandler, inject, Injectable, signal } from '@angular/core';
-import { color } from 'console-log-colors';
 import { cloneDeep } from 'lodash';
 import Rollbar from 'rollbar';
 import { environment } from '../../environments/environment';
-import { localVersion, versionInfoToSemver } from '../helpers';
+import {
+  debug,
+  error,
+  info,
+  localVersion,
+  log,
+  versionInfoToSemver,
+  warn,
+} from '../helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -50,44 +56,24 @@ export class LoggerService {
     }
   }
 
-  private _logMessage(
-    level: 'debug' | 'error' | 'log' | 'info' | 'warn',
-    category: string,
-    ...data: any
-  ) {
-    const colors: Record<typeof level, keyof typeof color> = {
-      debug: 'gray',
-      error: 'red',
-      log: 'magenta',
-      warn: 'yellow',
-      info: 'blue',
-    };
-    const colorFunc = color[colors[level]] as unknown as (
-      str: string,
-    ) => string;
-
-    const timestamp = formatDate(new Date(), 'medium', 'en-US');
-    console[level](colorFunc(`[${timestamp}] {${category}}`), ...data);
-  }
-
   public log(category: string, ...data: any) {
-    this._logMessage('log', category, ...data);
+    log(category, ...data);
   }
 
   public info(category: string, ...data: any) {
-    this._logMessage('info', category, ...data);
+    info(category, ...data);
   }
 
   public warn(category: string, ...data: any) {
-    this._logMessage('warn', category, ...data);
+    warn(category, ...data);
   }
 
   public debug(category: string, ...data: any) {
-    this._logMessage('debug', category, ...data);
+    debug(category, ...data);
   }
 
   public error(category: string, ...data: any) {
-    this._logMessage('error', category, ...data);
+    error(category, ...data);
   }
 
   public rollbarError(error: any) {

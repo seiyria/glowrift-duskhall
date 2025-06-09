@@ -18,6 +18,7 @@ export * from './guardian';
 export * from './hero';
 export * from './icons';
 export * from './item';
+export * from './logging';
 export * from './migrate';
 export * from './notify';
 export * from './rng';

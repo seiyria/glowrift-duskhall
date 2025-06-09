@@ -6,6 +6,7 @@ import { exploreGameloop } from './gameloop-explore';
 import { gameloopTimers } from './gameloop-timers';
 import { townGameloop } from './gameloop-town';
 import { travelGameloop } from './gameloop-travel';
+import { debug } from './logging';
 import { isSetup } from './setup';
 import { localStorageSignal } from './signal';
 import { isGameStateReady, updateGamestate } from './state-game';
@@ -49,7 +50,7 @@ export function doGameloop(numTicks: number): void {
   gameloopTimers(numTicks);
   timer.stopTimer('gameloop-timers');
 
-  timer.dumpTimers();
+  timer.dumpTimers((timers) => debug('Gameloop:Timers', timers));
 
   updateGamestate((state) => {
     state.actionClock.numTicks += numTicks;
