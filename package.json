@@ -53,6 +53,7 @@
     "fantastical": "^2.0.1",
     "gameanalytics": "^4.4.7",
     "lodash": "^4.17.21",
+    "logger-timer": "^1.0.7",
     "marked": "^15.0.0",
     "ngx-drag-drop": "^19.0.0",
     "rollbar": "^2.26.4",

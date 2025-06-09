@@ -1,7 +1,8 @@
 export type GameOption =
   | 'showDebug'
   | 'debugConsoleLogStateUpdates'
-  | 'debugMapNodePositions';
+  | 'debugMapNodePositions'
+  | 'debugGameloopTimerUpdates';
 
 export type GameOptions = Record<GameOption, boolean> & {
   uiTheme: string;

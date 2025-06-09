@@ -7,11 +7,12 @@ export function defaultOptions(): GameOptions {
   return {
     showDebug: !environment.production,
     debugConsoleLogStateUpdates: false,
+    debugGameloopTimerUpdates: false,
     debugMapNodePositions: false,
 
     uiTheme: 'dark',
 
-    volume: 0.5
+    volume: 0.5,
   };
 }
 

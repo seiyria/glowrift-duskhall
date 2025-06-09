@@ -2,13 +2,22 @@ import { CurrencyBlock, GameCurrency, WorldLocation } from '../interfaces';
 import { blankCurrencyBlock, gamestate, updateGamestate } from './state-game';
 import { getClaimedNodes } from './world';
 
-export function gainCurrency(currency: GameCurrency, amount = 1): void {
+export function gainCurrencies(currencies: Partial<CurrencyBlock>): void {
   updateGamestate((state) => {
-    state.currency.currencies[currency] = Math.max(
-      0,
-      state.currency.currencies[currency] + amount,
-    );
+    Object.keys(currencies).forEach((deltaCurrency) => {
+      const key = deltaCurrency as GameCurrency;
+      state.currency.currencies[key] = Math.max(
+        0,
+        state.currency.currencies[key] + (currencies[key] ?? 0),
+      );
+    });
     return state;
+  });
+}
+
+export function gainCurrency(currency: GameCurrency, amount = 1): void {
+  gainCurrencies({
+    [currency]: amount,
   });
 }
 
@@ -18,13 +27,7 @@ export function loseCurrency(currency: GameCurrency, amount = 1): void {
 
 export function gainCurrentCurrencyClaims(): void {
   const currencyGains = gamestate().currency.currencyPerTickEarnings;
-
-  Object.keys(currencyGains).forEach((currency) => {
-    gainCurrency(
-      currency as GameCurrency,
-      currencyGains[currency as GameCurrency],
-    );
-  });
+  gainCurrencies(currencyGains);
 }
 
 export function getCurrencyClaimsForNode(node: WorldLocation): CurrencyBlock {

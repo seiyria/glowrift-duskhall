@@ -16,6 +16,15 @@
             <span class="label-text">Log state updates</span>
           </label>
         </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="currentValueForOption('debugGameloopTimerUpdates') === true"
+              class="checkbox checkbox-secondary" appAnalyticsClick="Options:Debug:LogTimerUpdates"
+              (click)="setValueForOption('debugGameloopTimerUpdates', !currentValueForOption('debugGameloopTimerUpdates'))" />
+            <span class="label-text">Log gameloop timers</span>
+          </label>
+        </div>
       </div>
     </div>
 
