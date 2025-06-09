@@ -19,7 +19,7 @@ export function doGameloop(numTicks: number): void {
   if (isGameloopPaused()) return;
 
   const timer = new LoggerTimer({
-    dumpThreshold: 75,
+    dumpThreshold: 100,
     isActive: getOption('debugGameloopTimerUpdates'),
   });
 
