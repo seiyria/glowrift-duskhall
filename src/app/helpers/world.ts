@@ -87,8 +87,8 @@ export function claimNode(node: WorldLocation): void {
     if (updateNodeData) {
       updateNodeData.claimCount++;
       updateNodeData.currentlyClaimed = true;
-      updateNodeData.guardians = [];
-      updateNodeData.claimLoot = [];
+      updateNodeData.guardianIds = [];
+      updateNodeData.claimLootIds = [];
       updateNodeData.unclaimTime = getRegisterTick(claimDuration);
     }
 
@@ -112,8 +112,12 @@ export function unclaimNode(node: WorldLocation): void {
     const updateNodeData = getWorldNode(node.x, node.y, state);
     if (updateNodeData) {
       updateNodeData.currentlyClaimed = false;
-      updateNodeData.guardians = getGuardiansForLocation(updateNodeData);
-      updateNodeData.claimLoot = getLootForLocation(updateNodeData);
+      updateNodeData.guardianIds = getGuardiansForLocation(updateNodeData).map(
+        (i) => i.id,
+      );
+      updateNodeData.claimLootIds = getLootForLocation(updateNodeData).map(
+        (i) => i.id,
+      );
       updateNodeData.unclaimTime = 0;
     }
 

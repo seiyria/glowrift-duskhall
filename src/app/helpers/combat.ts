@@ -4,8 +4,10 @@ import {
   Combatant,
   CombatId,
   CombatLog,
+  DroppableEquippable,
   EquipmentSkill,
   EquipmentSkillDefinitionTechnique,
+  Guardian,
   WorldLocation,
 } from '../interfaces';
 import { getEntry } from './content';
@@ -16,6 +18,7 @@ import {
   travelHome,
   updateExploringAndGlobalStatusText,
 } from './explore';
+import { createGuardianForLocation } from './guardian';
 import { allHeroes, heroGainXp } from './hero';
 import { notify } from './notify';
 import { uuid } from './rng';
@@ -62,19 +65,23 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     skillRefs: h.skills.filter(Boolean) as EquipmentSkill[],
   }));
 
-  const guardians: Combatant[] = location.guardians.map((g) => ({
-    id: g.id,
-    name: g.name,
+  const guardians: Combatant[] = location.guardianIds
+    .map((g) => getEntry<Guardian>(g)!)
+    .filter(Boolean)
+    .map((g) => createGuardianForLocation(location, g))
+    .map((g) => ({
+      id: g.id,
+      name: g.name,
 
-    baseStats: g.stats,
-    stats: g.stats,
-    hp: g.stats.health,
-    level: location.encounterLevel,
-    sprite: g.sprite,
-    frames: g.frames,
-    skillIds: ['Attack', ...g.skillIds],
-    skillRefs: [],
-  }));
+      baseStats: g.stats,
+      stats: g.stats,
+      hp: g.stats.health,
+      level: location.encounterLevel,
+      sprite: g.sprite,
+      frames: g.frames,
+      skillIds: ['Attack', ...g.skillIds],
+      skillRefs: [],
+    }));
 
   return {
     id: uuid() as CombatId,
@@ -221,7 +228,7 @@ export function handleCombatVictory(combat: Combat): void {
 
   if (currentNode) {
     const xpGainedForClaim =
-      currentNode.encounterLevel * currentNode.guardians.length;
+      currentNode.encounterLevel * currentNode.guardianIds.length;
     notify(`You have claimed ${currentNode.name}!`, 'LocationClaim');
 
     logCombatMessage(combat, `Heroes claimed **${currentNode.name}**!`);
@@ -239,7 +246,10 @@ export function handleCombatVictory(combat: Combat): void {
     gainCurrency('Soul Essence', xpGainedForClaim);
     logCombatMessage(combat, `You gained ${xpGainedForClaim} Soul Essence!`);
 
-    currentNode.claimLoot.forEach((lootDef) => {
+    currentNode.claimLootIds.forEach((lootDefId) => {
+      const lootDef = getEntry<DroppableEquippable>(lootDefId);
+      if (!lootDef) return;
+
       const created = makeDroppableIntoRealItem(lootDef);
       gainDroppableItem(created);
 

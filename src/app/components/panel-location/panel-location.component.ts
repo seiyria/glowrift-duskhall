@@ -2,8 +2,10 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { sortBy } from 'lodash';
 import {
+  createGuardianForLocation,
   gamestate,
   getCurrencyClaimsForNode,
+  getEntry,
   isAtNode,
   isTravelingToNode,
   showLocationMenu,
@@ -11,7 +13,12 @@ import {
   travelTimeFromCurrentLocationTo,
   travelToNode,
 } from '../../helpers';
-import { GameCurrency, WorldLocation } from '../../interfaces';
+import {
+  DroppableEquippable,
+  GameCurrency,
+  Guardian,
+  WorldLocation,
+} from '../../interfaces';
 import { AtlasImageComponent } from '../atlas-image/atlas-image.component';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { CountdownComponent } from '../countdown/countdown.component';
@@ -69,6 +76,15 @@ export class PanelLocationComponent {
   );
 
   public elements = computed(() => sortBy(this.location().elements, 'element'));
+
+  public guardians = computed(() =>
+    this.location()
+      .guardianIds.map((g) => getEntry<Guardian>(g)!)
+      .map((g) => createGuardianForLocation(this.location(), g)),
+  );
+  public loot = computed(() =>
+    this.location().claimLootIds.map((l) => getEntry<DroppableEquippable>(l)!),
+  );
 
   public resourcesGenerated = computed(() => {
     const generated = getCurrencyClaimsForNode(this.location());

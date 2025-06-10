@@ -37,7 +37,7 @@ export function exploreGameloop(numTicks: number): void {
   // if we have guardians alive, we're doing combat
   if (currentCombatHasGuardiansAlive()) {
     updateExploringAndGlobalStatusText(
-      `Exploring ${node.name}... ${node.guardians.length} guardian(s) alive.`,
+      `Exploring ${node.name}... fighting ${node.guardianIds.length} guardian(s).`,
     );
 
     for (let i = 0; i < numTicks; i++) {

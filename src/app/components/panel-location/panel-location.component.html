@@ -33,7 +33,7 @@
         </div>
 
         <div class="w-full grid grid-cols-3 gap-2">
-          @for(guardian of locationData.guardians; track guardian.id) {
+          @for(guardian of guardians(); track $index) {
           <div>
             <app-location-guardian-display [guardian]="guardian"></app-location-guardian-display>
           </div>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="w-full grid grid-cols-3 gap-2">
-          @for(item of locationData.claimLoot; track $index) {
+          @for(item of loot(); track $index) {
           <div>
             <app-location-loot-display [loot]="item"></app-location-loot-display>
           </div>

@@ -8,7 +8,6 @@ import {
   GameStateWorld,
   Guardian,
   GuardianData,
-  GuardianId,
   LocationType,
   WorldConfig,
   WorldLocation,
@@ -51,8 +50,8 @@ function fillEmptySpaceWithEmptyNodes(
         claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
-        guardians: [],
-        claimLoot: [],
+        guardianIds: [],
+        claimLootIds: [],
         unclaimTime: 0,
       };
     }
@@ -315,8 +314,8 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     claimCount: 0,
     currentlyClaimed: true,
     encounterLevel: 0,
-    guardians: [],
-    claimLoot: [],
+    guardianIds: [],
+    claimLootIds: [],
     unclaimTime: 0,
   };
 
@@ -340,8 +339,8 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
         claimCount: 0,
         currentlyClaimed: false,
         encounterLevel: 0,
-        guardians: [],
-        claimLoot: [],
+        guardianIds: [],
+        claimLootIds: [],
         unclaimTime: 0,
       };
 
@@ -370,7 +369,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
 export function populateLocationWithLoot(location: WorldLocation): void {
   if (location.currentlyClaimed) return;
 
-  location.claimLoot = getLootForLocation(location);
+  location.claimLootIds = getLootForLocation(location).map((i) => i.id);
 }
 
 export function getLootForLocation(
@@ -408,7 +407,7 @@ export function numLootForLocation(location: WorldLocation): number {
 export function populateLocationWithGuardians(location: WorldLocation): void {
   if (location.currentlyClaimed) return;
 
-  location.guardians = getGuardiansForLocation(location);
+  location.guardianIds = getGuardiansForLocation(location).map((i) => i.id);
 }
 
 export function getGuardiansForLocation(location: WorldLocation): Guardian[] {
@@ -416,7 +415,7 @@ export function getGuardiansForLocation(location: WorldLocation): Guardian[] {
     `$${gamestate().gameId}-${location.id}-${location.claimCount}`,
   );
   const numGuardians = numGuardiansForLocation(location);
-  const guardians = Array.from({ length: numGuardians }, (_, index) => {
+  const guardians = Array.from({ length: numGuardians }, () => {
     const randomGuardianDataId = randomIdentifiableChoice<GuardianData>(
       getEntriesByType<GuardianData>('guardian'),
       rng,
@@ -424,10 +423,7 @@ export function getGuardiansForLocation(location: WorldLocation): Guardian[] {
     const randomGuardianData = getEntry<GuardianData>(randomGuardianDataId);
     if (!randomGuardianData) return undefined;
 
-    return {
-      ...createGuardianForLocation(location, randomGuardianData),
-      id: `guardian-${location.id}-${index}-${randomGuardianData.id}` as GuardianId,
-    };
+    return createGuardianForLocation(location, randomGuardianData);
   }).filter(Boolean) as Guardian[];
 
   return guardians;
