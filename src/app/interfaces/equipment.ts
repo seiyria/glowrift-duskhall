@@ -1,15 +1,8 @@
-import { Branded, Content } from './identifiable';
+import { DroppableEquippable } from './droppable';
+import { Branded } from './identifiable';
 import { StatBlock } from './stat';
 
 export type EquipmentSlot = 'accessory' | 'armor' | 'trinket' | 'weapon';
-
-export type EquipmentRarity =
-  | 'common'
-  | 'uncommon'
-  | 'rare'
-  | 'mystical'
-  | 'legendary'
-  | 'unique';
 
 export type EquipmentItemId = Branded<string, 'EquipmentItemId'>;
 
@@ -19,15 +12,10 @@ export type EquipmentModifiable = {
   baseStats: StatBlock;
 };
 
-export type EquipmentItemDefinition = Content &
+export type EquipmentItemDefinition = DroppableEquippable &
   EquipmentModifiable & {
     __type: EquipmentSlot;
     id: EquipmentItemId;
-    sprite: string;
-
-    canBeModified?: boolean;
-    rarity: EquipmentRarity;
-    dropLevel: number;
   };
 
 export type EquipmentItem = EquipmentItemDefinition & {

@@ -62,6 +62,7 @@ export class ContentService {
       'armor',
       'enemy',
       'hero',
+      'skill',
       'trinket',
       'weapon',
       'world-object',

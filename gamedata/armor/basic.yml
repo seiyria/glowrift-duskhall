@@ -2,8 +2,7 @@
   name: Leather Cloak
   sprite: '0056'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 1
 
   baseStats:
@@ -13,8 +12,7 @@
   name: Leather Plate
   sprite: '0041'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 2
 
   baseStats:

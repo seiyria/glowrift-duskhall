@@ -2,8 +2,7 @@
   name: Spellbook of Weak Force
   sprite: '0000'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 1
 
   baseStats:
@@ -13,8 +12,7 @@
   name: Spellbook of Weak Aura
   sprite: '0000'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 1
 
   baseStats:

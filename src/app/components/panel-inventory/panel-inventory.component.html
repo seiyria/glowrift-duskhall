@@ -17,7 +17,11 @@
   </div>
 
   <div class="flex flex-row inventory-scroller overflow-y-auto p-2">
-    <app-item-grid [items]="items()" [allowedActions]="['Salvage']">
-    </app-item-grid>
+    @if(currentItemType() !== 'skill') {
+    <app-inventory-grid-item [items]="items()" [allowedActions]="['Salvage']">
+    </app-inventory-grid-item>
+    } @else {
+    <app-inventory-grid-skill [skills]="skills()" [allowedActions]="['Salvage']"></app-inventory-grid-skill>
+    }
   </div>
 </app-card-page>

@@ -1,7 +1,8 @@
 name: Bug Report
 description: File a bug report for unexpected or broken behavior
-title: '[Bug] -'
+title: '[Bug] '
 labels: [bug]
+type: Bug
 body:
   - type: checkboxes
     attributes:

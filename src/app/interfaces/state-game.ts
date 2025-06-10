@@ -3,6 +3,7 @@ import { CurrencyBlock } from './currency';
 import { EquipmentItem } from './equipment';
 import { Hero, HeroRiskTolerance } from './hero';
 import { Branded } from './identifiable';
+import { EquipmentSkill } from './skill';
 import { Timer } from './timer';
 import { WorldLocation, WorldPosition } from './world';
 
@@ -48,6 +49,7 @@ export interface GameStateHeroes {
 
 export interface GameStateInventory {
   items: EquipmentItem[];
+  skills: EquipmentSkill[];
 }
 
 export interface GameStateCurrency {

@@ -1,6 +1,15 @@
 - id: 43282cd2-96e8-4590-b539-ff02f6db7ebf
   name: Attack
+
+  preventDrop: true
+
+  rarity: Common
+  dropLevel: 1
+
+  sprite: '0459'
+  frames: 14
+
   targets: 1
-  targetType: enemies
+  targetType: Enemies
   damageScaling:
     force: 1

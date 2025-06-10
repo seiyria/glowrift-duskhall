@@ -4,12 +4,12 @@ import {
   Combatant,
   CombatId,
   CombatLog,
-  CombatSkill,
+  EquipmentSkill,
   WorldLocation,
 } from '../interfaces';
 import { getEntry } from './content';
 import { gainCurrency, updateCurrencyClaims } from './currency';
-import { addItemToInventory, createItem } from './equipment';
+import { gainDroppableItem, makeDroppableIntoRealItem } from './droppable';
 import {
   exploreProgressPercent,
   travelHome,
@@ -56,6 +56,7 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     hp: h.baseStats.health,
     level: h.level,
     sprite: h.sprite,
+    frames: h.frames,
   }));
 
   const guardians: Combatant[] = location.guardians.map((g) => ({
@@ -67,6 +68,7 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     hp: g.stats.health,
     level: location.encounterLevel,
     sprite: g.sprite,
+    frames: g.frames,
   }));
 
   return {
@@ -82,8 +84,8 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
   };
 }
 
-export function availableSkillsForCombatant(): CombatSkill[] {
-  return ['Attack'].map((s) => getEntry<CombatSkill>(s)!);
+export function availableSkillsForCombatant(): EquipmentSkill[] {
+  return ['Attack'].map((s) => getEntry<EquipmentSkill>(s)!);
 }
 
 export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
@@ -93,25 +95,25 @@ export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
 export function getCombatantTargetsForSkill(
   combat: Combat,
   combatant: Combatant,
-  skill: CombatSkill,
+  skill: EquipmentSkill,
 ): Combatant[] {
   const myType = combatant.id.startsWith('guardian-') ? 'guardian' : 'hero';
   const allies = myType === 'guardian' ? combat.guardians : combat.heroes;
   const enemies = myType === 'guardian' ? combat.heroes : combat.guardians;
 
-  if (skill.targetType === 'all') {
+  if (skill.targetType === 'All') {
     return [...allies, ...enemies].filter((c) => !isDead(c));
   }
 
-  if (skill.targetType === 'enemies') {
+  if (skill.targetType === 'Enemies') {
     return enemies.filter((g) => !isDead(g));
   }
 
-  if (skill.targetType === 'allies') {
+  if (skill.targetType === 'Allies') {
     return allies.filter((h) => !isDead(h));
   }
 
-  if (skill.targetType === 'self') {
+  if (skill.targetType === 'Self') {
     return [combatant];
   }
 
@@ -122,7 +124,7 @@ export function applySkillToTarget(
   combat: Combat,
   combatant: Combatant,
   target: Combatant,
-  skill: CombatSkill,
+  skill: EquipmentSkill,
 ): void {
   const damage = Math.max(
     0,
@@ -225,11 +227,10 @@ export function handleCombatVictory(combat: Combat): void {
     logCombatMessage(combat, `You gained ${xpGainedForClaim} Soul Essence!`);
 
     currentNode.claimLoot.forEach((lootDef) => {
-      const item = createItem(lootDef);
+      const created = makeDroppableIntoRealItem(lootDef);
+      gainDroppableItem(created);
 
-      addItemToInventory(item);
-
-      logCombatMessage(combat, `Heroes found **${item.name}**!`);
+      logCombatMessage(combat, `Heroes found **${created.name}**!`);
     });
 
     claimNode(currentNode);

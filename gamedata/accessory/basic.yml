@@ -2,8 +2,7 @@
   name: Ring
   sprite: '0012'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 1
 
   baseStats:
@@ -13,8 +12,7 @@
   name: Amulet
   sprite: '0000'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 2
 
   baseStats:
@@ -25,7 +23,7 @@
   name: Amulet of Weak Speed
   sprite: '0003'
 
-  rarity: uncommon
+  rarity: Uncommon
   dropLevel: 3
 
   baseStats:

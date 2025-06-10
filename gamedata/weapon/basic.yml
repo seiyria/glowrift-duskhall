@@ -2,8 +2,7 @@
   name: Dagger
   sprite: '0007'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 1
 
   baseStats:
@@ -13,8 +12,7 @@
   name: Club
   sprite: '0003'
 
-  canBeModified: true
-  rarity: common
+  rarity: Common
   dropLevel: 2
 
   baseStats:
@@ -24,8 +22,7 @@
   name: Cross
   sprite: '0005'
 
-  canBeModified: true
-  rarity: rare
+  rarity: Rare
   dropLevel: 5
 
   baseStats:

@@ -5,7 +5,8 @@ export type ContentType =
   | 'weapon'
   | 'accessory'
   | 'trinket'
-  | 'armor';
+  | 'armor'
+  | 'skill';
 
 export interface Identifiable {
   id: string;

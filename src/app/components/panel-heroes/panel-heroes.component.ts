@@ -4,14 +4,14 @@ import {
   equipItem,
   gamestate,
   showHeroesMenu,
-  sortedItemList,
+  sortedRarityList,
   unequipItem,
 } from '../../helpers';
 import { EquipmentItem, EquipmentSlot } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { IconHeroComponent } from '../icon-hero/icon-hero.component';
 import { IconComponent } from '../icon/icon.component';
-import { ItemGridComponent } from '../item-grid/item-grid.component';
+import { InventoryGridItemComponent } from '../inventory-grid-item/inventory-grid-item.component';
 import { PanelHeroEquipmentComponent } from '../panel-hero-equipment/panel-hero-equipment.component';
 import { PanelHeroesStatsComponent } from '../panel-heroes-stats/panel-heroes-stats.component';
 
@@ -23,7 +23,7 @@ import { PanelHeroesStatsComponent } from '../panel-heroes-stats/panel-heroes-st
     PanelHeroesStatsComponent,
     IconHeroComponent,
     PanelHeroEquipmentComponent,
-    ItemGridComponent,
+    InventoryGridItemComponent,
     TitleCasePipe,
   ],
   templateUrl: './panel-heroes.component.html',
@@ -37,7 +37,7 @@ export class PanelHeroesComponent {
 
   public equipItemType = signal<EquipmentSlot | undefined>(undefined);
   public visibleItemsToEquip = computed(() =>
-    sortedItemList(
+    sortedRarityList(
       gamestate().inventory.items.filter(
         (i) => i.__type === this.equipItemType(),
       ),

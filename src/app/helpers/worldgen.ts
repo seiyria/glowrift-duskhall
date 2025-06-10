@@ -3,7 +3,7 @@ import { PRNG } from 'seedrandom';
 
 import { clamp } from 'lodash';
 import {
-  EquipmentItemDefinition,
+  DroppableEquippable,
   GameElement,
   GameStateWorld,
   Guardian,
@@ -15,7 +15,8 @@ import {
   WorldPosition,
 } from '../interfaces';
 import { getEntriesByType, getEntry } from './content';
-import { pickRandomItemDefinition } from './equipment';
+import { pickRandomItemDefinition } from './creator-equipment';
+import { pickRandomSkillDefinition } from './creator-skill';
 import { createGuardianForLocation } from './guardian';
 import {
   gamerng,
@@ -374,13 +375,16 @@ export function populateLocationWithLoot(location: WorldLocation): void {
 
 export function getLootForLocation(
   location: WorldLocation,
-): EquipmentItemDefinition[] {
+): DroppableEquippable[] {
   const rng = seededrng(
     `$${gamestate().gameId}-${location.id}-${location.claimCount}`,
   );
   const numLoot = numLootForLocation(location);
   return Array.from({ length: numLoot }, () => {
-    return pickRandomItemDefinition(rng);
+    return randomChoice(
+      [pickRandomItemDefinition(rng), pickRandomSkillDefinition(rng)],
+      rng,
+    );
   }).filter(Boolean);
 }
 

@@ -3,39 +3,52 @@ import {
   gamestate,
   localStorageSignal,
   showInventoryMenu,
-  sortedItemList,
+  sortedRarityList,
 } from '../../helpers';
-import { EquipmentItem, EquipmentSlot } from '../../interfaces';
+import { EquipmentItem, EquipmentSkill, EquipmentSlot } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { IconComponent } from '../icon/icon.component';
-import { ItemGridComponent } from '../item-grid/item-grid.component';
+import { InventoryGridItemComponent } from '../inventory-grid-item/inventory-grid-item.component';
+import { InventoryGridSkillComponent } from '../inventory-grid-skill/inventory-grid-skill.component';
+
+type InventorySlotType = EquipmentSlot | 'skill';
 
 @Component({
   selector: 'app-panel-inventory',
-  imports: [CardPageComponent, IconComponent, ItemGridComponent],
+  imports: [
+    CardPageComponent,
+    IconComponent,
+    InventoryGridItemComponent,
+    InventoryGridSkillComponent,
+  ],
   templateUrl: './panel-inventory.component.html',
   styleUrl: './panel-inventory.component.scss',
 })
 export class PanelInventoryComponent {
-  public currentItemType = localStorageSignal<EquipmentSlot>(
+  public currentItemType = localStorageSignal<InventorySlotType>(
     'inventoryFilter',
     'accessory',
   );
 
-  public readonly allItemTypes: Array<{ name: string; type: EquipmentSlot }> = [
+  public readonly allItemTypes: Array<{
+    name: string;
+    type: InventorySlotType;
+  }> = [
     { name: 'Accessories', type: 'accessory' },
     { name: 'Armor', type: 'armor' },
     { name: 'Trinkets', type: 'trinket' },
     { name: 'Weapons', type: 'weapon' },
+    { name: 'Spells', type: 'skill' },
   ];
 
   public itemCounts = computed(() => {
     const items = gamestate().inventory.items;
-    const counts: Record<EquipmentSlot, number> = {
+    const counts: Record<InventorySlotType, number> = {
       accessory: 0,
       armor: 0,
       trinket: 0,
       weapon: 0,
+      skill: 0,
     };
 
     items.forEach((item: EquipmentItem) => {
@@ -45,6 +58,8 @@ export class PanelInventoryComponent {
       }
     });
 
+    counts.skill = gamestate().inventory.skills.length;
+
     return counts;
   });
 
@@ -53,18 +68,22 @@ export class PanelInventoryComponent {
   }
 
   public items = computed(() =>
-    sortedItemList(
+    sortedRarityList<EquipmentItem>(
       gamestate().inventory.items.filter(
         (i: EquipmentItem) => i.__type === this.currentItemType(),
       ),
     ),
   );
 
+  public skills = computed(() =>
+    sortedRarityList<EquipmentSkill>(gamestate().inventory.skills),
+  );
+
   closeMenu() {
     showInventoryMenu.set(false);
   }
 
-  changeItemType(type: EquipmentSlot) {
+  changeItemType(type: InventorySlotType) {
     this.currentItemType.set(type);
   }
 }

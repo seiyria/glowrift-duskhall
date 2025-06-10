@@ -1,21 +1,23 @@
 import { sortBy } from 'lodash';
-import { EquipmentItem } from '../interfaces';
+import { DroppableEquippable } from '../interfaces';
 
-export function sortedItemList(items: EquipmentItem[]): EquipmentItem[] {
+export function sortedRarityList<T extends DroppableEquippable>(
+  items: T[],
+): T[] {
   return sortBy(items, [
     (i) => {
       switch (i.rarity) {
-        case 'common':
+        case 'Common':
           return 0;
-        case 'uncommon':
+        case 'Uncommon':
           return -1;
-        case 'rare':
+        case 'Rare':
           return -2;
-        case 'mystical':
+        case 'Mystical':
           return -3;
-        case 'legendary':
+        case 'Legendary':
           return -4;
-        case 'unique':
+        case 'Unique':
           return -5;
         default:
           return 0;

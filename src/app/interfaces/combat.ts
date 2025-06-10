@@ -1,3 +1,4 @@
+import { Artable } from './animatable';
 import { Branded } from './identifiable';
 import { StatBlock } from './stat';
 import { WorldPosition } from './world';
@@ -12,17 +13,16 @@ export interface CombatLog {
   message: string;
 }
 
-export interface Combatant {
+export type Combatant = Artable & {
   id: string;
   name: string;
 
-  sprite: string;
   level: number;
   hp: number;
 
   baseStats: StatBlock;
   stats: StatBlock;
-}
+};
 
 export interface Combat {
   id: CombatId;

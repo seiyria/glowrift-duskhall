@@ -1,10 +1,27 @@
-import { Content } from './identifiable';
-import { GameStat } from './stat';
+import { DroppableEquippable } from './droppable';
+import { GameElement } from './element';
+import { Branded } from './identifiable';
+import { StatBlock } from './stat';
 
-export type CombatSkillTargetType = 'allies' | 'enemies' | 'self' | 'all';
+export type EquippableSkillTargetType = 'Allies' | 'Enemies' | 'Self' | 'All';
 
-export interface CombatSkill extends Content {
-  targets: number;
-  targetType: CombatSkillTargetType;
-  damageScaling: Partial<Record<GameStat, number>>;
-}
+export type EquippableSkillId = Branded<string, 'EquippableSkillId'>;
+
+export type SkillModifiable = {
+  damageScaling: StatBlock;
+};
+
+export type EquipmentSkillDefinition = DroppableEquippable &
+  SkillModifiable & {
+    __type: 'skill';
+    id: EquippableSkillId;
+
+    targets: number;
+    targetType: EquippableSkillTargetType;
+    damageScaling: StatBlock;
+    element?: GameElement;
+  };
+
+export type EquipmentSkill = EquipmentSkillDefinition & {
+  mods: Partial<SkillModifiable>;
+};

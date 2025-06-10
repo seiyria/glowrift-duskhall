@@ -43,8 +43,8 @@
   </div>
 
   <div class="flex flex-row max-h-[156px] overflow-y-auto p-2">
-    <app-item-grid [items]="visibleItemsToEquip()" (itemClicked)="equipItem($event)"
-      [clickableItems]="true"></app-item-grid>
+    <app-inventory-grid-item [items]="visibleItemsToEquip()" (itemClicked)="equipItem($event)"
+      [clickableItems]="true"></app-inventory-grid-item>
   </div>
 </app-card-page>
 }

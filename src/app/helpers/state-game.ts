@@ -16,6 +16,7 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
     id: uuid() as HeroId,
     name: '',
     sprite: '',
+    frames: 4,
     level: 1,
     xp: 0,
     hp: 10,
@@ -111,6 +112,7 @@ export function blankGameState(): GameState {
     },
     inventory: {
       items: [],
+      skills: [],
     },
     currency: {
       currencyPerTickEarnings: blankCurrencyBlock(),
