@@ -26,6 +26,8 @@ export * from './inventory-skill';
 export * from './item';
 export * from './logging';
 export * from './migrate';
+export * from './migrate-items';
+export * from './migrate-skills';
 export * from './notify';
 export * from './rng';
 export * from './setup';

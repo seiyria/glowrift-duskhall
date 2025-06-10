@@ -10,6 +10,12 @@ import { createSkill } from './creator-skill';
 import { addItemToInventory } from './inventory-equipment';
 import { addSkillToInventory } from './inventory-skill';
 
+export function getDroppableEquippableBaseId(
+  item: DroppableEquippable,
+): string {
+  return item.id.split('|')[0];
+}
+
 export function cleanupDroppableDefinition(
   droppable: DroppableEquippable,
 ): DroppableEquippable {
