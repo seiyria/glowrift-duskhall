@@ -251,8 +251,19 @@ function determineSpritesForWorld(
   nodes: Record<string, WorldLocation>,
   rng: PRNG,
 ): void {
+  const elementStartSprites: Record<GameElement, number> = {
+    Air: 16,
+    Earth: 0,
+    Fire: 24,
+    Ice: 12,
+  };
+
   Object.values(nodes).forEach((node) => {
-    node.sprite = indexToSprite(16 + randomNumber(4, rng));
+    const dominantElement = node.elements[0]?.element ?? 'Air';
+
+    node.sprite = indexToSprite(
+      elementStartSprites[dominantElement] + randomNumber(4, rng),
+    );
 
     node.objectSprite = getSpriteFromNodeType(node.nodeType);
   });
