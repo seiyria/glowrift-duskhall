@@ -7,7 +7,7 @@
   rarity: Common
   dropLevel: 1
 
-  element: Fire
+  elements: [Fire]
   targets: 1
   targetType: Enemies
   damageScaling:
@@ -22,7 +22,7 @@
   rarity: Uncommon
   dropLevel: 5
 
-  element: Fire
+  elements: [Fire]
   targets: 1
   targetType: Enemies
   damageScaling:
@@ -37,7 +37,7 @@
   rarity: Rare
   dropLevel: 15
 
-  element: Fire
+  elements: [Fire]
   targets: 1
   targetType: Enemies
   damageScaling:

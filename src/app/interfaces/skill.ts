@@ -19,7 +19,7 @@ export type EquipmentSkillDefinition = DroppableEquippable &
     targets: number;
     targetType: EquippableSkillTargetType;
     damageScaling: StatBlock;
-    element?: GameElement;
+    elements?: [GameElement];
   };
 
 export type EquipmentSkill = EquipmentSkillDefinition & {
