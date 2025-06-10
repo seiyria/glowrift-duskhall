@@ -4,7 +4,8 @@
   @for(item of items(); track $index) {
   <div
     class="bg-gray-400 outline outline-2 h-[64px] w-[64px] cursor-pointer flex justify-center items-center text-black text-xs"
-    (click)="slotClick.emit(item.slot)" (contextmenu)="slotRightClick.emit(item.slot)">
+    [class.animate-pulse]="highlightSlot() === item.slot" (click)="slotClick.emit(item.slot)"
+    (contextmenu)="slotRightClick.emit(item.slot)">
     @if(item.item) {
     <app-icon-item [item]="item.item"></app-icon-item>
     } @else {

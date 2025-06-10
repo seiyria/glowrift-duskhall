@@ -2,17 +2,21 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
 import {
   equipItem,
+  equipSkill,
   gamestate,
   showHeroesMenu,
   sortedRarityList,
   unequipItem,
+  unequipSkill,
 } from '../../helpers';
-import { EquipmentItem, EquipmentSlot } from '../../interfaces';
+import { EquipmentItem, EquipmentSkill, EquipmentSlot } from '../../interfaces';
 import { CardPageComponent } from '../card-page/card-page.component';
 import { IconHeroComponent } from '../icon-hero/icon-hero.component';
 import { IconComponent } from '../icon/icon.component';
 import { InventoryGridItemComponent } from '../inventory-grid-item/inventory-grid-item.component';
-import { PanelHeroEquipmentComponent } from '../panel-hero-equipment/panel-hero-equipment.component';
+import { InventoryGridSkillComponent } from '../inventory-grid-skill/inventory-grid-skill.component';
+import { PanelHeroesEquipmentComponent } from '../panel-heroes-equipment/panel-heroes-equipment.component';
+import { PanelHeroesSkillsComponent } from '../panel-heroes-skills/panel-heroes-skills.component';
 import { PanelHeroesStatsComponent } from '../panel-heroes-stats/panel-heroes-stats.component';
 
 @Component({
@@ -22,9 +26,11 @@ import { PanelHeroesStatsComponent } from '../panel-heroes-stats/panel-heroes-st
     IconComponent,
     PanelHeroesStatsComponent,
     IconHeroComponent,
-    PanelHeroEquipmentComponent,
+    PanelHeroesEquipmentComponent,
     InventoryGridItemComponent,
     TitleCasePipe,
+    PanelHeroesSkillsComponent,
+    InventoryGridSkillComponent,
   ],
   templateUrl: './panel-heroes.component.html',
   styleUrl: './panel-heroes.component.css',
@@ -44,6 +50,12 @@ export class PanelHeroesComponent {
     ),
   );
 
+  public visibleSkillsToEquip = computed(() =>
+    sortedRarityList(gamestate().inventory.skills),
+  );
+
+  public skillSlot = signal<number>(-1);
+
   closeMenu() {
     showHeroesMenu.set(false);
   }
@@ -52,12 +64,34 @@ export class PanelHeroesComponent {
     this.equipItemType.set(undefined);
   }
 
+  closeSkills() {
+    this.skillSlot.set(-1);
+  }
+
   setHeroIndex(index: number) {
     this.activeHeroIndex.set(index);
     this.equipItemType.set(undefined);
+    this.skillSlot.set(-1);
+  }
+
+  setSkillSlot(slot: number) {
+    this.equipItemType.set(undefined);
+    this.skillSlot.set(slot);
+  }
+
+  equipSkill(item: EquipmentSkill) {
+    equipSkill(this.activeHero(), item, this.skillSlot());
+  }
+
+  unequipSkill(slot: number) {
+    const skill = this.activeHero().skills[slot];
+    if (!skill) return;
+
+    unequipSkill(this.activeHero(), skill, slot);
   }
 
   setEquipType(type: EquipmentSlot) {
+    this.skillSlot.set(-1);
     this.equipItemType.set(type);
   }
 

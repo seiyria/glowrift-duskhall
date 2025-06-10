@@ -40,6 +40,8 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
       weapon: undefined,
     },
 
+    skills: [],
+
     ...props,
   };
 }

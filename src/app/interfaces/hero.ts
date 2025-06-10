@@ -1,6 +1,7 @@
 import { Artable } from './animatable';
 import { EquipmentBlock } from './equipment';
 import { Branded, Identifiable } from './identifiable';
+import { EquipmentSkill } from './skill';
 import { StatBlock } from './stat';
 
 export type HeroId = Branded<string, 'HeroId'>;
@@ -19,4 +20,5 @@ export type Hero = Identifiable &
     totalStats: StatBlock;
 
     equipment: EquipmentBlock;
+    skills: (EquipmentSkill | undefined)[];
   };

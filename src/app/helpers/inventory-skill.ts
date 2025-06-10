@@ -1,5 +1,5 @@
 import { EquipmentSkill, Hero } from '../interfaces';
-import { recalculateStats } from './hero';
+import { recalculateStats, updateHeroData } from './hero';
 import { updateGamestate } from './state-game';
 
 export function addSkillToInventory(item: EquipmentSkill): void {
@@ -18,12 +18,43 @@ export function removeSkillFromInventory(item: EquipmentSkill): void {
   });
 }
 
-export function equipSkill(hero: Hero, item: EquipmentSkill): void {
+export function maxSkillsForHero(): number {
+  return 3;
+}
+
+export function equipSkill(
+  hero: Hero,
+  item: EquipmentSkill,
+  slot: number,
+): void {
+  const heroSkills = hero.skills;
+  const existingItem = heroSkills[slot];
+  if (existingItem) {
+    unequipSkill(hero, existingItem, slot);
+  }
+
+  hero.skills[slot] = item;
+
+  updateHeroData(hero.id, {
+    skills: heroSkills,
+  });
+
   removeSkillFromInventory(item);
   recalculateStats(hero);
 }
 
-export function unequipSkill(hero: Hero, item: EquipmentSkill): void {
+export function unequipSkill(
+  hero: Hero,
+  item: EquipmentSkill,
+  slot: number,
+): void {
+  const heroSkills = hero.skills;
+  heroSkills[slot] = undefined;
+
+  updateHeroData(hero.id, {
+    skills: heroSkills,
+  });
+
   addSkillToInventory(item);
   recalculateStats(hero);
 }

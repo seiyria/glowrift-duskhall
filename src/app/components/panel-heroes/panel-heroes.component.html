@@ -25,8 +25,18 @@
     <div class="flex-1 flex flex-col justify-between border-t border-r border-b p-4">
       <app-panel-heroes-stats [hero]="activeHero()"></app-panel-heroes-stats>
 
-      <app-panel-hero-equipment [hero]="activeHero()" (slotClick)="setEquipType($event)"
-        (slotRightClick)="unequipItem($event)"></app-panel-hero-equipment>
+      <div class="flex flex-row">
+        <div class="flex-1">
+          <app-panel-heroes-equipment [hero]="activeHero()" (slotClick)="setEquipType($event)"
+            (slotRightClick)="unequipItem($event)" [highlightSlot]="equipItemType()"></app-panel-heroes-equipment>
+        </div>
+
+        <div class="flex-1">
+          <app-panel-heroes-skills [hero]="activeHero()" (slotClick)="setSkillSlot($event)"
+            (slotRightClick)="unequipSkill($event)" [highlightSlot]="skillSlot()"></app-panel-heroes-skills>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -45,6 +55,23 @@
   <div class="flex flex-row max-h-[156px] overflow-y-auto p-2">
     <app-inventory-grid-item [items]="visibleItemsToEquip()" (itemClicked)="equipItem($event)"
       [clickableItems]="true"></app-inventory-grid-item>
+  </div>
+</app-card-page>
+}
+
+@if(skillSlot() >= 0) {
+<app-card-page height="270px">
+  <span header>Choose Spell</span>
+
+  <div pageactions>
+    <button class="ml-8 btn btn-clear" (click)="closeSkills()">
+      <app-icon name="tablerX"></app-icon>
+    </button>
+  </div>
+
+  <div class="flex flex-row max-h-[156px] overflow-y-auto p-2">
+    <app-inventory-grid-skill [skills]="visibleSkillsToEquip()" (itemClicked)="equipSkill($event)"
+      [clickableSkills]="true"></app-inventory-grid-skill>
   </div>
 </app-card-page>
 }

@@ -4,13 +4,14 @@ import { EquipmentItem, EquipmentSlot, Hero } from '../../interfaces';
 import { IconItemComponent } from '../icon-item/icon-item.component';
 
 @Component({
-  selector: 'app-panel-hero-equipment',
+  selector: 'app-panel-heroes-equipment',
   imports: [IconItemComponent, TitleCasePipe],
-  templateUrl: './panel-hero-equipment.component.html',
-  styleUrl: './panel-hero-equipment.component.scss',
+  templateUrl: './panel-heroes-equipment.component.html',
+  styleUrl: './panel-heroes-equipment.component.css',
 })
-export class PanelHeroEquipmentComponent {
+export class PanelHeroesEquipmentComponent {
   public hero = input.required<Hero>();
+  public highlightSlot = input<EquipmentSlot>();
   public slotClick = output<EquipmentSlot>();
   public slotRightClick = output<EquipmentSlot>();
 
