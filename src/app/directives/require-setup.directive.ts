@@ -1,12 +1,13 @@
-import { Directive, HostBinding } from '@angular/core';
+import { computed, Directive } from '@angular/core';
+import { hostBinding } from 'ngxtension/host-binding';
 import { isSetup } from '../helpers';
 
 @Directive({
   selector: '[appRequireSetup]',
 })
 export class RequireSetupDirective {
-  @HostBinding('class.hidden')
-  public get hidden() {
-    return !isSetup();
-  }
+  public hidden = hostBinding(
+    'class.hidden',
+    computed(() => !isSetup()),
+  );
 }

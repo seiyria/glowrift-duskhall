@@ -1,5 +1,6 @@
-import { Component, computed, HostBinding, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { hostBinding } from 'ngxtension/host-binding';
 import { ALL_ICONS } from '../../helpers';
 
 @Component({
@@ -18,7 +19,8 @@ export class IconComponent {
     return ALL_ICONS[this.name()];
   });
 
-  @HostBinding('style.height') public get maxHeight() {
-    return this.size();
-  }
+  maxHeight = hostBinding(
+    'style.height',
+    computed(() => this.size()),
+  );
 }

@@ -1,4 +1,5 @@
-import { Directive, HostBinding, input } from '@angular/core';
+import { computed, Directive, input } from '@angular/core';
+import { hostBinding } from 'ngxtension/host-binding';
 import { getOption } from '../helpers';
 import { GameOption } from '../interfaces';
 
@@ -8,8 +9,8 @@ import { GameOption } from '../interfaces';
 export class ShowIfOptionDirective {
   public appShowIfOption = input.required<GameOption>();
 
-  @HostBinding('class.hidden')
-  public get hidden() {
-    return !getOption(this.appShowIfOption());
-  }
+  public hidden = hostBinding(
+    'class.hidden',
+    computed(() => !getOption(this.appShowIfOption())),
+  );
 }
