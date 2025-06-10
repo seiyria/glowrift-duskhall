@@ -1,0 +1,25 @@
+@let skillData = skill();
+
+<div class="h-[64px] w-[64px] bg-gray-400 outline outline-2 z-0 absolute"
+  [class.outline-white-900]="skillData.rarity === 'Common'" [class.outline-green-400]="skillData.rarity === 'Uncommon'"
+  [class.outline-blue-400]="skillData.rarity === 'Rare'" [class.outline-purple-400]="skillData.rarity === 'Mystical'"
+  [class.outline-yellow-400]="skillData.rarity === 'Legendary'"
+  [class.outline-rose-400]="skillData.rarity === 'Unique'">
+</div>
+
+<app-atlas-animation class="z-10 absolute" [assetName]="skillData.sprite" [spritesheet]="'skill'"
+  [frames]="skillData.frames" [tp]="itemInfo"></app-atlas-animation>
+
+<div class="z-20 absolute bottom-0 left-[2px] text-xs font-bold italic text-black text-shadow-white">
+  Lv. {{ skillData.dropLevel }}
+</div>
+
+<ng-template #itemInfo let-hide>
+  <h3 class="text-lg">{{ skillData.name }}</h3>
+
+  <div class="mt-3">
+    <div>
+      Level {{ skillData.dropLevel }} {{ skillData.rarity }} {{ skillData.element }} {{ skillData.__type }}
+    </div>
+  </div>
+</ng-template>
