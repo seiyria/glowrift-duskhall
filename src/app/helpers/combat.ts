@@ -57,6 +57,8 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     level: h.level,
     sprite: h.sprite,
     frames: h.frames,
+    skillIds: ['Attack'],
+    skillRefs: h.skills.filter(Boolean) as EquipmentSkill[],
   }));
 
   const guardians: Combatant[] = location.guardians.map((g) => ({
@@ -69,6 +71,8 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     level: location.encounterLevel,
     sprite: g.sprite,
     frames: g.frames,
+    skillIds: ['Attack', ...g.skillIds],
+    skillRefs: [],
   }));
 
   return {
@@ -84,8 +88,13 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
   };
 }
 
-export function availableSkillsForCombatant(): EquipmentSkill[] {
-  return ['Attack'].map((s) => getEntry<EquipmentSkill>(s)!);
+export function availableSkillsForCombatant(
+  combatant: Combatant,
+): EquipmentSkill[] {
+  return [
+    ...combatant.skillIds.map((s) => getEntry<EquipmentSkill>(s)!),
+    ...combatant.skillRefs,
+  ];
 }
 
 export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
@@ -158,7 +167,7 @@ export function combatantTakeTurn(combat: Combat, combatant: Combatant): void {
     return;
   }
 
-  const skills = availableSkillsForCombatant();
+  const skills = availableSkillsForCombatant(combatant);
   const chosenSkill = sample(skills);
   if (!chosenSkill) {
     logCombatMessage(

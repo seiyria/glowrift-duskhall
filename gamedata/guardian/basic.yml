@@ -8,6 +8,8 @@
     speed: 0.3
     aura: 0.2
 
+  skillIds: []
+
 - id: be3d7ddc-dcc6-47c1-afe0-6ac4286216f8
   name: Shield Goblin
   sprite: '0140'
@@ -17,3 +19,18 @@
     health: 9
     speed: 0.2
     aura: 0.8
+
+  skillIds: []
+
+- id: 4b17369f-cce7-4ef9-92d1-2b77f29bf01d
+  name: Fire Goblin
+  sprite: '0144'
+
+  statScaling:
+    force: 0.7
+    health: 4
+    speed: 0.3
+    aura: 0.2
+
+  skillIds:
+    - Firewisp I

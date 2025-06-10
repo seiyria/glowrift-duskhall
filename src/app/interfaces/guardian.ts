@@ -9,9 +9,10 @@ export type GuardianData = Artable &
     id: GuardianId;
 
     statScaling: StatBlock;
+    skillIds: string[];
   };
 
-export interface Guardian extends GuardianData {
+export type Guardian = GuardianData & {
   hp: number;
   stats: StatBlock;
-}
+};
