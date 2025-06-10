@@ -7,11 +7,12 @@
   rarity: Common
   dropLevel: 1
 
-  elements: [Fire]
-  targets: 1
-  targetType: Enemies
-  damageScaling:
-    force: 1
+  techniques:
+    - elements: [Fire]
+      targets: 1
+      targetType: Enemies
+      damageScaling:
+        force: 1
 
 - id: 4483d281-ce7e-4b6f-9672-12c73c4dfb53
   name: Firewisp II
@@ -22,11 +23,12 @@
   rarity: Uncommon
   dropLevel: 5
 
-  elements: [Fire]
-  targets: 1
-  targetType: Enemies
-  damageScaling:
-    force: 1.5
+  techniques:
+    - elements: [Fire]
+      targets: 1
+      targetType: Enemies
+      damageScaling:
+        force: 1.5
 
 - id: eaaf9352-a32d-4800-afe7-7550c0a42506
   name: Firewisp III
@@ -37,8 +39,9 @@
   rarity: Rare
   dropLevel: 15
 
-  elements: [Fire]
-  targets: 1
-  targetType: Enemies
-  damageScaling:
-    force: 2
+  techniques:
+    - elements: [Fire]
+      targets: 1
+      targetType: Enemies
+      damageScaling:
+        force: 2

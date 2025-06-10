@@ -19,7 +19,7 @@
 
   <div class="mt-3">
     <div>
-      Level {{ skillData.dropLevel }} {{ skillData.rarity }} {{ skillData.element }} {{ skillData.__type }}
+      Level {{ skillData.dropLevel }} {{ skillData.rarity }} {{ elements().join(', ') }} {{ skillData.__type }}
     </div>
   </div>
 </ng-template>

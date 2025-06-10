@@ -7,21 +7,23 @@ export type EquippableSkillTargetType = 'Allies' | 'Enemies' | 'Self' | 'All';
 
 export type EquippableSkillId = Branded<string, 'EquippableSkillId'>;
 
-export type SkillModifiable = {
+export type EquipmentSkillDefinitionTechniqueModifiable = {
+  techniques: EquipmentSkillDefinitionTechnique[];
+};
+
+export type EquipmentSkillDefinitionTechnique = {
+  targets: number;
+  targetType: EquippableSkillTargetType;
   damageScaling: StatBlock;
+  elements: GameElement[];
 };
 
 export type EquipmentSkillDefinition = DroppableEquippable &
-  SkillModifiable & {
+  EquipmentSkillDefinitionTechniqueModifiable & {
     __type: 'skill';
     id: EquippableSkillId;
-
-    targets: number;
-    targetType: EquippableSkillTargetType;
-    damageScaling: StatBlock;
-    elements?: [GameElement];
   };
 
 export type EquipmentSkill = EquipmentSkillDefinition & {
-  mods: Partial<SkillModifiable>;
+  mods: Partial<EquipmentSkillDefinitionTechniqueModifiable>;
 };

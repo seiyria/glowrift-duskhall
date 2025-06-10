@@ -9,7 +9,9 @@
   sprite: '0459'
   frames: 14
 
-  targets: 1
-  targetType: Enemies
-  damageScaling:
-    force: 1
+  techniques:
+    - elements: []
+      targets: 1
+      targetType: Enemies
+      damageScaling:
+        force: 1

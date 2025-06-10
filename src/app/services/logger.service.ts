@@ -101,7 +101,7 @@ export class RollbarErrorHandler implements ErrorHandler {
   private logger = inject(LoggerService);
 
   handleError(error: any) {
-    this.logger.error(error);
+    this.logger.error('Error', error);
     this.logger.rollbarError(error);
   }
 }

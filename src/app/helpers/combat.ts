@@ -5,6 +5,7 @@ import {
   CombatId,
   CombatLog,
   EquipmentSkill,
+  EquipmentSkillDefinitionTechnique,
   WorldLocation,
 } from '../interfaces';
 import { getEntry } from './content';
@@ -104,25 +105,25 @@ export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
 export function getCombatantTargetsForSkill(
   combat: Combat,
   combatant: Combatant,
-  skill: EquipmentSkill,
+  technique: EquipmentSkillDefinitionTechnique,
 ): Combatant[] {
   const myType = combatant.id.startsWith('guardian-') ? 'guardian' : 'hero';
   const allies = myType === 'guardian' ? combat.guardians : combat.heroes;
   const enemies = myType === 'guardian' ? combat.heroes : combat.guardians;
 
-  if (skill.targetType === 'All') {
+  if (technique.targetType === 'All') {
     return [...allies, ...enemies].filter((c) => !isDead(c));
   }
 
-  if (skill.targetType === 'Enemies') {
+  if (technique.targetType === 'Enemies') {
     return enemies.filter((g) => !isDead(g));
   }
 
-  if (skill.targetType === 'Allies') {
+  if (technique.targetType === 'Allies') {
     return allies.filter((h) => !isDead(h));
   }
 
-  if (skill.targetType === 'Self') {
+  if (technique.targetType === 'Self') {
     return [combatant];
   }
 
@@ -134,14 +135,15 @@ export function applySkillToTarget(
   combatant: Combatant,
   target: Combatant,
   skill: EquipmentSkill,
+  technique: EquipmentSkillDefinitionTechnique,
 ): void {
   const damage = Math.max(
     0,
     Math.floor(
-      combatant.stats.force * (skill.damageScaling.force ?? 0) +
-        combatant.stats.aura * (skill.damageScaling.aura ?? 0) +
-        combatant.stats.health * (skill.damageScaling.health ?? 0) +
-        combatant.stats.speed * (skill.damageScaling.speed ?? 0),
+      combatant.stats.force * (technique.damageScaling.force ?? 0) +
+        combatant.stats.aura * (technique.damageScaling.aura ?? 0) +
+        combatant.stats.health * (technique.damageScaling.health ?? 0) +
+        combatant.stats.speed * (technique.damageScaling.speed ?? 0),
     ),
   );
 
@@ -177,16 +179,18 @@ export function combatantTakeTurn(combat: Combat, combatant: Combatant): void {
     return;
   }
 
-  const targets = sampleSize(
-    getCombatantTargetsForSkill(combat, combatant, chosenSkill),
-    chosenSkill.targets,
-  );
+  chosenSkill.techniques.forEach((tech) => {
+    const targets = sampleSize(
+      getCombatantTargetsForSkill(combat, combatant, tech),
+      tech.targets,
+    );
 
-  targets.forEach((target) => {
-    // check for early termination of combat
-    if (isCombatOver(combat)) return;
+    targets.forEach((target) => {
+      // check for early termination of combat
+      if (isCombatOver(combat)) return;
 
-    applySkillToTarget(combat, combatant, target, chosenSkill);
+      applySkillToTarget(combat, combatant, target, chosenSkill, tech);
+    });
   });
 }
 
