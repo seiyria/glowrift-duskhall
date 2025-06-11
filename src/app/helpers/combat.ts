@@ -1,4 +1,4 @@
-import { sample, sampleSize, sortBy, union } from 'lodash';
+import { intersection, sample, sampleSize, sortBy, union } from 'lodash';
 import Mustache from 'mustache';
 import {
   Combat,
@@ -141,7 +141,7 @@ export function filterCombatantTargetListForSkillTechnique(
   combatants: Combatant[],
   technique: EquipmentSkillDefinitionTechnique,
 ): Combatant[] {
-  return union(
+  return intersection(
     ...technique.targetBehaviors.map((b) =>
       filterCombatantTargetListForSkillTechniqueBehavior(combatants, b),
     ),
