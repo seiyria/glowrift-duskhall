@@ -5,6 +5,7 @@ import {
   EquipmentSkill,
   EquipmentSkillDefinition,
 } from '../interfaces';
+import { getEntry } from './content';
 import { createItem } from './creator-equipment';
 import { createSkill } from './creator-skill';
 import { addItemToInventory } from './inventory-equipment';
@@ -44,6 +45,11 @@ export function makeDroppableIntoRealItem(
 }
 
 export function gainDroppableItem(droppable: DroppableEquippable): void {
+  if (getEntry<DroppableEquippable>(droppable.id))
+    throw new Error(
+      'Gaining a droppable that has a real content id instead of a unique one',
+    );
+
   switch (droppable.__type) {
     case 'skill':
       addSkillToInventory(droppable as EquipmentSkill);

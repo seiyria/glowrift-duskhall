@@ -18,11 +18,13 @@ export type Combatant = Artable & {
   id: string;
   name: string;
 
+  isEnemy: boolean;
+
   level: number;
   hp: number;
 
   baseStats: StatBlock;
-  stats: StatBlock;
+  totalStats: StatBlock;
 
   skillIds: string[];
   skillRefs: EquipmentSkill[];

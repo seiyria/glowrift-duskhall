@@ -7,12 +7,13 @@
   rarity: Common
   dropLevel: 1
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.stats.health }} HP remaining).'
+  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
   techniques:
     - elements: [Fire]
       targets: 1
       targetType: Enemies
+      targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 1
 
@@ -25,12 +26,13 @@
   rarity: Uncommon
   dropLevel: 5
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.stats.health }} HP remaining).'
+  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
   techniques:
     - elements: [Fire]
       targets: 1
       targetType: Enemies
+      targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 1.5
 
@@ -43,11 +45,12 @@
   rarity: Rare
   dropLevel: 15
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.stats.health }} HP remaining).'
+  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
   techniques:
     - elements: [Fire]
       targets: 1
       targetType: Enemies
+      targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 2

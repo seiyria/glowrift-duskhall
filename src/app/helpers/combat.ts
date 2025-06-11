@@ -1,4 +1,4 @@
-import { sample, sampleSize, sortBy } from 'lodash';
+import { sample, sampleSize, sortBy, union } from 'lodash';
 import Mustache from 'mustache';
 import {
   Combat,
@@ -7,7 +7,10 @@ import {
   CombatLog,
   DroppableEquippable,
   EquipmentSkill,
+  EquipmentSkillDefinition,
   EquipmentSkillDefinitionTechnique,
+  EquippableSkillTargetBehavior,
+  EquippableSkillTargetType,
   Guardian,
   WorldLocation,
 } from '../interfaces';
@@ -55,9 +58,10 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
   const heroes: Combatant[] = allHeroes().map((h) => ({
     id: h.id,
     name: h.name,
+    isEnemy: false,
 
     baseStats: h.baseStats,
-    stats: h.baseStats,
+    totalStats: h.baseStats,
     hp: h.baseStats.health,
     level: h.level,
     sprite: h.sprite,
@@ -73,9 +77,10 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     .map((g) => ({
       id: g.id,
       name: g.name,
+      isEnemy: true,
 
       baseStats: g.stats,
-      stats: g.stats,
+      totalStats: g.stats,
       hp: g.stats.health,
       level: location.encounterLevel,
       sprite: g.sprite,
@@ -107,35 +112,88 @@ export function availableSkillsForCombatant(
 }
 
 export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
-  return sortBy([...combat.guardians, ...combat.heroes], (c) => -c.stats.speed);
+  return sortBy(
+    [...combat.guardians, ...combat.heroes],
+    (c) => -c.totalStats.speed,
+  );
 }
 
-export function getCombatantTargetsForSkill(
+export function filterCombatantTargetListForSkillTechniqueBehavior(
+  combatants: Combatant[],
+  behavior: EquippableSkillTargetBehavior,
+): Combatant[] {
+  const behaviors: Record<
+    EquippableSkillTargetBehavior,
+    (c: Combatant[]) => Combatant[]
+  > = {
+    Always: (list) => list,
+    NotMaxHealth: (list) => list.filter((c) => c.hp < c.totalStats.health),
+    NotZeroHealth: (list) => list.filter((c) => c.hp > 0),
+  };
+
+  if (!behaviors[behavior])
+    throw new Error(`Invalid target behavior: ${behavior}`);
+
+  return behaviors[behavior](combatants);
+}
+
+export function filterCombatantTargetListForSkillTechnique(
+  combatants: Combatant[],
+  technique: EquipmentSkillDefinitionTechnique,
+): Combatant[] {
+  return union(
+    ...technique.targetBehaviors.map((b) =>
+      filterCombatantTargetListForSkillTechniqueBehavior(combatants, b),
+    ),
+  );
+}
+
+export function getBaseCombatantTargetListForSkillTechnique(
   combat: Combat,
   combatant: Combatant,
   technique: EquipmentSkillDefinitionTechnique,
 ): Combatant[] {
-  const myType = combatant.id.startsWith('guardian-') ? 'guardian' : 'hero';
+  const myType = combatant.isEnemy ? 'guardian' : 'hero';
   const allies = myType === 'guardian' ? combat.guardians : combat.heroes;
   const enemies = myType === 'guardian' ? combat.heroes : combat.guardians;
 
-  if (technique.targetType === 'All') {
-    return [...allies, ...enemies].filter((c) => !isDead(c));
-  }
+  const targetTypes: Record<EquippableSkillTargetType, Combatant[]> = {
+    All: [...allies, ...enemies],
+    Enemies: enemies,
+    Allies: allies,
+    Self: [combatant],
+  };
 
-  if (technique.targetType === 'Enemies') {
-    return enemies.filter((g) => !isDead(g));
-  }
+  if (!targetTypes[technique.targetType])
+    throw new Error(`Invalid target type: ${technique.targetType}`);
 
-  if (technique.targetType === 'Allies') {
-    return allies.filter((h) => !isDead(h));
-  }
+  return targetTypes[technique.targetType];
+}
 
-  if (technique.targetType === 'Self') {
-    return [combatant];
-  }
+export function getPossibleCombatantTargetsForSkillTechnique(
+  combat: Combat,
+  combatant: Combatant,
+  skill: EquipmentSkillDefinition,
+  tech: EquipmentSkillDefinitionTechnique,
+): Combatant[] {
+  const baseList = getBaseCombatantTargetListForSkillTechnique(
+    combat,
+    combatant,
+    tech,
+  );
+  return filterCombatantTargetListForSkillTechnique(baseList, tech);
+}
 
-  return [];
+export function getPossibleCombatantTargetsForSkill(
+  combat: Combat,
+  combatant: Combatant,
+  skill: EquipmentSkillDefinition,
+): Combatant[] {
+  return union(
+    skill.techniques.flatMap((t) =>
+      getPossibleCombatantTargetsForSkillTechnique(combat, combatant, skill, t),
+    ),
+  );
 }
 
 export function applySkillToTarget(
@@ -148,21 +206,29 @@ export function applySkillToTarget(
   const damage = Math.max(
     0,
     Math.floor(
-      combatant.stats.force * (technique.damageScaling.force ?? 0) +
-        combatant.stats.aura * (technique.damageScaling.aura ?? 0) +
-        combatant.stats.health * (technique.damageScaling.health ?? 0) +
-        combatant.stats.speed * (technique.damageScaling.speed ?? 0),
+      combatant.totalStats.force * (technique.damageScaling.force ?? 0) +
+        combatant.totalStats.aura * (technique.damageScaling.aura ?? 0) +
+        combatant.totalStats.health * (technique.damageScaling.health ?? 0) +
+        combatant.totalStats.speed * (technique.damageScaling.speed ?? 0),
     ),
   );
 
-  const targetDefense = target.stats.aura;
+  const targetDefense = target.totalStats.aura;
   const effectiveDamage = Math.floor(
     Math.max(damage > 0 ? 1 : 0, damage - targetDefense),
   );
 
   target.hp = Math.max(0, target.hp - effectiveDamage);
 
-  const templateData = { combat, combatant, target, skill, technique, damage };
+  const templateData = {
+    combat,
+    combatant,
+    target,
+    skill,
+    technique,
+    damage,
+    absdamage: Math.abs(damage),
+  };
   const message = Mustache.render(skill.combatMessage, templateData);
   logCombatMessage(combat, message);
 
@@ -177,7 +243,9 @@ export function combatantTakeTurn(combat: Combat, combatant: Combatant): void {
     return;
   }
 
-  const skills = availableSkillsForCombatant(combatant);
+  const skills = availableSkillsForCombatant(combatant).filter(
+    (s) => getPossibleCombatantTargetsForSkill(combat, combatant, s).length > 0,
+  );
   const chosenSkill = sample(skills);
   if (!chosenSkill) {
     logCombatMessage(
@@ -189,7 +257,12 @@ export function combatantTakeTurn(combat: Combat, combatant: Combatant): void {
 
   chosenSkill.techniques.forEach((tech) => {
     const targets = sampleSize(
-      getCombatantTargetsForSkill(combat, combatant, tech),
+      getPossibleCombatantTargetsForSkillTechnique(
+        combat,
+        combatant,
+        chosenSkill,
+        tech,
+      ),
       tech.targets,
     );
 
