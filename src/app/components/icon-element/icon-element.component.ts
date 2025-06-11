@@ -6,14 +6,14 @@ import { IconComponent } from '../icon/icon.component';
 
 const icons: Record<GameElement, keyof typeof ALL_ICONS> = {
   Fire: 'gameSmallFire',
-  Ice: 'gameIceCube',
+  Water: 'gameIceCube',
   Air: 'gameSwanBreeze',
   Earth: 'gameStonePile',
 };
 
 const colors: Record<GameElement, string> = {
   Fire: 'text-red-600',
-  Ice: 'text-sky-500',
+  Water: 'text-sky-500',
   Air: 'text-green-500',
   Earth: 'text-amber-700',
 };

@@ -108,36 +108,36 @@ function getElementsForCardinalDirection(
     case Compass.CardinalDirection.ESE:
       return [
         { element: 'Air', multiplier: MAJOR },
-        { element: 'Ice', multiplier: MINOR },
+        { element: 'Water', multiplier: MINOR },
       ];
     case Compass.CardinalDirection.SE:
       return [
         { element: 'Air', multiplier: SPLIT },
-        { element: 'Ice', multiplier: SPLIT },
+        { element: 'Water', multiplier: SPLIT },
       ];
     case Compass.CardinalDirection.SSE:
       return [
-        { element: 'Ice', multiplier: MAJOR },
+        { element: 'Water', multiplier: MAJOR },
         { element: 'Air', multiplier: MINOR },
       ];
 
     case Compass.CardinalDirection.S:
-      return [{ element: 'Ice', multiplier: FULL }];
+      return [{ element: 'Water', multiplier: FULL }];
 
     case Compass.CardinalDirection.SSW:
       return [
-        { element: 'Ice', multiplier: MAJOR },
+        { element: 'Water', multiplier: MAJOR },
         { element: 'Earth', multiplier: MINOR },
       ];
     case Compass.CardinalDirection.SW:
       return [
-        { element: 'Ice', multiplier: SPLIT },
+        { element: 'Water', multiplier: SPLIT },
         { element: 'Earth', multiplier: SPLIT },
       ];
     case Compass.CardinalDirection.WSW:
       return [
         { element: 'Earth', multiplier: MAJOR },
-        { element: 'Ice', multiplier: MINOR },
+        { element: 'Water', multiplier: MINOR },
       ];
 
     case Compass.CardinalDirection.W:
@@ -163,7 +163,7 @@ function getElementsForCardinalDirection(
       return [
         { element: 'Fire', multiplier: MINOR },
         { element: 'Air', multiplier: MINOR },
-        { element: 'Ice', multiplier: MINOR },
+        { element: 'Water', multiplier: MINOR },
         { element: 'Earth', multiplier: MINOR },
       ];
   }
@@ -255,7 +255,7 @@ function determineSpritesForWorld(
     Air: 16,
     Earth: 0,
     Fire: 24,
-    Ice: 12,
+    Water: 12,
   };
 
   Object.values(nodes).forEach((node) => {

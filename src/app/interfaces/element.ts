@@ -1,1 +1,1 @@
-export type GameElement = 'Fire' | 'Ice' | 'Earth' | 'Air';
+export type GameElement = 'Fire' | 'Water' | 'Earth' | 'Air';
