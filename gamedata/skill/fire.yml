@@ -9,6 +9,7 @@
 
   techniques:
     - elements: [Fire]
+      attributes: [AllowPlink]
       targets: 1
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]
@@ -28,6 +29,7 @@
 
   techniques:
     - elements: [Fire]
+      attributes: [AllowPlink]
       targets: 1
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]
@@ -47,6 +49,7 @@
 
   techniques:
     - elements: [Fire]
+      attributes: [AllowPlink]
       targets: 1
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]

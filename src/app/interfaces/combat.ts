@@ -1,4 +1,5 @@
 import { Artable } from './animatable';
+import { ElementBlock } from './element';
 import { Branded } from './identifiable';
 import { EquipmentSkill } from './skill';
 import { StatBlock } from './stat';
@@ -25,6 +26,9 @@ export type Combatant = Artable & {
 
   baseStats: StatBlock;
   totalStats: StatBlock;
+
+  resistance: ElementBlock;
+  affinity: ElementBlock;
 
   skillIds: string[];
   skillRefs: EquipmentSkill[];

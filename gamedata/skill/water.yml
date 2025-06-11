@@ -9,6 +9,7 @@
 
   techniques:
     - elements: [Water]
+      attributes: [BypassDefense, AllowNegative]
       targets: 1
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]
@@ -29,6 +30,7 @@
 
   techniques:
     - elements: [Water]
+      attributes: [BypassDefense, AllowNegative]
       targets: 1
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]
@@ -49,6 +51,7 @@
 
   techniques:
     - elements: [Water]
+      attributes: [BypassDefense, AllowNegative]
       targets: 1
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]

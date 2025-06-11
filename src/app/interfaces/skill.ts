@@ -8,6 +8,11 @@ export type EquippableSkillTargetBehavior =
   | 'NotZeroHealth'
   | 'NotMaxHealth';
 
+export type EquippableSkillAttribute =
+  | 'BypassDefense'
+  | 'AllowNegative'
+  | 'AllowPlink';
+
 export type EquippableSkillTargetType = 'Allies' | 'Enemies' | 'Self' | 'All';
 
 export type EquippableSkillId = Branded<string, 'EquippableSkillId'>;
@@ -22,6 +27,7 @@ export type EquipmentSkillDefinitionTechnique = {
   targetBehaviors: EquippableSkillTargetBehavior[];
   damageScaling: StatBlock;
   elements: GameElement[];
+  attributes: EquippableSkillAttribute[];
 
   combatMessage: string;
 };

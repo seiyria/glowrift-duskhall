@@ -32,10 +32,10 @@
     Speed: 0.3
     Aura: 0.2
 
-  resistances:
+  resistance:
     Fire: 0.5
 
-  affinities:
+  affinity:
     Fire: 1.5
 
   skillIds:

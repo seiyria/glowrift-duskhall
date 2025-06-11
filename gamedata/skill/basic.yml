@@ -11,6 +11,7 @@
 
   techniques:
     - elements: []
+      attributes: [AllowPlink]
       targets: 1
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]

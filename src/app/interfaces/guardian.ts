@@ -1,4 +1,5 @@
 import { Artable } from './animatable';
+import { ElementBlock } from './element';
 import { Branded, Content } from './identifiable';
 import { StatBlock } from './stat';
 
@@ -10,6 +11,9 @@ export type GuardianData = Artable &
 
     statScaling: StatBlock;
     skillIds: string[];
+
+    resistance: ElementBlock;
+    affinity: ElementBlock;
   };
 
 export type Guardian = GuardianData & {

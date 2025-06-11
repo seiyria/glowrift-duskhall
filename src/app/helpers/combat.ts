@@ -1,4 +1,4 @@
-import { intersection, sample, sampleSize, sortBy, union } from 'lodash';
+import { intersection, sample, sampleSize, sortBy, sum, union } from 'lodash';
 import Mustache from 'mustache';
 import {
   Combat,
@@ -6,9 +6,11 @@ import {
   CombatId,
   CombatLog,
   DroppableEquippable,
+  ElementBlock,
   EquipmentSkill,
   EquipmentSkillDefinition,
   EquipmentSkillDefinitionTechnique,
+  EquippableSkillAttribute,
   EquippableSkillTargetBehavior,
   EquippableSkillTargetType,
   Guardian,
@@ -54,6 +56,15 @@ export function currentCombatHasGuardiansAlive(): boolean {
   return combat.guardians.some((guardian) => !isDead(guardian));
 }
 
+export function getDefaultAffinities(): ElementBlock {
+  return {
+    Air: 1,
+    Earth: 1,
+    Fire: 1,
+    Water: 1,
+  };
+}
+
 export function generateCombatForLocation(location: WorldLocation): Combat {
   const heroes: Combatant[] = allHeroes().map((h) => ({
     id: h.id,
@@ -68,6 +79,14 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     frames: h.frames,
     skillIds: ['Attack'],
     skillRefs: h.skills.filter(Boolean) as EquipmentSkill[],
+
+    affinity: {
+      ...getDefaultAffinities(),
+    },
+
+    resistance: {
+      ...getDefaultAffinities(),
+    },
   }));
 
   const guardians: Combatant[] = location.guardianIds
@@ -76,7 +95,7 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
     .map((g) => createGuardianForLocation(location, g))
     .map((g) => ({
       id: g.id,
-      name: g.name,
+      name: `${g.name} Lv.${location.encounterLevel}`,
       isEnemy: true,
 
       baseStats: g.stats,
@@ -87,6 +106,16 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
       frames: g.frames,
       skillIds: ['Attack', ...g.skillIds],
       skillRefs: [],
+
+      affinity: {
+        ...getDefaultAffinities(),
+        ...g.affinity,
+      },
+
+      resistance: {
+        ...getDefaultAffinities(),
+        ...g.resistance,
+      },
     }));
 
   return {
@@ -196,6 +225,13 @@ export function getPossibleCombatantTargetsForSkill(
   );
 }
 
+export function techniqueHasAttribute(
+  technique: EquipmentSkillDefinitionTechnique,
+  attribute: EquippableSkillAttribute,
+): boolean {
+  return technique.attributes?.includes(attribute);
+}
+
 export function applySkillToTarget(
   combat: Combat,
   combatant: Combatant,
@@ -203,20 +239,45 @@ export function applySkillToTarget(
   skill: EquipmentSkill,
   technique: EquipmentSkillDefinitionTechnique,
 ): void {
-  const damage = Math.max(
-    0,
-    Math.floor(
-      combatant.totalStats.Force * (technique.damageScaling.Force ?? 0) +
-        combatant.totalStats.Aura * (technique.damageScaling.Aura ?? 0) +
-        combatant.totalStats.Health * (technique.damageScaling.Health ?? 0) +
-        combatant.totalStats.Speed * (technique.damageScaling.Speed ?? 0),
-    ),
-  );
+  const baseDamage =
+    combatant.totalStats.Force * (technique.damageScaling.Force ?? 0) +
+    combatant.totalStats.Aura * (technique.damageScaling.Aura ?? 0) +
+    combatant.totalStats.Health * (technique.damageScaling.Health ?? 0) +
+    combatant.totalStats.Speed * (technique.damageScaling.Speed ?? 0);
 
-  const targetDefense = target.totalStats.Aura;
-  const effectiveDamage = Math.floor(
-    Math.max(damage > 0 ? 1 : 0, damage - targetDefense),
-  );
+  const damage =
+    technique.elements.length === 0
+      ? baseDamage
+      : sum(
+          technique.elements.map((el) => baseDamage * combatant.affinity[el]),
+        ) / technique.elements.length;
+
+  const baseTargetDefense = target.totalStats.Aura;
+  const targetDefense =
+    technique.elements.length === 0
+      ? baseTargetDefense
+      : sum(
+          technique.elements.map(
+            (el) => baseTargetDefense * target.resistance[el],
+          ),
+        ) / technique.elements.length;
+
+  let effectiveDamage = damage;
+
+  console.log('pre', effectiveDamage, skill.name, technique.damageScaling);
+  if (!techniqueHasAttribute(technique, 'AllowNegative')) {
+    effectiveDamage = Math.max(0, effectiveDamage);
+  }
+
+  if (!techniqueHasAttribute(technique, 'BypassDefense')) {
+    effectiveDamage = Math.max(0, effectiveDamage - targetDefense);
+  }
+
+  if (techniqueHasAttribute(technique, 'AllowPlink')) {
+    effectiveDamage = Math.max(damage > 0 ? 1 : 0, effectiveDamage);
+  }
+
+  effectiveDamage = Math.floor(effectiveDamage);
 
   target.hp = Math.max(0, target.hp - effectiveDamage);
 
@@ -226,8 +287,8 @@ export function applySkillToTarget(
     target,
     skill,
     technique,
-    damage,
-    absdamage: Math.abs(damage),
+    damage: effectiveDamage,
+    absdamage: Math.abs(effectiveDamage),
   };
   const message = Mustache.render(technique.combatMessage, templateData);
   logCombatMessage(combat, message);
@@ -356,6 +417,8 @@ export function checkCombatOver(combat: Combat): boolean {
   }
 
   resetCombat();
+
+  logCombatMessage(combat, '');
 
   return true;
 }
