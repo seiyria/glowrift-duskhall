@@ -1,3 +1,3 @@
-export type GameStat = 'force' | 'health' | 'speed' | 'aura';
+export type GameStat = 'Force' | 'Health' | 'Speed' | 'Aura';
 
 export type StatBlock = Record<GameStat, number>;

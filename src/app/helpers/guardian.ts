@@ -5,15 +5,15 @@ export function createGuardianForLocation(
   guardianData: GuardianData,
 ): Guardian {
   const stats: Record<GameStat, number> = {
-    aura: location.encounterLevel * guardianData.statScaling.aura,
-    force: location.encounterLevel * guardianData.statScaling.force,
-    health: location.encounterLevel * guardianData.statScaling.health,
-    speed: location.encounterLevel * guardianData.statScaling.speed,
+    Aura: location.encounterLevel * guardianData.statScaling.Aura,
+    Force: location.encounterLevel * guardianData.statScaling.Force,
+    Health: location.encounterLevel * guardianData.statScaling.Health,
+    Speed: location.encounterLevel * guardianData.statScaling.Speed,
   };
 
   return {
     ...guardianData,
-    hp: stats.health,
+    hp: stats.Health,
     stats,
   };
 }

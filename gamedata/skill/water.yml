@@ -13,10 +13,10 @@
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]
       damageScaling:
-        force: -0.5
-        aura: -0.25
+        Force: -0.5
+        Aura: -0.25
 
-      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'
 
 - id: aa08ed93-efbe-4f21-923c-4593a4b211c4
   name: Healsprite II
@@ -33,10 +33,10 @@
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]
       damageScaling:
-        force: -1
-        aura: -0.25
+        Force: -1
+        Aura: -0.25
 
-      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'
 
 - id: 29a6aa50-3e3f-49d0-8e22-60d18a042271
   name: Healsprite III
@@ -53,7 +53,7 @@
       targetType: Allies
       targetBehaviors: [NotMaxHealth, NotZeroHealth]
       damageScaling:
-        force: -1.5
-        aura: -0.25
+        Force: -1.5
+        Aura: -0.25
 
-      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'

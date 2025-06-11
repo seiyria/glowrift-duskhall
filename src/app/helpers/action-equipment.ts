@@ -5,10 +5,10 @@ import { notifySuccess } from './notify';
 
 export function itemSalvageValue(item: EquipmentItem): number {
   return (
-    (item.baseStats.aura ?? 0) * 4 +
-    (item.baseStats.force ?? 0) * 6 +
-    (item.baseStats.health ?? 0) * 2 +
-    (item.baseStats.speed ?? 0) * 10
+    (item.baseStats.Aura ?? 0) * 4 +
+    (item.baseStats.Force ?? 0) * 6 +
+    (item.baseStats.Health ?? 0) * 2 +
+    (item.baseStats.Speed ?? 0) * 10
   );
 }
 

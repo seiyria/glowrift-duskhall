@@ -6,7 +6,7 @@
   dropLevel: 1
 
   baseStats:
-    force: 1
+    Force: 1
 
 - id: fd70017f-849e-42f9-b8f3-7a9d10e44b7a
   name: Club
@@ -16,7 +16,7 @@
   dropLevel: 2
 
   baseStats:
-    force: 2
+    Force: 2
 
 - id: be54ce9f-53f5-4e9a-a424-48e40f5d9c17
   name: Cross
@@ -26,5 +26,5 @@
   dropLevel: 5
 
   baseStats:
-    force: 3
-    aura: 3
+    Force: 3
+    Aura: 3

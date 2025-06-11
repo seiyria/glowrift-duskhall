@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class GameCurrencyPipe implements PipeTransform {
   transform(number: number): string {
+    if (number === 0) return '0';
     if (isNaN(number) || !number) return '';
 
     const rounder = Math.pow(10, 1);
@@ -28,6 +29,7 @@ export class GameCurrencyPipe implements PipeTransform {
         break;
       }
     }
+
     return `${abs} ${key}`;
   }
 }

@@ -45,7 +45,8 @@ export class NavbarComponent {
   public displayedCurrencies = computed(() => {
     const currentCurrencies = gamestate().currency.currencies;
     return Object.keys(currentCurrencies).filter(
-      (c) => c !== 'Mana' && currentCurrencies[c as GameCurrency] > 0,
+      (c) =>
+        c !== 'Mana' && Math.floor(currentCurrencies[c as GameCurrency]) > 0,
     ) as GameCurrency[];
   });
 

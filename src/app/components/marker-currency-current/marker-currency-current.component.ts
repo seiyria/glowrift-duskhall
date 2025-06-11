@@ -13,6 +13,6 @@ export class MarkerCurrencyCurrentComponent {
   public currency = input.required<GameCurrency>();
 
   public currentValue = computed(
-    () => gamestate().currency.currencies[this.currency()],
+    () => gamestate().currency.currencies[this.currency()] ?? 0,
   );
 }

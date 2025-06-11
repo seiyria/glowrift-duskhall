@@ -6,7 +6,7 @@
   dropLevel: 1
 
   baseStats:
-    force: 1
+    Force: 1
 
 - id: 621baab3-f5d3-4c54-9de9-4ab65331874c
   name: Spellbook of Weak Aura
@@ -16,4 +16,4 @@
   dropLevel: 1
 
   baseStats:
-    aura: 1
+    Aura: 1

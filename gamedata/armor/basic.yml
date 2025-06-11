@@ -6,7 +6,7 @@
   dropLevel: 1
 
   baseStats:
-    aura: 1
+    Aura: 1
 
 - id: 10c7e2e8-d455-49b9-9977-c0d0c428877d
   name: Leather Plate
@@ -16,4 +16,4 @@
   dropLevel: 2
 
   baseStats:
-    aura: 2
+    Aura: 2

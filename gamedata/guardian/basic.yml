@@ -3,10 +3,10 @@
   sprite: '0136'
 
   statScaling:
-    force: 0.5
-    health: 5
-    speed: 0.3
-    aura: 0.2
+    Force: 0.5
+    Health: 5
+    Speed: 0.3
+    Aura: 0.2
 
   skillIds: []
 
@@ -15,10 +15,10 @@
   sprite: '0140'
 
   statScaling:
-    force: 0.2
-    health: 9
-    speed: 0.2
-    aura: 0.8
+    Force: 0.2
+    Health: 9
+    Speed: 0.2
+    Aura: 0.8
 
   skillIds: []
 
@@ -27,10 +27,16 @@
   sprite: '0144'
 
   statScaling:
-    force: 0.7
-    health: 4
-    speed: 0.3
-    aura: 0.2
+    Force: 0.7
+    Health: 4
+    Speed: 0.3
+    Aura: 0.2
+
+  resistances:
+    Fire: 0.5
+
+  affinities:
+    Fire: 1.5
 
   skillIds:
     - Firewisp I

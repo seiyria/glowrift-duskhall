@@ -21,20 +21,20 @@
       Level {{ itemData.dropLevel }} {{ itemData.rarity }} {{ itemData.__type }}
     </div>
 
-    @if(itemData.baseStats.health) {
-    <app-marker-stat stat="health" [value]="itemData.baseStats.health"></app-marker-stat>
+    @if(itemData.baseStats.Health) {
+    <app-marker-stat stat="Health" [value]="itemData.baseStats.Health"></app-marker-stat>
     }
 
-    @if(itemData.baseStats.force) {
-    <app-marker-stat stat="force" [value]="itemData.baseStats.force"></app-marker-stat>
+    @if(itemData.baseStats.Force) {
+    <app-marker-stat stat="Force" [value]="itemData.baseStats.Force"></app-marker-stat>
     }
 
-    @if(itemData.baseStats.aura) {
-    <app-marker-stat stat="aura" [value]="itemData.baseStats.aura"></app-marker-stat>
+    @if(itemData.baseStats.Aura) {
+    <app-marker-stat stat="Aura" [value]="itemData.baseStats.Aura"></app-marker-stat>
     }
 
-    @if(itemData.baseStats.speed) {
-    <app-marker-stat stat="speed" [value]="itemData.baseStats.speed"></app-marker-stat>
+    @if(itemData.baseStats.Speed) {
+    <app-marker-stat stat="Speed" [value]="itemData.baseStats.Speed"></app-marker-stat>
     }
   </div>
 </ng-template>

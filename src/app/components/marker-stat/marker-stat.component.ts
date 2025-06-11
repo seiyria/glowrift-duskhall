@@ -5,10 +5,10 @@ import { GameStat } from '../../interfaces';
 import { IconComponent } from '../icon/icon.component';
 
 const icons: Record<GameStat, keyof typeof ALL_ICONS> = {
-  aura: 'gameVibratingShield',
-  force: 'gameGooeyImpact',
-  health: 'gameGlassHeart',
-  speed: 'gameClockwork',
+  Aura: 'gameVibratingShield',
+  Force: 'gameGooeyImpact',
+  Health: 'gameGlassHeart',
+  Speed: 'gameClockwork',
 };
 
 @Component({
@@ -24,7 +24,7 @@ export class MarkerStatComponent {
 
   public icon = computed(() => icons[this.stat()]);
 
- public displayDelta = computed(() => {
+  public displayDelta = computed(() => {
     const deltaValue = this.delta();
     if (deltaValue === 0) return null;
 
@@ -32,9 +32,6 @@ export class MarkerStatComponent {
   });
 
   public deltaColor = computed(() =>
-    this.delta() > 0 ? 'text-green-500' : 'text-red-500'
+    this.delta() > 0 ? 'text-green-500' : 'text-red-500',
   );
 }
-
-
-

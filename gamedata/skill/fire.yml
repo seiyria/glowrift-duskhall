@@ -13,9 +13,9 @@
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]
       damageScaling:
-        force: 1
+        Force: 1
 
-      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'
 
 - id: 4483d281-ce7e-4b6f-9672-12c73c4dfb53
   name: Firewisp II
@@ -32,9 +32,9 @@
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]
       damageScaling:
-        force: 1.5
+        Force: 1.5
 
-      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'
 
 - id: eaaf9352-a32d-4800-afe7-7550c0a42506
   name: Firewisp III
@@ -51,6 +51,6 @@
       targetType: Enemies
       targetBehaviors: [NotZeroHealth]
       damageScaling:
-        force: 2
+        Force: 2
 
-      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.Health }} HP remaining).'

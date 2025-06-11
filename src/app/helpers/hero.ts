@@ -65,17 +65,17 @@ export function heroLevelUp(hero: Hero): void {
   const rng = seededrng(levelUpSeed);
 
   const newStats: StatBlock = {
-    force: hero.baseStats.force + randomNumber(3, rng),
-    health: hero.baseStats.health + randomNumber(10, rng),
-    speed: hero.baseStats.speed + randomNumber(1, rng),
-    aura: hero.baseStats.aura + randomNumber(2, rng),
+    Force: hero.baseStats.Force + randomNumber(3, rng),
+    Health: hero.baseStats.Health + randomNumber(10, rng),
+    Speed: hero.baseStats.Speed + randomNumber(1, rng),
+    Aura: hero.baseStats.Aura + randomNumber(2, rng),
   };
 
   updateHeroData(hero.id, {
     level: hero.level + 1,
     xp: 0,
     baseStats: newStats,
-    hp: newStats.health,
+    hp: newStats.Health,
   });
 
   recalculateStats(hero);
@@ -93,10 +93,10 @@ export function heroGainXp(hero: Hero, xp: number): void {
 
 export function heroStats(hero: Hero): StatBlock {
   return {
-    force: heroTotalStat(hero, 'force'),
-    health: heroTotalStat(hero, 'health'),
-    speed: heroTotalStat(hero, 'speed'),
-    aura: heroTotalStat(hero, 'aura'),
+    Force: heroTotalStat(hero, 'Force'),
+    Health: heroTotalStat(hero, 'Health'),
+    Speed: heroTotalStat(hero, 'Speed'),
+    Aura: heroTotalStat(hero, 'Aura'),
   };
 }
 
@@ -131,6 +131,6 @@ export function recalculateStats(hero: Hero): void {
 
   updateHeroData(hero.id, {
     totalStats: newStats,
-    hp: newStats.health,
+    hp: newStats.Health,
   });
 }

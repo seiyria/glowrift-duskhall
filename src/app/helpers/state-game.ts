@@ -21,16 +21,16 @@ export function blankHero(props: Partial<Hero> = {}): Hero {
     xp: 0,
     hp: 10,
     baseStats: {
-      force: 5,
-      health: 10,
-      speed: 1,
-      aura: 1,
+      Force: 5,
+      Health: 10,
+      Speed: 1,
+      Aura: 1,
     },
     totalStats: {
-      force: 5,
-      health: 10,
-      speed: 1,
-      aura: 1,
+      Force: 5,
+      Health: 10,
+      Speed: 1,
+      Aura: 1,
     },
 
     equipment: {

@@ -62,7 +62,7 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
 
     baseStats: h.baseStats,
     totalStats: h.baseStats,
-    hp: h.baseStats.health,
+    hp: h.baseStats.Health,
     level: h.level,
     sprite: h.sprite,
     frames: h.frames,
@@ -81,7 +81,7 @@ export function generateCombatForLocation(location: WorldLocation): Combat {
 
       baseStats: g.stats,
       totalStats: g.stats,
-      hp: g.stats.health,
+      hp: g.stats.Health,
       level: location.encounterLevel,
       sprite: g.sprite,
       frames: g.frames,
@@ -114,7 +114,7 @@ export function availableSkillsForCombatant(
 export function orderCombatantsBySpeed(combat: Combat): Combatant[] {
   return sortBy(
     [...combat.guardians, ...combat.heroes],
-    (c) => -c.totalStats.speed,
+    (c) => -c.totalStats.Speed,
   );
 }
 
@@ -127,7 +127,7 @@ export function filterCombatantTargetListForSkillTechniqueBehavior(
     (c: Combatant[]) => Combatant[]
   > = {
     Always: (list) => list,
-    NotMaxHealth: (list) => list.filter((c) => c.hp < c.totalStats.health),
+    NotMaxHealth: (list) => list.filter((c) => c.hp < c.totalStats.Health),
     NotZeroHealth: (list) => list.filter((c) => c.hp > 0),
   };
 
@@ -206,14 +206,14 @@ export function applySkillToTarget(
   const damage = Math.max(
     0,
     Math.floor(
-      combatant.totalStats.force * (technique.damageScaling.force ?? 0) +
-        combatant.totalStats.aura * (technique.damageScaling.aura ?? 0) +
-        combatant.totalStats.health * (technique.damageScaling.health ?? 0) +
-        combatant.totalStats.speed * (technique.damageScaling.speed ?? 0),
+      combatant.totalStats.Force * (technique.damageScaling.Force ?? 0) +
+        combatant.totalStats.Aura * (technique.damageScaling.Aura ?? 0) +
+        combatant.totalStats.Health * (technique.damageScaling.Health ?? 0) +
+        combatant.totalStats.Speed * (technique.damageScaling.Speed ?? 0),
     ),
   );
 
-  const targetDefense = target.totalStats.aura;
+  const targetDefense = target.totalStats.Aura;
   const effectiveDamage = Math.floor(
     Math.max(damage > 0 ? 1 : 0, damage - targetDefense),
   );
