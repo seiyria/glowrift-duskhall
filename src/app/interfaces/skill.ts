@@ -22,14 +22,14 @@ export type EquipmentSkillDefinitionTechnique = {
   targetBehaviors: EquippableSkillTargetBehavior[];
   damageScaling: StatBlock;
   elements: GameElement[];
+
+  combatMessage: string;
 };
 
 export type EquipmentSkillDefinition = DroppableEquippable &
   EquipmentSkillDefinitionTechniqueModifiable & {
     __type: 'skill';
     id: EquippableSkillId;
-
-    combatMessage: string;
   };
 
 export type EquipmentSkill = EquipmentSkillDefinition & {

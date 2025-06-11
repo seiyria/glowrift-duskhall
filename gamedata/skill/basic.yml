@@ -9,8 +9,6 @@
   sprite: '0459'
   frames: 14
 
-  combatMessage: '**{{ combatant.name }}** attacks **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: []
       targets: 1
@@ -18,3 +16,5 @@
       targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 1
+
+      combatMessage: '**{{ combatant.name }}** attacks **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'

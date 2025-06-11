@@ -7,8 +7,6 @@
   rarity: Common
   dropLevel: 1
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Water]
       targets: 1
@@ -17,6 +15,8 @@
       damageScaling:
         force: -0.5
         aura: -0.25
+
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
 - id: aa08ed93-efbe-4f21-923c-4593a4b211c4
   name: Healsprite II
@@ -27,8 +27,6 @@
   rarity: Uncommon
   dropLevel: 5
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Water]
       targets: 1
@@ -37,6 +35,8 @@
       damageScaling:
         force: -1
         aura: -0.25
+
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
 - id: 29a6aa50-3e3f-49d0-8e22-60d18a042271
   name: Healsprite III
@@ -47,8 +47,6 @@
   rarity: Rare
   dropLevel: 15
 
-  combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Water]
       targets: 1
@@ -57,3 +55,5 @@
       damageScaling:
         force: -1.5
         aura: -0.25
+
+      combatMessage: '**{{ combatant.name }}** cast **{{ skill.name }}** on **{{ target.name }}** for {{ absdamage }} healing ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'

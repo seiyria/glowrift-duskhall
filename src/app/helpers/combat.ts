@@ -229,7 +229,7 @@ export function applySkillToTarget(
     damage,
     absdamage: Math.abs(damage),
   };
-  const message = Mustache.render(skill.combatMessage, templateData);
+  const message = Mustache.render(technique.combatMessage, templateData);
   logCombatMessage(combat, message);
 
   if (isDead(target)) {

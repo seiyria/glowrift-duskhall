@@ -7,8 +7,6 @@
   rarity: Common
   dropLevel: 1
 
-  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Fire]
       targets: 1
@@ -16,6 +14,8 @@
       targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 1
+
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
 - id: 4483d281-ce7e-4b6f-9672-12c73c4dfb53
   name: Firewisp II
@@ -26,8 +26,6 @@
   rarity: Uncommon
   dropLevel: 5
 
-  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Fire]
       targets: 1
@@ -35,6 +33,8 @@
       targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 1.5
+
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
 
 - id: eaaf9352-a32d-4800-afe7-7550c0a42506
   name: Firewisp III
@@ -45,8 +45,6 @@
   rarity: Rare
   dropLevel: 15
 
-  combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
-
   techniques:
     - elements: [Fire]
       targets: 1
@@ -54,3 +52,5 @@
       targetBehaviors: [NotZeroHealth]
       damageScaling:
         force: 2
+
+      combatMessage: '**{{ combatant.name }}** uses **{{ skill.name }}** on **{{ target.name }}** for {{ damage }} damage ({{ target.hp }}/{{ target.totalStats.health }} HP remaining).'
