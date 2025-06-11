@@ -264,7 +264,6 @@ export function applySkillToTarget(
 
   let effectiveDamage = damage;
 
-  console.log('pre', effectiveDamage, skill.name, technique.damageScaling);
   if (!techniqueHasAttribute(technique, 'AllowNegative')) {
     effectiveDamage = Math.max(0, effectiveDamage);
   }
