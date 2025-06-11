@@ -1,4 +1,5 @@
 import { sample, sampleSize, sortBy } from 'lodash';
+import Mustache from 'mustache';
 import {
   Combat,
   Combatant,
@@ -160,10 +161,10 @@ export function applySkillToTarget(
   );
 
   target.hp = Math.max(0, target.hp - effectiveDamage);
-  logCombatMessage(
-    combat,
-    `**${combatant.name}** uses **${skill.name}** on **${target.name}** for ${damage} damage (${target.hp}/${target.stats.health} HP remaining).`,
-  );
+
+  const templateData = { combat, combatant, target, skill, technique, damage };
+  const message = Mustache.render(skill.combatMessage, templateData);
+  logCombatMessage(combat, message);
 
   if (isDead(target)) {
     logCombatMessage(combat, `**${target.name}** has been defeated!`);

@@ -22,6 +22,8 @@ export type EquipmentSkillDefinition = DroppableEquippable &
   EquipmentSkillDefinitionTechniqueModifiable & {
     __type: 'skill';
     id: EquippableSkillId;
+
+    combatMessage: string;
   };
 
 export type EquipmentSkill = EquipmentSkillDefinition & {
