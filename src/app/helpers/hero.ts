@@ -7,7 +7,7 @@ import {
   StatBlock,
   WorldPosition,
 } from '../interfaces';
-import { randomNumber, seededrng } from './rng';
+import { randomChoice, seededrng } from './rng';
 import { indexToSprite } from './sprite';
 import { gamestate, updateGamestate } from './state-game';
 import { getWorldNode } from './world';
@@ -65,10 +65,12 @@ export function heroLevelUp(hero: Hero): void {
   const rng = seededrng(levelUpSeed);
 
   const newStats: StatBlock = {
-    Force: hero.baseStats.Force + randomNumber(3, rng),
-    Health: hero.baseStats.Health + randomNumber(10, rng),
-    Speed: hero.baseStats.Speed + randomNumber(1, rng),
-    Aura: hero.baseStats.Aura + randomNumber(2, rng),
+    Force: hero.baseStats.Force + randomChoice([0.5, 1, 1.5, 2, 2.5, 3], rng),
+    Health:
+      hero.baseStats.Health +
+      randomChoice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], rng),
+    Speed: hero.baseStats.Speed + randomChoice([0, 0.3, 0.5], rng),
+    Aura: hero.baseStats.Aura + randomChoice([0.3, 0.5, 1, 1.5, 2], rng),
   };
 
   updateHeroData(hero.id, {
