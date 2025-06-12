@@ -87,6 +87,20 @@ export function blankGameState(): GameState {
       height: 0,
       nodes: {},
       homeBase: blankPosition(),
+      nodeCounts: {
+        castle: 0,
+        cave: 0,
+        dungeon: 0,
+        town: 0,
+        village: 0,
+      },
+      claimedCounts: {
+        castle: 0,
+        cave: 0,
+        dungeon: 0,
+        town: 0,
+        village: 0,
+      },
     },
     camera: blankPosition(),
     hero: {

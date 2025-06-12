@@ -29,6 +29,7 @@ import {
 import { indexToSprite } from './sprite';
 import { gamestate } from './state-game';
 import { distanceBetweenNodes } from './travel';
+import { blankWorldNode } from './world';
 
 function fillEmptySpaceWithEmptyNodes(
   config: WorldConfig,
@@ -39,20 +40,7 @@ function fillEmptySpaceWithEmptyNodes(
       if (nodes[`${x},${y}`]) continue;
 
       nodes[`${x},${y}`] = {
-        id: uuid(),
-        elements: [],
-        name: '',
-        nodeType: undefined,
-        sprite: '',
-        objectSprite: '',
-        x,
-        y,
-        claimCount: 0,
-        currentlyClaimed: false,
-        encounterLevel: 0,
-        guardianIds: [],
-        claimLootIds: [],
-        unclaimTime: 0,
+        ...blankWorldNode(x, y),
       };
     }
   }
@@ -179,7 +167,7 @@ function addElementsToWorld(
   };
 
   const maxDistance = distanceBetweenNodes(
-    nodes[`${centerPosition.x},0`],
+    { x: centerPosition.x, y: 0 },
     centerPosition,
   );
 
@@ -237,7 +225,7 @@ function setEncounterLevels(
 
   const { maxLevel } = config;
   const maxDistance = distanceBetweenNodes(
-    nodes[`${centerPosition.x},0`],
+    { x: centerPosition.x, y: 0 },
     middleNode,
   );
 
@@ -249,6 +237,7 @@ function setEncounterLevels(
 
 function determineSpritesForWorld(
   nodes: Record<string, WorldLocation>,
+  sprites: Record<string, string>,
   rng: PRNG,
 ): void {
   const elementStartSprites: Record<GameElement, number> = {
@@ -284,6 +273,7 @@ function fillSpacesWithLoot(nodes: Record<string, WorldLocation>): void {
 export function generateWorld(config: WorldConfig): GameStateWorld {
   const rng = gamerng();
 
+  const nodeSprites: Record<string, string> = {};
   const nodes: Record<string, WorldLocation> = {};
   const nodeList: WorldLocation[] = [];
   const nodePositionsAvailable: Record<
@@ -314,23 +304,24 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   };
 
   const firstTown: WorldLocation = {
+    ...blankWorldNode(),
     id: uuid(),
     x: Math.floor(config.width / 2),
     y: Math.floor(config.height / 2),
     nodeType: 'town',
     name: 'LaFlotte',
-    elements: [],
-    sprite: '',
-    objectSprite: '',
-    claimCount: 0,
     currentlyClaimed: true,
-    encounterLevel: 0,
-    guardianIds: [],
-    claimLootIds: [],
-    unclaimTime: 0,
   };
 
   addNode(firstTown);
+
+  const counts: Record<LocationType, number> = {
+    castle: 0,
+    cave: 0,
+    dungeon: 0,
+    town: 0,
+    village: 0,
+  };
 
   Object.keys(config.nodeCount).forEach((key) => {
     const count = config.nodeCount[key as LocationType];
@@ -339,21 +330,15 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     for (let i = 0; i < nodeCount; i++) {
       const { x, y } = findUnusedPosition();
       const node: WorldLocation = {
+        ...blankWorldNode(),
         id: uuid(),
         x,
         y,
         nodeType: key as LocationType,
         name: `${key} ${i + 1}`,
-        elements: [],
-        sprite: '',
-        objectSprite: '',
-        claimCount: 0,
-        currentlyClaimed: false,
-        encounterLevel: 0,
-        guardianIds: [],
-        claimLootIds: [],
-        unclaimTime: 0,
       };
+
+      counts[key as LocationType]++;
 
       addNode(node);
     }
@@ -364,7 +349,7 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
   addElementsToWorld(config, nodes);
   fillSpacesWithGuardians(nodes);
   fillSpacesWithLoot(nodes);
-  determineSpritesForWorld(nodes, rng);
+  determineSpritesForWorld(nodes, nodeSprites, rng);
 
   return {
     width: config.width,
@@ -373,6 +358,14 @@ export function generateWorld(config: WorldConfig): GameStateWorld {
     homeBase: {
       x: firstTown.x,
       y: firstTown.y,
+    },
+    nodeCounts: counts,
+    claimedCounts: {
+      castle: 0,
+      cave: 0,
+      dungeon: 0,
+      town: 1,
+      village: 0,
     },
   };
 }

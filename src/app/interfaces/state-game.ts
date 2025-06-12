@@ -6,6 +6,7 @@ import { Branded } from './identifiable';
 import { EquipmentSkill } from './skill';
 import { Timer } from './timer';
 import { WorldLocation, WorldPosition } from './world';
+import { LocationType } from './worldconfig';
 
 export type GameId = Branded<string, 'GameId'>;
 
@@ -25,6 +26,9 @@ export interface GameStateWorld {
   height: number;
   nodes: Record<string, WorldLocation>;
   homeBase: WorldPosition;
+
+  nodeCounts: Record<LocationType, number>;
+  claimedCounts: Record<LocationType, number>;
 }
 
 export type GameStateHeroesTraveling = WorldPosition & {

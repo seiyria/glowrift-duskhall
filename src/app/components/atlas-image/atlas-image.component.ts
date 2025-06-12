@@ -25,5 +25,7 @@ export class AtlasImageComponent {
   public assetJSON = computed(
     () => this.contentService.artAtlases()[this.spritesheet()],
   );
-  public specificAsset = computed(() => this.assetJSON()[this.assetPath()]);
+  public specificAsset = computed(
+    () => this.assetJSON()[this.assetPath()] ?? { width: 0, height: 0 },
+  );
 }

@@ -2,6 +2,7 @@ import { sortBy } from 'lodash';
 import { GameCurrency, GameStateWorld, WorldLocation } from '../interfaces';
 import { getCurrencyClaimsForNode, mergeCurrencyClaims } from './currency';
 import { notify } from './notify';
+import { uuid } from './rng';
 import { gamestate, updateGamestate } from './state-game';
 import { addTimerAndAction, getRegisterTick } from './timer';
 import { distanceBetweenNodes } from './travel';
@@ -14,12 +15,31 @@ export function setWorld(world: GameStateWorld): void {
   });
 }
 
+export function blankWorldNode(x = -1, y = -1): WorldLocation {
+  return {
+    id: uuid(),
+    elements: [],
+    name: '',
+    nodeType: undefined,
+    sprite: '',
+    objectSprite: '',
+    x,
+    y,
+    claimCount: 0,
+    currentlyClaimed: false,
+    encounterLevel: 0,
+    guardianIds: [],
+    claimLootIds: [],
+    unclaimTime: 0,
+  };
+}
+
 export function getWorldNode(
   x: number,
   y: number,
   state = gamestate(),
-): WorldLocation | undefined {
-  return state.world.nodes[`${x},${y}`];
+): WorldLocation {
+  return state.world.nodes[`${x},${y}`] ?? blankWorldNode(x, y);
 }
 
 export function getCurrentWorldNode(
@@ -90,6 +110,10 @@ export function claimNode(node: WorldLocation): void {
       updateNodeData.guardianIds = [];
       updateNodeData.claimLootIds = [];
       updateNodeData.unclaimTime = getRegisterTick(claimDuration);
+
+      if (updateNodeData.nodeType) {
+        state.world.claimedCounts[updateNodeData.nodeType]++;
+      }
     }
 
     return state;
@@ -119,6 +143,10 @@ export function unclaimNode(node: WorldLocation): void {
         (i) => i.id,
       );
       updateNodeData.unclaimTime = 0;
+
+      if (updateNodeData.nodeType) {
+        state.world.claimedCounts[updateNodeData.nodeType]--;
+      }
     }
 
     return state;
