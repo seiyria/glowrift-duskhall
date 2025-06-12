@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { currentCombatHasGuardiansAlive } from './combat';
+import { currentCombatHasGuardiansAlive } from './combat-end';
 import { gamestate } from './state-game';
 import { travelToNode } from './travel';
 import { globalStatusText } from './ui';

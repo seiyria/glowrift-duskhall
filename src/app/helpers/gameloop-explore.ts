@@ -1,10 +1,6 @@
-import {
-  currentCombat,
-  currentCombatHasGuardiansAlive,
-  doCombatIteration,
-  generateCombatForLocation,
-  resetCombat,
-} from './combat';
+import { currentCombat, doCombatIteration, resetCombat } from './combat';
+import { generateCombatForLocation } from './combat-create';
+import { currentCombatHasGuardiansAlive } from './combat-end';
 import { updateExploringAndGlobalStatusText } from './explore';
 import { updateGamestate } from './state-game';
 import { isTraveling } from './travel';
