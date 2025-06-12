@@ -1,0 +1,19 @@
+<div class="flex gap-2">
+  <div class="flex-1 min-w-[200px] italic text-sm">
+    This Item
+  </div>
+
+  <div class="flex-1 min-w-[200px] italic text-sm">
+    Currently Equipped
+  </div>
+</div>
+
+<div class="flex gap-2">
+  <div class="flex-1 min-w-[200px]">
+    <app-item-stats [item]="item()" [statDeltas]="leftSideDeltas()"></app-item-stats>
+  </div>
+
+  <div class="flex-11 min-w-[200px]">
+    <app-item-stats [item]="compareWith()" [statDeltas]="rightSideDeltas()"></app-item-stats>
+  </div>
+</div>

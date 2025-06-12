@@ -2,8 +2,8 @@
 
 <div class="flex flex-wrap flex-row gap-2 p-2">
   @for(item of items(); track item.id) {
-  <app-icon-item [item]="item" (click)="itemClicked.emit(item)" [tp]="contextMenu" [tpData]="item"
-    tpVariation="contextMenu" [class.cursor-pointer]="clickableItems()"></app-icon-item>
+  <app-icon-item [item]="item" [compareItem]="compareWithItem(item)" (click)="itemClicked.emit(item)" [tp]="contextMenu"
+    [tpData]="item" tpVariation="contextMenu" [class.cursor-pointer]="clickableItems()"></app-icon-item>
 
   <ng-template #contextMenu let-hide let-item="data">
     @if(actions.length > 0) {

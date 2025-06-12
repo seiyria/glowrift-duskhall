@@ -1,0 +1,27 @@
+@let itemData = item();
+@let deltas = statDeltas();
+
+<h3 class="text-lg">{{ itemData.name }}</h3>
+
+<div class="mt-3">
+  <div>
+    Level {{ itemData.dropLevel }} {{ itemData.rarity }} {{ itemData.__type }}
+  </div>
+
+  @if(itemData.baseStats.Health || deltas?.Health) {
+  <app-marker-stat stat="Health" [value]="itemData.baseStats.Health || 0"
+    [delta]="deltas?.Health ?? 0"></app-marker-stat>
+  }
+
+  @if(itemData.baseStats.Force || deltas?.Force) {
+  <app-marker-stat stat="Force" [value]="itemData.baseStats.Force || 0" [delta]="deltas?.Force ?? 0"></app-marker-stat>
+  }
+
+  @if(itemData.baseStats.Aura || deltas?.Aura) {
+  <app-marker-stat stat="Aura" [value]="itemData.baseStats.Aura || 0" [delta]="deltas?.Aura ?? 0"></app-marker-stat>
+  }
+
+  @if(itemData.baseStats.Speed || deltas?.Speed) {
+  <app-marker-stat stat="Speed" [value]="itemData.baseStats.Speed || 0" [delta]="deltas?.Speed ?? 0"></app-marker-stat>
+  }
+</div>

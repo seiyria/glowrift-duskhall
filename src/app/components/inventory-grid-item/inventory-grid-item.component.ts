@@ -3,7 +3,7 @@ import { Component, input, output } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { TippyDirective } from '@ngneat/helipopper';
 import { itemSalvage, itemSalvageValue } from '../../helpers';
-import { EquipmentItem } from '../../interfaces';
+import { EquipmentItem, Hero } from '../../interfaces';
 import { IconItemComponent } from '../icon-item/icon-item.component';
 
 export type ItemAction = 'Salvage';
@@ -17,8 +17,8 @@ export type ItemAction = 'Salvage';
 export class InventoryGridItemComponent {
   public items = input.required<EquipmentItem[]>();
   public clickableItems = input<boolean>();
-
   public allowedActions = input<ItemAction[]>([]);
+  public compareWithEquippedHero = input<Hero>();
 
   public itemClicked = output<EquipmentItem>();
 
@@ -28,5 +28,9 @@ export class InventoryGridItemComponent {
 
   salvageItem(item: EquipmentItem) {
     itemSalvage(item);
+  }
+
+  compareWithItem(item: EquipmentItem) {
+    return this.compareWithEquippedHero()?.equipment[item.__type];
   }
 }

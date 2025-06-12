@@ -6,35 +6,18 @@
   [class.outline-yellow-400]="itemData.rarity === 'Legendary'" [class.outline-rose-400]="itemData.rarity === 'Unique'">
 </div>
 
-<app-atlas-image class="z-10 absolute" [assetName]="itemData.sprite" [spritesheet]="itemData.__type"
-  [tp]="itemInfo"></app-atlas-image>
+<app-atlas-image class="z-10 absolute" [assetName]="itemData.sprite" [spritesheet]="itemData.__type" [tp]="itemInfo"
+  [tpMaxWidth]="500"></app-atlas-image>
 
 <div class="z-20 absolute bottom-0 left-[2px] text-xs font-bold italic text-black text-shadow-white">
   Lv. {{ itemData.dropLevel }}
 </div>
 
 <ng-template #itemInfo let-hide>
-  <h3 class="text-lg">{{ itemData.name }}</h3>
+  @if(compareItem(); as compareWith) {
+  <app-item-stats-compare [item]="itemData" [compareWith]="compareWith"></app-item-stats-compare>
 
-  <div class="mt-3">
-    <div>
-      Level {{ itemData.dropLevel }} {{ itemData.rarity }} {{ itemData.__type }}
-    </div>
-
-    @if(itemData.baseStats.Health) {
-    <app-marker-stat stat="Health" [value]="itemData.baseStats.Health"></app-marker-stat>
-    }
-
-    @if(itemData.baseStats.Force) {
-    <app-marker-stat stat="Force" [value]="itemData.baseStats.Force"></app-marker-stat>
-    }
-
-    @if(itemData.baseStats.Aura) {
-    <app-marker-stat stat="Aura" [value]="itemData.baseStats.Aura"></app-marker-stat>
-    }
-
-    @if(itemData.baseStats.Speed) {
-    <app-marker-stat stat="Speed" [value]="itemData.baseStats.Speed"></app-marker-stat>
-    }
-  </div>
+  } @else {
+  <app-item-stats [item]="itemData"></app-item-stats>
+  }
 </ng-template>
