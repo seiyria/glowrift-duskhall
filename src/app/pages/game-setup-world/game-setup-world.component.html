@@ -16,7 +16,8 @@
             <div class="min-w-[128px] flex flex-col gap-2 items-center">
               <app-atlas-animation [assetName]="heroSprites[$index]()" [spritesheet]="'hero'"></app-atlas-animation>
 
-              <button class="btn btn-info btn-block" [swal]="renameSwal">{{ name() }}</button>
+              <button class="btn btn-info btn-block" [swal]="renameSwal" appSfx="ui-click" [sfxOffset]="$index"
+                [sfxTrigger]="['click', 'hover']">{{ name() }}</button>
 
               <swal #renameSwal title="Rename Hero" text="Choose a name for this hero!" input="text"
                 inputPlaceholder="Enter new name..." inputValue="{{ name() }}"
@@ -57,7 +58,8 @@
           @for(config of allWorldSizes; track $index) {
           <div class="min-w-[128px]">
             <button class="btn btn-primary btn-block" appAnalyticsClick="Setup:World:{{ config.name }}"
-              (click)="createWorld(config)">{{ config.name }}</button>
+              (click)="createWorld(config)" appSfx="ui-click" [sfxOffset]="$index" [sfxTrigger]="['click', 'hover']">{{
+              config.name }}</button>
           </div>
           }
         </div>

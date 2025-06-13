@@ -1,7 +1,7 @@
 <div class="flex flex-row gap-2">
 
   <div class="flex-1">
-  
+
     <div class="card bg-base-100 foreground shadow-xl mt-3">
       <div class="card-body">
         <div class="card-title">
@@ -10,32 +10,59 @@
 
         <div class="form-control">
           <label class="label cursor-pointer label-checkbox">
-            <input type="checkbox" [checked]="notificationsEnabled() === true"
-              class="checkbox checkbox-secondary" 
+            <input type="checkbox" [checked]="notificationsEnabled()" class="checkbox checkbox-secondary"
               (click)="toggleNotifications()" />
             <span class="label-text">Show All</span>
           </label>
         </div>
 
-          <div class="form-control">
-            <label class="label cursor-pointer label-checkbox">
-              <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('Travel')"
-                class="checkbox checkbox-secondary" 
-                (click)="toggleNotificationCategories('Travel')"
-                [disabled]="!notificationsEnabled()" />
-              <span class="label-text">Show Travel</span>
-            </label>
-          </div>
-          
-          <div class="form-control">
-            <label class="label cursor-pointer label-checkbox">
-              <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('LocationClaim')"
-                class="checkbox checkbox-secondary" 
-                (click)="toggleNotificationCategories('LocationClaim')"
-                [disabled]="!notificationsEnabled()" />
-              <span class="label-text">Show Location Claim</span>
-            </label>
-          </div>
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('Travel')"
+              class="checkbox checkbox-secondary" (click)="toggleNotificationCategories('Travel')"
+              [disabled]="!notificationsEnabled()" />
+            <span class="label-text">Show Travel</span>
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="notificationCategoriesEnabled().includes('LocationClaim')"
+              class="checkbox checkbox-secondary" (click)="toggleNotificationCategories('LocationClaim')"
+              [disabled]="!notificationsEnabled()" />
+            <span class="label-text">Show Location Claim</span>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="flex-1">
+
+    <div class="card bg-base-100 foreground shadow-xl mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          Audio
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <input type="checkbox" [checked]="getOption('audioPlay')" class="checkbox checkbox-secondary"
+              (click)="setOption('audioPlay', !getOption('audioPlay'))" />
+            <span class="label-text">Play Audio</span>
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer label-checkbox">
+            <span class="label-text">SFX Volume</span>
+            <input #sfxVolume type="range" [min]="0" [max]="1" [step]="0.05" [value]="getOption('volume')"
+              (change)="setOption('volume', sfxVolume.valueAsNumber)" class="range range-secondary" />
+            <span>{{ getOption('volume') * 100 }}%</span>
+          </label>
+        </div>
 
       </div>
 

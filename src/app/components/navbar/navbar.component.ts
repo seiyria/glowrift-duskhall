@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { TippyDirective } from '@ngneat/helipopper';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RequireSetupDirective } from '../../directives/require-setup.directive';
+import { SFXDirective } from '../../directives/sfx.directive';
 import {
+  ALL_ICONS,
   closeAllMenus,
   focusCameraOnPlayer,
   gamestate,
@@ -27,6 +29,7 @@ import { MarkerCurrencyCurrentComponent } from '../marker-currency-current/marke
     RequireSetupDirective,
     IconComponent,
     SweetAlert2Module,
+    SFXDirective,
     MarkerCurrencyCurrentComponent,
   ],
   providers: [],
@@ -49,6 +52,34 @@ export class NavbarComponent {
         c !== 'Mana' && Math.floor(currentCurrencies[c as GameCurrency]) > 0,
     ) as GameCurrency[];
   });
+
+  public readonly panelConfigs: Array<{
+    name: string;
+    icon: keyof typeof ALL_ICONS;
+    clickCb: () => void;
+  }> = [
+    {
+      name: 'Combat',
+      icon: 'gameSwordBrandish',
+      clickCb: () => this.toggleCombat(),
+    },
+    {
+      name: 'Inventory',
+      icon: 'gameSwapBag',
+      clickCb: () => this.toggleInventory(),
+    },
+    { name: 'Heroes', icon: 'gameAges', clickCb: () => this.toggleHeroes() },
+    {
+      name: 'Focus Camera',
+      icon: 'gameHumanTarget',
+      clickCb: () => this.focusCamera(),
+    },
+    {
+      name: 'Options',
+      icon: 'tablerSettings',
+      clickCb: () => this.toggleOptions(),
+    },
+  ];
 
   public toggleCurrencyList() {
     showCurrencyList.set(!showCurrencyList());

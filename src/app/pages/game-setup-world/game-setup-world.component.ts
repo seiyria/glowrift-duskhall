@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AtlasAnimationComponent } from '../../components/atlas-animation/atlas-animation.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
+import { SFXDirective } from '../../directives/sfx.directive';
 import {
   gamestate,
   getEntriesByType,
@@ -20,6 +21,7 @@ import { WorldConfig } from '../../interfaces';
     AnalyticsClickDirective,
     SweetAlert2Module,
     AtlasAnimationComponent,
+    SFXDirective,
   ],
   templateUrl: './game-setup-world.component.html',
   styleUrl: './game-setup-world.component.scss',

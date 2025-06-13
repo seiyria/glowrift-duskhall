@@ -45,7 +45,7 @@ export class GamestateService {
     });
   }
 
-  async init() {
+  init() {
     this.doSpriteloop();
     this.doGameloop();
   }

@@ -10,6 +10,7 @@ export * from './guardian';
 export * from './hero';
 export * from './identifiable';
 export * from './meta';
+export * from './sfx';
 export * from './skill';
 export * from './stat';
 export * from './state-game';

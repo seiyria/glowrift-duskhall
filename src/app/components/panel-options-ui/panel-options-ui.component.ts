@@ -1,8 +1,15 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  canSendNotifications,
+  enabledCategories,
+  getOption,
+  setOption,
+  ToggleableCategory,
+} from '../../helpers';
+import { GameOptions } from '../../interfaces';
 import { OptionsBaseComponent } from '../panel-options/option-base-page.component';
-import { canSendNotifications, ToggleableCategory, enabledCategories } from '../../helpers';
 
 @Component({
   selector: 'app-panel-options-ui',
@@ -11,6 +18,13 @@ import { canSendNotifications, ToggleableCategory, enabledCategories } from '../
   styleUrl: './panel-options-ui.component.css',
 })
 export class PanelOptionsUIComponent extends OptionsBaseComponent {
+  public currentTheme = signal<string>(
+    this.currentValueForOption('uiTheme') as string,
+  );
+
+  public notificationsEnabled = computed(() => canSendNotifications());
+  public notificationCategoriesEnabled = computed(() => enabledCategories());
+
   public readonly themes = [
     { name: 'acid', type: 'light' },
     { name: 'autumn', type: 'light' },
@@ -78,29 +92,32 @@ export class PanelOptionsUIComponent extends OptionsBaseComponent {
     { name: 'wireframe', type: 'light' },
   ];
 
-  public currentTheme = signal<string>(
-    this.currentValueForOption('uiTheme') as string,
-  );
-
   public changeTheme(theme: string): void {
     this.setValueForOption('uiTheme', theme);
   }
 
-  public notificationsEnabled = computed(() => canSendNotifications());
+  public getOption<T extends keyof GameOptions>(option: T) {
+    return getOption(option);
+  }
 
-  
+  public setOption<T extends keyof GameOptions>(
+    option: T,
+    value: GameOptions[T],
+  ) {
+    setOption(option, value);
+  }
+
   public toggleNotifications() {
     canSendNotifications.set(!canSendNotifications());
   }
 
-  public notificationCategoriesEnabled = computed(() => enabledCategories());
-
   public toggleNotificationCategories(category: ToggleableCategory) {
     if (enabledCategories().includes(category)) {
-      enabledCategories.set(enabledCategories().filter(cat => cat !== category));
+      enabledCategories.set(
+        enabledCategories().filter((cat) => cat !== category),
+      );
       return;
     }
     enabledCategories.set([...enabledCategories(), category]);
   }
-
 }

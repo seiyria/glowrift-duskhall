@@ -20,10 +20,12 @@
       </p>
 
       <div class="card-actions pb-10 mt-3 flex gap-2">
-        <button class="btn btn-primary" (click)="newGame()" appAnalyticsClick="Meta:Play:New">New Game</button>
+        <button class="btn btn-primary" (click)="newGame()" appAnalyticsClick="Meta:Play:New" appSfx="ui-click"
+          [sfxOffset]="0" [sfxTrigger]="['click']">New Game</button>
 
         @if(hasStartedGame()) {
-        <button class="btn btn-primary" (click)="resumeGame()" appAnalyticsClick="Meta:Play:Resume">Resume
+        <button class="btn btn-primary" (click)="resumeGame()" appAnalyticsClick="Meta:Play:Resume" appSfx="ui-click"
+          [sfxOffset]="1" [sfxTrigger]="['click']">Resume
           Game</button>
         }
       </div>

@@ -39,38 +39,17 @@
         </button>
       </li>
 
+      @for(panel of panelConfigs; track $index) {
       <li class="action-button" appRequireSetup>
-        <button class="btn btn-xs btn-accent" [tp]="'Combat'" (click)="toggleCombat()">
-          <app-icon name="gameSwordBrandish" size="2em" color="#000"></app-icon>
+        <button class="btn btn-xs btn-accent" [tp]="panel.name" (click)="panel.clickCb()" appSfx="ui-click"
+          [sfxOffset]="$index" [sfxTrigger]="['click']">
+          <app-icon [name]="panel.icon" size="2em" color="#000"></app-icon>
         </button>
       </li>
-
-      <li class="action-button" appRequireSetup>
-        <button class="btn btn-xs btn-accent" [tp]="'Inventory'" (click)="toggleInventory()">
-          <app-icon name="gameSwapBag" size="2em" color="#000"></app-icon>
-        </button>
-      </li>
-
-      <li class="action-button" appRequireSetup>
-        <button class="btn btn-xs btn-accent" [tp]="'Heroes'" (click)="toggleHeroes()">
-          <app-icon name="gameAges" size="2em" color="#000"></app-icon>
-        </button>
-      </li>
-
-      <li class="action-button" appRequireSetup>
-        <button class="btn btn-xs btn-accent" [tp]="'Focus Camera'" (click)="focusCamera()">
-          <app-icon name="gameHumanTarget" size="2em" color="#000"></app-icon>
-        </button>
-      </li>
-
-      <li class="action-button" appRequireSetup>
-        <button class="btn btn-xs btn-accent" [tp]="'Options'" (click)="toggleOptions()">
-          <app-icon name="tablerSettings" size="2em" color="#000"></app-icon>
-        </button>
-      </li>
+      }
 
       <li class="action-button">
-        <a class="btn btn-xs btn-accent" [swal]="leaveSwal" [tp]="'Go Back'">
+        <a class="btn btn-xs btn-warning" [swal]="leaveSwal" [tp]="'Go Back'">
           <app-icon name="gameExitDoor" size="2em" color="#000"></app-icon>
         </a>
       </li>

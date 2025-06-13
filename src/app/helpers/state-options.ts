@@ -10,6 +10,8 @@ export function defaultOptions(): GameOptions {
     debugGameloopTimerUpdates: false,
     debugMapNodePositions: false,
 
+    audioPlay: true,
+
     uiTheme: 'dark',
 
     volume: 0.5,

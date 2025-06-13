@@ -34,6 +34,7 @@ import { GamestateService } from './services/gamestate.service';
 import { LoggerService, RollbarErrorHandler } from './services/logger.service';
 import { MetaService } from './services/meta.service';
 import { NotifyService } from './services/notify.service';
+import { SoundService } from './services/sound.service';
 import { ThemeService } from './services/theme.service';
 
 export const appConfig: ApplicationConfig = {
@@ -111,7 +112,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
-      useValue: () => inject(ContentService).init(),
+      useValue: async () => await inject(ContentService).init(),
     },
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -127,6 +128,11 @@ export const appConfig: ApplicationConfig = {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
       useValue: () => inject(CameraService).init(),
+    },
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: async () => await inject(SoundService).init(),
     },
   ],
 };
