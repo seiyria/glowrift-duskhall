@@ -57,10 +57,10 @@
 
         <div class="form-control">
           <label class="label cursor-pointer label-checkbox">
-            <span class="label-text">SFX Volume</span>
+            <span class="label-text !ml-0 mr-2">SFX Volume</span>
             <input #sfxVolume type="range" [min]="0" [max]="1" [step]="0.05" [value]="getOption('volume')"
               (change)="setOption('volume', sfxVolume.valueAsNumber)" class="range range-secondary" />
-            <span>{{ getOption('volume') * 100 }}%</span>
+            <span class="ml-2">{{ getOption('volume') * 100 }}%</span>
           </label>
         </div>
 
