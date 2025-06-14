@@ -1,15 +1,18 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AtlasAnimationComponent } from '../../components/atlas-animation/atlas-animation.component';
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import { SFXDirective } from '../../directives/sfx.directive';
 import {
+  closeAllMenus,
   gamestate,
   getEntriesByType,
   pickSpriteForHeroName,
   resetGameState,
   setDiscordStatus,
+  setWorldSeed,
   startGame,
   updateHeroData,
 } from '../../helpers';
@@ -22,6 +25,7 @@ import { WorldConfig } from '../../interfaces';
     SweetAlert2Module,
     AtlasAnimationComponent,
     SFXDirective,
+    FormsModule,
   ],
   templateUrl: './game-setup-world.component.html',
   styleUrl: './game-setup-world.component.scss',
@@ -47,6 +51,8 @@ export class GameSetupWorldComponent implements OnInit {
 
   public isGeneratingWorld = signal<boolean>(false);
 
+  public worldSeed = signal<string | null>(null);
+
   ngOnInit() {
     setDiscordStatus({
       state: 'Starting a new game...',
@@ -55,8 +61,10 @@ export class GameSetupWorldComponent implements OnInit {
 
   public createWorld(config: WorldConfig): void {
     this.isGeneratingWorld.set(true);
+    closeAllMenus();
 
     resetGameState();
+    setWorldSeed(this.worldSeed());
 
     for (let h = 0; h < 4; h++) {
       const heroId = gamestate().hero.heroes[h].id;

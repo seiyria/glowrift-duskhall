@@ -2,45 +2,52 @@
   <div class="h-20"></div>
 
   <div class="xl:w-1/4 w-1/2">
-
     <div class="card bg-base-100 h-[200px]">
-
       <div class="card-body items-center justify-between">
-        <div class="card-title text-center flex flex-col">
-          Heroes
-        </div>
+        <div class="card-title text-center flex flex-col">Heroes</div>
 
         <div class="card-actions pt-3 flex flex-row gap-2">
           <div class="flex flex-row justify-center gap-2">
             @for(name of heroNames; track $index) {
             <div class="min-w-[128px] flex flex-col gap-2 items-center">
-              <app-atlas-animation [assetName]="heroSprites[$index]()" [spritesheet]="'hero'"></app-atlas-animation>
+              <app-atlas-animation
+                [assetName]="heroSprites[$index]()"
+                [spritesheet]="'hero'"
+              ></app-atlas-animation>
 
-              <button class="btn btn-info btn-block" [swal]="renameSwal" appSfx="ui-click" [sfxOffset]="$index"
-                [sfxTrigger]="['click', 'hover']">{{ name() }}</button>
+              <button
+                class="btn btn-info btn-block"
+                [swal]="renameSwal"
+                appSfx="ui-click"
+                [sfxOffset]="$index"
+                [sfxTrigger]="['click', 'hover']"
+              >
+                {{ name() }}
+              </button>
 
-              <swal #renameSwal title="Rename Hero" text="Choose a name for this hero!" input="text"
-                inputPlaceholder="Enter new name..." inputValue="{{ name() }}"
-                [inputAttributes]="{ 'minlength': '2', 'maxlength': '12' }" icon="warning"
-                (confirm)="renameHero($index, $event)">
-              </swal>
+              <swal
+                #renameSwal
+                title="Rename Hero"
+                text="Choose a name for this hero!"
+                input="text"
+                inputPlaceholder="Enter new name..."
+                inputValue="{{ name() }}"
+                [inputAttributes]="{ minlength: '2', maxlength: '12' }"
+                icon="warning"
+                (confirm)="renameHero($index, $event)"
+              ></swal>
             </div>
             }
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
   <div class="xl:w-1/4 w-1/2">
-
     <div class="card bg-base-100 h-[200px]">
-
       <div class="card-body items-center justify-between">
-        <div class="card-title text-center flex flex-col">
-          World Size
-        </div>
+        <div class="card-title text-center flex flex-col">World Size</div>
 
         <div class="flex flex-row justify-center gap-2">
           Smaller worlds are less challenging than larger ones.
@@ -57,16 +64,39 @@
         <div class="card-actions pt-3 flex flex-row gap-2">
           @for(config of allWorldSizes; track $index) {
           <div class="min-w-[128px]">
-            <button class="btn btn-primary btn-block" appAnalyticsClick="Setup:World:{{ config.name }}"
-              (click)="createWorld(config)" appSfx="ui-click" [sfxOffset]="$index" [sfxTrigger]="['click', 'hover']">{{
-              config.name }}</button>
+            <button
+              class="btn btn-primary btn-block"
+              appAnalyticsClick="Setup:World:{{ config.name }}"
+              (click)="createWorld(config)"
+              appSfx="ui-click"
+              [sfxOffset]="$index"
+              [sfxTrigger]="['click', 'hover']"
+            >
+              {{ config.name }}
+            </button>
           </div>
           }
         </div>
         }
       </div>
-
     </div>
+  </div>
 
+  <div class="xl:w-1/4 w-1/2">
+    <div class="card bg-base-100">
+      <div class="card-body items-center justify-between">
+        <div class="card-title text-center flex flex-col">World Seed</div>
+        <div class="flex flex-row justify-center gap-2">
+          The world seed is used to generate the world. You can use a custom
+          seed or let the game generate one for you.
+        </div>
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          placeholder="Enter world seed..."
+          [(ngModel)]="worldSeed"
+        />
+      </div>
+    </div>
   </div>
 </div>

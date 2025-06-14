@@ -5,6 +5,7 @@ import { clamp } from 'lodash';
 import {
   DroppableEquippable,
   GameElement,
+  GameId,
   GameStateWorld,
   Guardian,
   GuardianData,
@@ -27,7 +28,7 @@ import {
   uuid,
 } from './rng';
 import { indexToSprite } from './sprite';
-import { gamestate } from './state-game';
+import { gamestate, updateGamestate } from './state-game';
 import { distanceBetweenNodes } from './travel';
 import { blankWorldNode } from './world';
 
@@ -267,6 +268,15 @@ function fillSpacesWithGuardians(nodes: Record<string, WorldLocation>): void {
 function fillSpacesWithLoot(nodes: Record<string, WorldLocation>): void {
   Object.values(nodes).forEach((node) => {
     populateLocationWithLoot(node);
+  });
+}
+
+export function setWorldSeed(seed: string | null): void {
+  if (!seed) return;
+
+  updateGamestate((state) => {
+    state.gameId = seed as GameId;
+    return state;
   });
 }
 
