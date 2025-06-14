@@ -1,0 +1,10 @@
+:host {
+  @apply block w-full h-full;
+  position: relative;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
