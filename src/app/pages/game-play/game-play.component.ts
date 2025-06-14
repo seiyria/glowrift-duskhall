@@ -1,5 +1,6 @@
 import { Component, computed, HostListener } from '@angular/core';
 import { GameCameraControllerComponent } from '../../components/game-camera-controller/game-camera-controller.component';
+import { GameMapPixiComponent } from '../../components/game-map-pixi/game-map-pixi.component';
 import { GameMapComponent } from '../../components/game-map/game-map.component';
 import { PanelCombatComponent } from '../../components/panel-combat/panel-combat.component';
 import { PanelHeroesComponent } from '../../components/panel-heroes/panel-heroes.component';
@@ -18,6 +19,7 @@ import {
 @Component({
   selector: 'app-game-play',
   imports: [
+    GameMapPixiComponent,
     GameMapComponent,
     GameCameraControllerComponent,
     PanelOptionsComponent,
