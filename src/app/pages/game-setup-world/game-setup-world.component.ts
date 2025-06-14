@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AtlasAnimationComponent } from '../../components/atlas-animation/atlas-animation.component';
@@ -24,6 +25,7 @@ import { GameId, WorldConfig } from '../../interfaces';
     SweetAlert2Module,
     AtlasAnimationComponent,
     SFXDirective,
+    FormsModule,
   ],
   templateUrl: './game-setup-world.component.html',
   styleUrl: './game-setup-world.component.scss',
@@ -55,13 +57,6 @@ export class GameSetupWorldComponent implements OnInit {
     setDiscordStatus({
       state: 'Starting a new game...',
     });
-  }
-
-  public setWorldSeed(e: Event): void {
-    e.target as HTMLInputElement;
-    const seed = (e.target as HTMLInputElement).value;
-
-    this.worldSeed.set(seed);
   }
 
   public createWorld(config: WorldConfig): void {

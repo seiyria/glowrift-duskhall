@@ -94,8 +94,7 @@
           type="text"
           class="input input-bordered w-full"
           placeholder="Enter world seed..."
-          [value]="worldSeed()"
-          (change)="setWorldSeed($event)"
+          [(ngModel)]="worldSeed"
         />
       </div>
     </div>
