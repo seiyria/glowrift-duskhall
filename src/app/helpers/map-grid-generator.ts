@@ -56,25 +56,3 @@ export function generateMapGrid(
 
   return { tiles, width, height };
 }
-
-/**
- * Flattens a 2D tile grid into a 1D array
- * @param gridData Map grid data
- * @returns Flattened array of tile data
- */
-export function flattenMapGrid(gridData: MapGridData): MapTileData[] {
-  return gridData.tiles.flat();
-}
-
-/**
- * Finds tiles that match a specific condition
- * @param gridData Map grid data
- * @param predicate Condition to match
- * @returns Array of matching tiles
- */
-export function findTilesWhere(
-  gridData: MapGridData,
-  predicate: (tile: MapTileData) => boolean,
-): MapTileData[] {
-  return flattenMapGrid(gridData).filter(predicate);
-}
