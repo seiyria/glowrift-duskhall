@@ -5,6 +5,7 @@ import { AtlasAnimationComponent } from '../../components/atlas-animation/atlas-
 import { AnalyticsClickDirective } from '../../directives/analytics-click.directive';
 import { SFXDirective } from '../../directives/sfx.directive';
 import {
+  closeAllMenus,
   gamestate,
   getEntriesByType,
   pickSpriteForHeroName,
@@ -65,6 +66,7 @@ export class GameSetupWorldComponent implements OnInit {
 
   public createWorld(config: WorldConfig): void {
     this.isGeneratingWorld.set(true);
+    closeAllMenus();
 
     resetGameState();
 
