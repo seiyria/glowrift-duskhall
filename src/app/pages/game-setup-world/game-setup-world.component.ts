@@ -12,11 +12,11 @@ import {
   pickSpriteForHeroName,
   resetGameState,
   setDiscordStatus,
+  setWorldSeed,
   startGame,
-  updateGamestate,
   updateHeroData,
 } from '../../helpers';
-import { GameId, WorldConfig } from '../../interfaces';
+import { WorldConfig } from '../../interfaces';
 
 @Component({
   selector: 'app-game-setup-world',
@@ -64,13 +64,7 @@ export class GameSetupWorldComponent implements OnInit {
     closeAllMenus();
 
     resetGameState();
-
-    if (this.worldSeed()) {
-      updateGamestate((state) => {
-        state.gameId = this.worldSeed() as GameId;
-        return state;
-      });
-    }
+    setWorldSeed(this.worldSeed());
 
     for (let h = 0; h < 4; h++) {
       const heroId = gamestate().hero.heroes[h].id;
