@@ -11,9 +11,10 @@ import {
   resetGameState,
   setDiscordStatus,
   startGame,
+  updateGamestate,
   updateHeroData,
 } from '../../helpers';
-import { WorldConfig } from '../../interfaces';
+import { GameId, WorldConfig } from '../../interfaces';
 
 @Component({
   selector: 'app-game-setup-world',
@@ -47,16 +48,32 @@ export class GameSetupWorldComponent implements OnInit {
 
   public isGeneratingWorld = signal<boolean>(false);
 
+  public worldSeed = signal<string | null>(null);
+
   ngOnInit() {
     setDiscordStatus({
       state: 'Starting a new game...',
     });
   }
 
+  public setWorldSeed(e: Event): void {
+    e.target as HTMLInputElement;
+    const seed = (e.target as HTMLInputElement).value;
+
+    this.worldSeed.set(seed);
+  }
+
   public createWorld(config: WorldConfig): void {
     this.isGeneratingWorld.set(true);
 
     resetGameState();
+
+    if (this.worldSeed()) {
+      updateGamestate((state) => {
+        state.gameId = this.worldSeed() as GameId;
+        return state;
+      });
+    }
 
     for (let h = 0; h < 4; h++) {
       const heroId = gamestate().hero.heroes[h].id;
