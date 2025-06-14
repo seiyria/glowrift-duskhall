@@ -74,6 +74,7 @@ export class GameMapPixiComponent implements OnInit, OnDestroy {
       world.height,
     );
   });
+
   constructor() {
     effect(() => {
       const mapData = this.map();
@@ -117,6 +118,7 @@ export class GameMapPixiComponent implements OnInit, OnDestroy {
 
     this.setupMouseDragging();
   }
+
   private setupMouseDragging() {
     if (!this.app || !this.mapContainer || !this.playerIndicatorContainer)
       return;
@@ -128,6 +130,7 @@ export class GameMapPixiComponent implements OnInit, OnDestroy {
       viewportHeight: this.nodeHeight(),
     });
   }
+
   private async loadTextures() {
     try {
       const textures = await loadGameMapTextures(this.contentService);
@@ -141,6 +144,7 @@ export class GameMapPixiComponent implements OnInit, OnDestroy {
       console.error('Failed to load textures:', error);
     }
   }
+
   private updateMap(mapData: MapTileData[][]) {
     if (!this.mapContainer || !this.playerIndicatorContainer) return;
 
@@ -156,6 +160,7 @@ export class GameMapPixiComponent implements OnInit, OnDestroy {
 
     this.updatePlayerIndicators(mapData);
   }
+
   private createNodeSprites(x: number, y: number, nodeData: WorldLocation) {
     if (!this.mapContainer) return;
 
