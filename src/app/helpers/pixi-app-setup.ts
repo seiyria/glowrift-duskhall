@@ -8,10 +8,10 @@ export interface PixiAppConfig {
 }
 
 /**
- * Initializes a PIXI application with the specified configuration
+ * Initializes a pixijs with the specified configuration
  * @param container HTML element to append the canvas to
- * @param config PIXI application configuration
- * @returns Initialized PIXI application
+ * @param config pixijs configuration
+ * @returns Initialized pixijs
  */
 export async function initializePixiApp(
   container: HTMLElement,
@@ -33,7 +33,7 @@ export async function initializePixiApp(
 
 /**
  * Sets up automatic canvas resizing based on container size changes
- * @param app PIXI application
+ * @param app pixijs application
  * @param container HTML container element
  * @returns ResizeObserver instance
  */
@@ -52,7 +52,7 @@ export function setupResponsiveCanvas(
 
 /**
  * Creates the main containers for the game map
- * @param app PIXI application
+ * @param app pixijs application
  * @returns Map and player indicator containers
  */
 export function createGameMapContainers(app: Application): {
